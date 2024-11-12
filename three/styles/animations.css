@@ -1,0 +1,83 @@
+/* canvas */
+
+.hero {
+    position: relative;
+    overflow: hidden;
+}
+
+#starfield-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* z-index: -1; */
+}
+
+/* move */
+
+@keyframes subtleMove {
+    0%, 100% {
+        transform: translateX(0);
+    }
+    50% {
+        transform: translateX(25px) translateY(10px);
+    }
+    75% {
+        transform: translateY(-15px);
+    }
+}
+
+/* original base was half of the above, 15, 5, 7 */ 
+@keyframes subtleMove2 {
+    0%, 100% {
+        transform: translateX(0);
+    }
+    50% {
+        transform: translateX(1px) translateY(1px);
+    }
+    75% {
+        transform: translateY(-1px);
+    }
+}
+
+@keyframes subtleMoveReverse {
+    0%, 100% {
+        transform: translateX(0);
+    }
+    50% {
+        transform: translateX(1px) translateY(-1px);
+    }
+    75% {
+        transform: translateY(1px);
+    }
+}
+
+/* glows */
+
+@keyframes glow {
+    0% {
+        box-shadow: 0 0 5px 0px rgba(255, 255, 255, 0.4);
+    }
+    50% {
+        box-shadow: 0 0 20px 0px rgb(107, 117, 255);
+    }
+    100% {
+        box-shadow: 0 0 5px 0px rgba(255, 255, 255, 0.4);
+    }
+}
+
+/* @keyframes gradientAnimation {
+    0%, 100% {
+        background-image: linear-gradient(180deg, #4FE196 0%, #63C2EB 35%, #5BCFC8 70%, #4FE196 100%);
+    }
+    25% {
+        background-image: linear-gradient(180deg, #63C2EB 0%, #5BCFC8 35%, #4FE196 70%, #63C2EB 100%);
+    }
+    50% {
+        background-image: linear-gradient(180deg, #5BCFC8 0%, #4FE196 35%, #63C2EB 70%, #5BCFC8 100%);
+    }
+    75% {
+        background-image: linear-gradient(180deg, #4FE196 0%, #63C2EB 35%, #5BCFC8 70%, #4FE196 100%);
+    }
+} */

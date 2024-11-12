@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Three JS Heroic Cube</title>
+	<style>
+		body { margin: 0; overflow: hidden; background-color: #000; color: #fff; }
+		.interface {
+			position: absolute;
+			bottom: 5%;
+			left: 25%;
+			transform: translateX(-50%);
+			color: #fff;
+			background-color: rgba(255, 255, 255, 0.075);
+			padding: 10px;
+			border-radius: 5px;
+			font-size: 18px;
+			text-align: center;
+			width: 200px;
+		}
+
+		.interface h3 {
+			margin: 0;
+			font-size: 20px;
+		}
+
+		.interface ul {
+			list-style: none;
+			padding: 0;
+			margin: 10px 0;
+		}
+
+		.interface ul li {
+			margin: 5px 0;
+		}
+
+		.interface span {
+			font-weight: bold;
+			color: #00ff00;
+		}
+
+		#attackMessage {
+			margin-top: 10px;
+			color: #ff4c4c;
+			font-weight: bold;
+			font-size: 18px;
+		}
+	</style>
+	<script type="importmap">
+		{
+		  "imports": {
+			"three": "https://cdnjs.cloudflare.com/ajax/libs/three.js/0.170.0/three.module.js"
+		  }
+		}
+	</script>
+</head>
+<body>
+	  
+	<div class="interface">
+		<button id="easyButton">Easy</button>
+		<button id="mediumButton">Medium</button>
+		<button id="hardButton">Hard</button>
+
+		<p id="attackMessage">Out of range</p>
+
+		<p>Find the king cube and destroy it.</p>
+		<p>Avoid the other cubes.</p>
+		<ul>
+			<li><span>W</span> Move Up</li>
+			<li><span>S</span> Move Down</li>
+			<li><span>A</span> Move Left</li>
+			<li><span>D</span> Move Right</li>
+			<li><span>Space</span> Attack</li>
+		</ul>
+		<!-- Attack message container -->
+	</div>
+
+	<script type="module" src="./main.js"></script>
+</body>
+</html>

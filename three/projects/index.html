@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="theme-color" content="#000A15">
+    <title>birdonathree</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,200..1000;1,200..1000&family=Orbitron:wght@400..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../styles/colors.css">
+    <link rel="stylesheet" href="../styles/animations.css">
+    <link rel="stylesheet" href="../styles/styles.css">
+    <script src="https://kit.fontawesome.com/df3e6f116a.js" crossorigin="anonymous"></script>
+    <script src="../js/main.js" defer></script>
+    <script src="../js/search.js" defer></script>
+</head>
+
+<!-- split them by boxes of 6. 3rd 4th basis of 60%?  -->
+<!-- how would I approach saving the state, so on refresh the view stays as is? -->
+
+<body class="load">
+
+    <main>
+    
+        <section class="hero">
+
+            <!-- class="load"  -->
+            <canvas id="starfield-canvas"></canvas>
+
+            <header id="top">
+                <nav>
+                    <ul>
+                        <li><a class="internal-link" href="#top">birdonathree.com</a></li>
+                        <li>|</li>
+                        <li><a class="internal-link" href="#">blog</a></li>
+                        <li>|</li>
+                        <li><a class="internal-link" href="#">projects</a></li>
+                        <li>|</li>
+                        <li><a href="mailto:hello@madbence.com"><i class="fa-solid fa-envelope"></i> hello@madbence.com</a></li>
+                        <li>|</li>
+                        <li><a href="https://linkedin.com/in/madbence"><i class="fa-brands fa-linkedin"></i> linkedin</a></li>
+                        <li>|</li>
+                        <li><a href="https://github.com/bembit"><i class="fa-brands fa-github"></i> github</a></li>
+                    </ul>
+                </nav>
+            </header>
+
+            <div class="container" style="min-height: 88svh;">
+
+                <div class="hero-intro">
+                    <h2 class="gradient">
+                        Maybe
+                    </h2>
+                    <h2 class="gradient">
+                        Next
+                    </h2>
+                    <h2 class="gradient">
+                        Week.
+                    </h2>
+                    <p class="subtitle">
+                        All projects paginated.
+                    </p>
+                </div>
+
+                <div class="search-container">
+                    <input type="text" placeholder="Search..">
+                    <div class="tags-container">
+                        <ul>
+                           <!-- return unique tags from json -->
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="all-projects-container">
+
+                </div>
+
+            </div>
+        </section>
+                
+        <footer>
+            <p>Copyright © 2024 - built and designed by <a href="https://github.com/bembit">Me</a></p> 
+            <p>Vanilla ❤️ on Cloudflare</p>
+            <p>Linkedin AI Cringe fatigue 🤮💊</p>
+        </footer>
+
+    </main>
+
+    <script type="importmap">
+		{
+		  "imports": {
+			"three": "https://cdnjs.cloudflare.com/ajax/libs/three.js/0.170.0/three.module.js"
+		  }
+		}
+	</script>
+
+    <!-- <script type="module" src="../test.js"></script> -->
+
+</body>
+</html>

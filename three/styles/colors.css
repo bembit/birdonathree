@@ -1,0 +1,95 @@
+:root {
+    --bg-color: #04010f;
+    --text-color: #f9f9f9;
+
+    /* --secondary: #5f00b8; */
+    --secondary: #4e85cd;
+    --tertiary: #4e85cd;
+
+    --margin-s: 25px;
+    --margin-m: 50px;
+    --margin-l: 85px;
+    --margin-xl: 155px;
+
+    --border-radius: 15px;
+    --border-radius-none: 0px;
+    --border-radius-high: 25px;
+
+    --warning: #f5515f;
+    --success: #8adc32;
+
+    --box-shadow: 0 0 5px 5px rgba(79, 148, 238, 0.534);
+    --box-shadow-big: 0 0 150px 150px rgba(79, 148, 238, 0.1);
+    --box-shadow-hint: 0 0 25px 5px rgba(79, 148, 238, 0.1);
+    --box-shadow-light: 0 0 125px 25px rgba(79, 148, 238, 0.1);
+
+    --gradient: linear-gradient(180deg, #4fb3e1 0%, #63C2EB 35%, #5b89cf 70%, #824fe1 100%);
+    --gradient-opacity: linear-gradient(90deg, #4fb3e13b 0%, #63c2eb42 35%, #5b89cf2a 70%, #824fe12f 100%);
+
+    --primary-light: #0b0b0b;
+    --background-light-primary: #1b96f1;
+    --background-light-secondary: #f9f9f9;
+    --background-light-tertiary: #f9f9f9;
+
+    --primary-dark: #f9f9f9;
+    --background-dark-primary: #0b0b0b;
+    --background-dark-secondary: #0b0b0b;
+    --background-dark-tertiary: #0b0b0b;
+
+    /* themes */
+    /* --text-primary: #cf4a60;
+    --text-secondary: #beddf2;
+    --background-primary: #000a12;
+    --background-primary-opacity: #000a127e;
+    --secondary: #021f37;
+    --secondary-opacity: #021f377e;
+    --tertiary: #beddf2; */
+    /* light */
+    --text-primary-light: #f5515f;
+    --text-secondary-light: #0b0b0b;
+    --background-primary-light: #1b96f1;
+    --background-primary-light-opacity: #1b96f17e;
+    --secondary-light: #f3f0e8;
+    --secondary-light-opacity: #f3f0e8d0;
+    --tertiary-light: #0b0b0b;
+    /* dark */
+    --text-primary-dark: #cf4a60;
+    --text-secondary-dark: #beddf2;
+    --background-primary-dark: #000a12;
+    --background-primary-dark-opacity: #000a127e;
+    --secondary-dark: #021f37;
+    --secondary-dark-opacity: #021f377e;
+    --tertiary-dark: #beddf2;
+    /* babe */
+    --text-primary-babe: #f8c332;
+    --text-secondary-babe: #f3f0e8;
+    --background-primary-babe: #fb8332;
+    --background-primary-babe-opacity: #fb83327e;
+    --secondary-babe: #8e2ef7;
+    --secondary-babe-opacity: #8e2ef77e;
+    --tertiary-babe: #f3f0e8;
+    /* why is this still called pastel? */
+    --text-primary-pastel: #ea4b01;
+    --text-secondary-pastel: #f9d98a;
+    --background-primary-pastel: #e20707;
+    --background-primary-pastel-opacity: #e207077e;
+    --secondary-pastel: #040c50;
+    --secondary-pastel-opacity: #040c507e;
+    --tertiary-pastel: #ffb700;
+    /* pretty */
+    --text-primary-pretty: #f3f0e8;
+    --text-secondary-pretty: #f3f0e8;
+    --background-primary-pretty: #ea4b01;
+    --background-primary-pretty-opacity: #ea4b017e;
+    --secondary-pretty: #9f046c;
+    --secondary-pretty-opacity: #9f046c7e;
+    --tertiary-pretty: #000a15;
+    /* hacky */
+    --text-primary-hacky: #4fe15b;
+    --text-secondary-hacky: #f3f0e8;
+    --background-primary-hacky: #000a15;
+    --background-primary-hacky-opacity: #000a157e;
+    --secondary-hacky: #000000;
+    --secondary-hacky-opacity: #0000007e;
+    --tertiary-hacky: #4fe15b;
+}

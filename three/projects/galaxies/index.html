@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Three JS Galaxy Camera Test</title>
+	<style>
+		body { margin: 0; overflow: hidden; background-color: #000; color: #fff; }
+		.controls {
+			position: absolute;
+			bottom: 0;
+			left: 50%;
+			transform: translate(-50%, 0);
+			color: #fff;
+			/* background-color: rgba(255, 255, 255, 0.021); */
+			padding: 10px;
+			border-radius: 5px;
+			font-size: 18px;
+			width: 100%;
+			text-align: center;
+			user-select: none;
+		}
+		p span {
+			color: greenyellow;
+		}
+
+	</style>
+	<script type="importmap">
+		{
+		  "imports": {
+			"three": "https://cdnjs.cloudflare.com/ajax/libs/three.js/0.170.0/three.module.js"
+		  }
+		}
+	</script>
+</head>
+<body>
+	<div class="controls">
+		<!-- Reset View Button -->
+		<button id="resetView">Reset View</button>
+
+		<p>Scroll wheels to zoom</p>
+
+		<p><span>SHIFT</span> + <span>Mouse</span>: Pan</p>
+		<p><span>SPACE</span>: Zoom</p>
+
+		<!-- Navigation -->
+		<p>Position is:</p>
+		<p id="navigation">unknown</p>
+		<p>Special thanks to Gauss and  OpenAI for "Mathematics"!</p>
+	</div>
+
+	<script type="module" src="./main.js"></script>
+</body>
+</html>

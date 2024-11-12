@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="theme-color" content="#000A15">
+    <title>birdonathree</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,200..1000;1,200..1000&family=Orbitron:wght@400..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./styles/colors.css">
+    <link rel="stylesheet" href="./styles/animations.css">
+    <link rel="stylesheet" href="./styles/styles.css">
+    <link rel="stylesheet" href="./styles/div-expand.css">
+    <script src="https://kit.fontawesome.com/df3e6f116a.js" crossorigin="anonymous"></script>
+    <script src="./js/main.js" defer></script>
+
+    <style>
+        .arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            font-size: 2rem;
+            z-index: 2;
+            color: var(--secondary);
+            display: none;
+            background-color: aliceblue;
+        }
+
+        .arrow-left {
+            left: 10px;
+        }
+
+        .arrow-right {
+            right: 10px;
+        }
+/* 
+        .inside-box.expanded ~ .arrow-left,
+        .inside-box.expanded ~ .arrow-right {
+            display: block;
+        } */
+    </style>
+</head>
+
+<!-- Keep CSS separate as a comp. -->
+
+<!-- figure out .hero size for canvas -->
+<!-- add a small rocket ^^ -->
+<!-- finish JS -->
+<!-- add menu interactions -->
+<!-- add the on click projects zoom to planets beta. -->
+
+<!-- /* MIGHT fully hide other containers when expanded */ -->
+<!-- or add borders to the boxes -->
+
+<!-- if click on expanding item, scroll to view center -->
+<!-- or images to the zoom.. figure out -->
+
+<!-- more clarity -->
+
+<!-- add the exapndings to the business / designs pages as test -->
+
+<body class="load">
+
+    <div class="nav-bar">
+        <audio id="audioWhisper" src="./assets/sounds/whisper.mp3"></audio>
+        <h4>Interface</h4>
+        <ul>
+            <span class="close-btn">×</span>
+            <li><a href="#top"><i style="margin-right: 10px;" class="fa-solid fa-arrow-up-from-bracket"></i> Top</a></li>
+            <li><a href="#section"><i style="margin-right: 7px;" class="fa-solid fa-user-group"></i> Menu</a></li>
+            <li><a href="#section1">Option</a></li>
+            <li><a href="#section2">Option</a></li>
+            <li><a href="#section4">Option</a></li>
+            <li><a href="#section3">Option</a></li>
+        </ul>
+    </div>
+
+    <div onclick="playSound('audioWhisper')" class="show-nav hidden-arrow"><i class="fa-solid fa-bars"></i></div>
+
+    <!-- cookie ? -->
+    <!-- <div id="popup" class="popup">
+        <div class="popup-content">
+            <p>I don't use cookies or anything!
+                <br><br> Most parts of this CV is not optimized for mobile.
+                <br><br> Because it's a CV for desktop.
+                <br>I'm not going to optimize it for all the tri-fold screens
+                to run optimmally on 3G in an emulated samsung browser ontop of the himalayas.
+                <br>Grow up, buy a desktop PC.
+            </p>
+        </div>
+    </div> -->
+
+    <main>
+    
+        <section class="hero">
+
+            <canvas id="starfield-canvas"></canvas>
+
+            <header id="top">
+                <nav>
+                    <ul>
+                        <li><a class="internal-link" href="#top">birdonathree.com</a></li>
+                        <li>|</li>
+                        <li><a class="internal-link" href="#section-roles">tags</a></li>
+                        <li>|</li>
+                        <li><a class="internal-link" href="#section1">projects</a></li>
+                        <li>|</li>
+                        <li><a href="mailto:hello@madbence.com"><i class="fa-solid fa-envelope"></i> hello@madbence.com</a></li>
+                        <li>|</li>
+                        <li><a href="https://linkedin.com/in/madbence"><i class="fa-brands fa-linkedin"></i> linkedin</a></li>
+                        <li>|</li>
+                        <li><a href="https://github.com/bembit"><i class="fa-brands fa-github"></i> github</a></li>
+                    </ul>
+                </nav>
+            </header>
+
+            <div class="container">
+
+                <!-- top candy -->
+                <div class="hero-intro">
+                    <h2 class="gradient">
+                        ThreeJS
+                    </h2>
+                    <h2 class="gradient">
+                        Learning
+                    </h2>
+                    <h2 class="gradient">
+                        Graphics.
+                    </h2>
+                    <p class="subtitle">
+                        <!-- Add a button to stop / disable <br>the animation and sounds. -->
+                         This is a work in progress concept
+                         <br>
+                         for a simple static "blog".
+                    </p>
+                    <audio id="audioOpen" src="./assets/sounds/open.mp3"></audio>
+                    <div class="cta-buttons">
+
+                        <a onclick="playSound('audioOpen')" id="allprojects" class="btn cta-button">All Projects 👇</a>
+                    
+                        <a onclick="playSound('audioOpen')" id="about" class="btn cta-button">About 👇</a>
+
+                    </div>
+                </div>
+
+                <h3 class="gradient">Recent Projects</h3>
+
+                <!-- exp box -->
+                <div class="expanding-box-container">
+
+                    <!-- add sound on these -->
+                    <audio id="audioOpen" src="./assets/sounds/open.mp3"></audio>
+                    <!-- add ids -->
+                    <div id="zoomToImage1" class="inside-box" data-id="1">
+                        <div class="main-info">
+                            <h3>#1</h3>
+                            <p>First look at ThreeJS</p>
+                            <h3 class="gradient">Solar</h3>
+                            <ul>
+                                <li>Camera</li>
+                                <li>Mouse</li>
+                                <li>UI</li>
+                            </ul>
+                        </div>
+                        <div class="extra-info">
+                            <p>
+                                My second few hours of playing with cameras, mouse movement effects.
+                            </p>
+                            <div>
+                                <a class="btn">Read.</a>
+                                <a href="./projects/solarsystem/" class="btn">View.</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div id="zoomToImage2" class="inside-box" data-id="2">
+                        <div class="main-info">
+                            <h3>#2</h3>
+                            <p>Second small project</p>
+                            <h3 class="gradient">Heroic</h3>
+                            <ul>
+                                <li>Camera</li>
+                                <li>Keyboard</li>
+                                <li>Collision</li>
+                                <li>Distance</li>
+                                <li>UI</li>
+                            </ul>
+                        </div>
+                        <div class="extra-info">
+                            <p>
+                                My second few hours of playing with cameras, mouse movement effects.
+                            </p>
+                            <div>
+                                <a class="btn">Read.</a>
+                                <a href="./projects/heroic/" class="btn">View.</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="zoomToImage3" class="inside-box" data-id="3">
+                        <div class="main-info">
+                            <h3>#3</h3>
+                            <p>Third small project</p>
+                            <h3 class="gradient">Galaxy</h3>
+                            <ul>
+                                <li>Camera</li>
+                                <li>Mouse</li>
+                                <li>UI</li>
+                            </ul>
+                        </div>
+                        <div class="extra-info">
+                            <p>
+                                My second few hours of playing with cameras, mouse movement effects.
+                            </p>
+                            <div>
+                                <a class="btn">Read.</a>
+                                <a href="./projects/galaxy/" class="btn">View.</a>
+                            </div>    
+                        </div>
+                    </div>
+    
+                    <div id="zoomToImage4" class="inside-box" data-id="4">
+                        <div class="main-info">
+                            <h3>#4</h3>
+                            <p>Fourth small project</p>
+                            <h3 class="gradient">Galaxies</h3>
+                            <ul>
+                                <li>Camera</li>
+                                <li>Mouse</li>
+                                <li>UI</li>
+                                <li>Movement</li>
+                                <li>Textures</li>
+                            </ul>
+                        </div>
+                        <div class="extra-info">
+                            <p>
+                                Galaxies is actually a galaxy. With moons. And red / green squares. And added some keyboard interactions to play with the camera. Not the best. But a solid start, practice.
+                            </p>
+                            <div>
+                                <a class="btn">Read.</a>
+                                <a href="./projects/galaxies/" class="btn">View.</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="zoomToImage5" class="inside-box" data-id="5">
+                        <div class="main-info">
+                            <h3>#5</h3>
+                            <p>TBA.</p>
+                            <h3 class="gradient">Quick Model test</h3>
+                            <ul>
+                                <li>Model</li>
+                                <li>Vite</li>
+                                <li>Animation</li>
+                                <li>Import</li>
+                            </ul>
+                        </div>
+                        <div class="extra-info">
+                            <p>
+                                My second few hours of playing with cameras, mouse movement effects.
+                            </p>
+                            <div>
+                                <a class="btn">Read.</a>
+                                <a href="./projects/model_test/" class="btn">View.</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="arrow arrow-left">&#8592;</div>
+                    <div class="arrow arrow-right">&#8594;</div>
+                    
+                    <!-- blank -->
+                    <!-- <div class="inside-box" data-id="5">
+                        <div class="main-info">
+                            <h3>#5</h3>
+                            <p>TBA.</p>
+                            <h3 class="gradient">Soon™</h3>
+                            <ul>
+                                <li>Camera</li>
+                                <li>Mouse</li>
+                            </ul>
+                        </div>
+                        <div class="extra-info">
+                            <p>
+                                My second few hours of playing with cameras, mouse movement effects.
+                            </p>
+                            <div>
+                                <a class="btn">Read.</a>
+                                <a class="btn">View.</a>
+                            </div>
+                        </div>
+                    </div> -->
+
+                </div>
+
+                <a href="./projects/" class="btn">All projects.</a>
+
+                <h3 class="gradient">Contact</h3>
+
+                <!-- div to shrink to padding -->
+                <!-- <div> -->
+                    <form class="">
+                        <audio id="audioCoin" src="./assets/sounds/coins.mp3"></audio>
+                        <div class="form-container">
+
+                            <span>
+                                Drop a message,&nbsp; 
+                            </span>
+
+                            <span>
+                                ask a question&nbsp;
+                            </span>
+
+                            <a onclick="playSound('audioCoin')" class="btn" href="mailto:hello@madbence.com"><i class="fa-solid fa-envelope"></i> Email</a>
+
+                            <span>
+                            
+                                or</span> 
+
+                            <a onclick="playSound('audioCoin')" class="btn" href="https://linkedin.com/in/madbence"><i class="fa-brands fa-linkedin"></i>&nbsp;LinkedIn</a>
+
+                            <span>
+                                for now.</span> 
+                        </div>
+                    </form>
+                <!-- </div> -->
+
+            </div>
+
+            <h3 class="gradient single">Why / self-FAQ / notes</h3>
+            
+            <ul id="features" class="features">
+                <li><span class="gradient">1.</span> <span>Learning ThreeJS.</span></li>
+                <li><span class="gradient">2.</span> <span>WebGL, web graphics.</span></li>
+                <li><span class="gradient">3.</span> <span>Most projects are minimal / crap.</span></li>
+                <li><span class="gradient">4.</span> <span>But you only learn while doing.</span></li>
+                <li><span class="gradient">5.</span> <span>Kind of bored of current Web2..</span></li>
+                <li><span class="gradient">6.</span> <span>This is writing the same old JavaScript but feels fresh.</span></li>
+                <li><span class="gradient">7.</span> <span>Having fun.</span></li>
+                <li><span class="gradient">8.</span> <span>Trying to figure out how to build something non intrusive, non laggy, and non-distracting.</span></li>
+                <li><span class="gradient">9.</span> <span>Just 30 minutes a day.</span></li>
+                <li><span class="gradient">10.</span> <span>Since you only have a text editor and no visual editor you kinda have to understand what the fuck is happening. Even if you churn out all the math with Sam Altman.</span></li>
+                <li><span class="gradient">11.</span> <span>Yes I know it's still as high level as it can get.</span></li>
+                <li><span class="gradient">12.</span> <span>I really hope eventually my OOP skills will be a bit better than dogshit.</span></li>
+                <li><span class="gradient">13.</span> <span>I'm mainly interested in camera movement, rotations, animations, scenes.</span></li>
+                <li><span class="gradient">14.</span> <span>No plans on making the next Diablo game in three.js. Yet.</span></li>
+            </ul>
+        
+        </section>
+
+
+        <footer>
+            <p>Copyright © 2024 - built and designed by <a href="https://github.com/bembit">Me</a></p> 
+            <p>Vanilla ❤️ on Cloudflare</p>
+            <p>No unnecessary frameworks 🚫</p>
+        </footer>
+
+    </main>
+    <script type="importmap">
+		{
+		  "imports": {
+			"three": "https://cdnjs.cloudflare.com/ajax/libs/three.js/0.170.0/three.module.js"
+		  }
+		}
+	</script>
+    <script type="module" src="./test.js"></script>
+</body>
+</html>

@@ -1,0 +1,227 @@
+[
+    {
+        "id": "1",
+        "title": "Solar",
+        "dateCreated": "2024-10-01",
+        "subtitle": "First look at ThreeJS",
+        "tags": ["Camera", "Mouse", "UI", "Basics", "Easy", "Space"],
+        "url": "./solarsystem/",
+        "image": "../assets/img/projects/1.png"
+    },
+    {
+        "id": "2",
+        "title": "Heroic",
+        "dateCreated": "2024-10-01",
+        "subtitle": "Second small project",
+        "tags": ["Camera", "Keyboard", "Collision", "Distance", "UI", "Not Space"],
+        "url": "./heroic/",
+        "image": "../assets/img/projects/2.png"
+    },
+    {
+        "id": "3",
+        "title": "Galaxy",
+        "dateCreated": "2024-10-01",
+        "subtitle": "Third small project",
+        "tags": ["Camera", "Mouse", "UI"],
+        "url": "./galaxy/",
+        "image": "../assets/img/projects/3.png"
+    },
+    {
+        "id": "4",
+        "title": "Galaxies",
+        "dateCreated": "2024-10-01",
+        "subtitle": "Fourth small project",
+        "tags": ["Camera", "Mouse", "UI", "Movement", "Textures"],
+        "url": "./galaxies/",
+        "image": "../assets/img/projects/4.png"
+    },
+    {
+        "id": "5",
+        "title": "Quick Model test",
+        "dateCreated": "2024-10-01",
+        "subtitle": "TBA.",
+        "tags": ["Model", "Vite", "Animation", "Import"],
+        "url": "./model_test/",
+        "image": "../assets/img/projects/6.png"
+    },
+    {
+        "id": "6",
+        "title": "Dummy",
+        "dateCreated": "2024-10-01",
+        "subtitle": "TBA.",
+        "tags": ["Model", "Vite", "Animation", "Import"],
+        "url": "./model_test/",
+        "image": "../assets/img/projects/5.png"
+    },
+    {
+        "id": "7",
+        "title": "Dummy",
+        "dateCreated": "2024-10-01",
+        "subtitle": "TBA.",
+        "tags": ["Model", "Vite", "Animation", "Import"],
+        "url": "./model_test/",
+        "image": "../assets/img/projects/5.png"
+    },
+    {
+        "id": "8",
+        "title": "Dummy",
+        "dateCreated": "2024-10-01",
+        "subtitle": "TBA.",
+        "tags": ["Model", "Vite", "Animation", "Import"],
+        "url": "./model_test/",
+        "image": "../assets/img/projects/5.png"
+    },
+    {
+        "id": "9",
+        "title": "Dummy",
+        "dateCreated": "2024-10-01",
+        "subtitle": "TBA.",
+        "tags": ["Model", "Vite", "Animation", "Import"],
+        "url": "./projects/model_test/",
+        "image": "../assets/img/projects/5.png"
+    },
+    {
+        "id": "1",
+        "title": "Solar",
+        "dateCreated": "2024-10-01",
+        "subtitle": "First look at ThreeJS",
+        "tags": ["Camera", "Mouse", "UI", "Basics", "Easy"],
+        "url": "./projects/solarsystem/",
+        "image": "../assets/img/projects/1.png"
+    },
+    {
+        "id": "2",
+        "title": "Heroic",
+        "dateCreated": "2024-10-01",
+        "subtitle": "Second small project",
+        "tags": ["Camera", "Keyboard", "Collision", "Distance", "UI"],
+        "url": "./projects/heroic/",
+        "image": "../assets/img/projects/2.png"
+    },
+    {
+        "id": "3",
+        "title": "Galaxy",
+        "dateCreated": "2024-10-01",
+        "subtitle": "Third small project",
+        "tags": ["Camera", "Mouse", "UI"],
+        "url": "./projects/galaxy/",
+        "image": "../assets/img/projects/3.png"
+    },
+    {
+        "id": "4",
+        "title": "Galaxies",
+        "dateCreated": "2024-10-01",
+        "subtitle": "Fourth small project",
+        "tags": ["Camera", "Mouse", "UI", "Movement", "Textures"],
+        "url": "./projects/galaxies/",
+        "image": "../assets/img/projects/4.png"
+    },
+    {
+        "id": "5",
+        "title": "Quick Model test",
+        "dateCreated": "2024-10-01",
+        "subtitle": "TBA.",
+        "tags": ["Model", "Vite", "Animation", "Import"],
+        "url": "./projects/model_test/",
+        "image": "../assets/img/projects/6.png"
+    },
+    {
+        "id": "6",
+        "title": "Dummy",
+        "dateCreated": "2024-10-01",
+        "subtitle": "TBA.",
+        "tags": ["Model", "Vite", "Animation", "Import"],
+        "url": "./projects/model_test/",
+        "image": "../assets/img/projects/5.png"
+    },
+    {
+        "id": "7",
+        "title": "Dummy",
+        "dateCreated": "2024-10-01",
+        "subtitle": "TBA.",
+        "tags": ["Model", "Vite", "Animation", "Import"],
+        "url": "./projects/model_test/",
+        "image": "../assets/img/projects/5.png"
+    },
+    {
+        "id": "8",
+        "title": "Dummy",
+        "dateCreated": "2024-10-01",
+        "subtitle": "TBA.",
+        "tags": ["Model", "Vite", "Animation", "Import"],
+        "url": "./projects/model_test/",
+        "image": "../assets/img/projects/5.png"
+    },
+    {
+        "id": "9",
+        "title": "Dummy",
+        "dateCreated": "2024-10-01",
+        "subtitle": "TBA.",
+        "tags": ["Model", "Vite", "Animation", "Import"],
+        "url": "./projects/model_test/",
+        "image": "../assets/img/projects/5.png"
+    },
+    {
+        "id": "1",
+        "title": "Solar",
+        "dateCreated": "2024-10-01",
+        "subtitle": "First look at ThreeJS",
+        "tags": ["Camera", "Mouse", "UI", "Basics", "Easy"],
+        "url": "./projects/solarsystem/",
+        "image": "../assets/img/projects/1.png"
+    },
+    {
+        "id": "2",
+        "title": "Heroic",
+        "dateCreated": "2024-10-01",
+        "subtitle": "Second small project",
+        "tags": ["Camera", "Keyboard", "Collision", "Distance", "UI"],
+        "url": "./projects/heroic/",
+        "image": "../assets/img/projects/2.png"
+    },
+    {
+        "id": "3",
+        "title": "Galaxy",
+        "dateCreated": "2024-10-01",
+        "subtitle": "Third small project",
+        "tags": ["Camera", "Mouse", "UI"],
+        "url": "./projects/galaxy/",
+        "image": "../assets/img/projects/3.png"
+    },
+    {
+        "id": "4",
+        "title": "Galaxies",
+        "dateCreated": "2024-10-01",
+        "subtitle": "Fourth small project",
+        "tags": ["Camera", "Mouse", "UI", "Movement", "Textures"],
+        "url": "./projects/galaxies/",
+        "image": "../assets/img/projects/4.png"
+    },
+    {
+        "id": "5",
+        "title": "Quick Model test",
+        "dateCreated": "2024-10-01",
+        "subtitle": "TBA.",
+        "tags": ["Model", "Vite", "Animation", "Import"],
+        "url": "./projects/model_test/",
+        "image": "../assets/img/projects/6.png"
+    },
+    {
+        "id": "6",
+        "title": "Dummy",
+        "dateCreated": "2024-10-01",
+        "subtitle": "TBA.",
+        "tags": ["Model", "Vite", "Animation", "Import"],
+        "url": "./projects/model_test/",
+        "image": "../assets/img/projects/5.png"
+    },
+    {
+        "id": "7",
+        "title": "Dummy",
+        "dateCreated": "2024-10-01",
+        "subtitle": "TBA.",
+        "tags": ["Model", "Vite", "Animation", "Import"],
+        "url": "./projects/model_test/",
+        "image": "../assets/img/projects/5.png"
+    }
+]
