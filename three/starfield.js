@@ -143,11 +143,13 @@ function animateCamera(targetPosition, duration = 2000) {
     requestAnimationFrame(updateCamera);
 }
 
+// two times error trigger on zooms below.
+
 // Zoom to image on click
 // THIS
-function zoomToImage(index) {
+function zoomToImage(index, duration = 2000) {
     const targetPosition = images[index].position.clone().sub(new THREE.Vector3(5, 0, 0)); // Offset slightly for zoom effect
-    animateCamera(targetPosition, 2000); // Adjust duration as needed
+    animateCamera(targetPosition, duration); // Adjust duration as needed
 }
 
 // store the initial camera position
@@ -155,7 +157,8 @@ function zoomToImage(index) {
 const initialCameraPosition = camera.position.clone();
 
 // Zoom back to the initial position
-function zoomBackToInitialPosition(duration = 2000) {
+function zoomBackToInitialPosition(targetPosition, duration = 2000) {
+    // targetPosition = ;
     animateCamera(initialCameraPosition, duration);
 }
 
@@ -166,7 +169,12 @@ document.getElementById('zoomToImage3').addEventListener('click', () => zoomToIm
 document.getElementById('zoomToImage4').addEventListener('click', () => zoomToImage(3));
 document.getElementById('zoomToImage5').addEventListener('click', () => zoomToImage(4));
 
-// Add an event listener for clicking anywhere else
+// make it also check if the click was outside the image elements (not on any of the zoom buttons)
+// and none of the divs are expanded
+
+// ah the old problem of "should have fucking ooped / split the whole thing"
+// let insideBox = document.querySelectorAll('.inside-box');
+// let checkIfExpanded = !insideBox.classlist.contains('expanded');
 document.addEventListener('click', (event) => {
     // Check if the click was outside the image elements (not on any of the zoom buttons)
     if (
@@ -181,6 +189,7 @@ document.addEventListener('click', (event) => {
         // adding cta buttons too
         !event.target.closest('#about') &&
         !event.target.closest('#allprojects')
+        // && checkIfExpanded
     ) {
         zoomBackToInitialPosition(); // Zoom back to the initial camera position
     }

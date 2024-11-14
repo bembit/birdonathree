@@ -31,7 +31,7 @@
         "title": "Galaxies",
         "dateCreated": "2024-10-01",
         "subtitle": "Fourth small project",
-        "tags": ["Camera", "Mouse", "UI", "Movement", "Textures"],
+        "tags": ["Camera", "Mouse", "UI", "Movement", "Textures", "Keyboard", "space"],
         "url": "./galaxies/",
         "image": "../assets/img/projects/4.png"
     },
@@ -49,7 +49,7 @@
         "title": "Dummy",
         "dateCreated": "2024-10-01",
         "subtitle": "TBA.",
-        "tags": ["Model", "Vite", "Animation", "Import"],
+        "tags": ["Model", "Vite", "Animation", "Import", "Movement"],
         "url": "./model_test/",
         "image": "../assets/img/projects/5.png"
     },
