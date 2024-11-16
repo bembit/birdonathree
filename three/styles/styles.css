@@ -279,18 +279,6 @@ form .btn {
     animation: gradientAnimation 5s ease infinite;
 }
 
-/* .gradient {
-    --color-stop-1: #4fb3e1;
-    --color-stop-2: #63C2EB;
-    --color-stop-3: #5b89cf;
-    --color-stop-4: #824fe1;
-    background: linear-gradient(180deg, var(--color-stop-1) 0%, var(--color-stop-2) 35%, var(--color-stop-3) 70%, var(--color-stop-4) 100%);
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-} */
-
 .gradient-slow {
     animation: gradientAnimation 25s ease infinite;
 }
@@ -328,8 +316,6 @@ h3 {
     margin-top: var(--margin-l);
     margin-bottom: var(--margin-l);
     z-index: 1;
-    /* THIS */
-    /* transform: translateX(7.5%); */
 }
 
 .hero .titles {
@@ -337,35 +323,6 @@ h3 {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-}
-
-/* wrapper */
-
-.wrapper {
-    border-radius: var(--border-radius--none);
-    isolation: isolate;
-    padding: 50px;
-    position: relative;
-    z-index: 1;
-}
-
-.wrapper::before {
-    background: linear-gradient(45deg, #8763eb , #3723eb );
-    inset: -5px;
-    content: "";
-    position: absolute;
-    z-index: -1;
-    border-radius: var(--border-radius--none);
-}
-
-.wrapper::after {
-    background: var(--bg-color);
-    z-index: -1;
-    border-radius: var(--border-radius--none);
-
-    content: "";
-    inset: 0;
-    position: absolute;
 }
 
 /* popup container */

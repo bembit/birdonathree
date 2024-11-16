@@ -6,67 +6,15 @@ function playSound(soundId) {
     sound.play();
 }
 
-// nav sections, active tracking
-
-const navLinks = document.querySelectorAll('.nav-bar ul li a');
-
-const sections = [
-    '#top', 
-    '#section-roles',
-    '#section1', 
-    '#section2', 
-    '#section4', 
-    '#section3', 
-    '#section5', 
-    '#section6', 
-    '#section7',
-].map(id => document.querySelector(id));
-
-const observerOptions = {
-    root: null, // viewport
-    threshold: 0.5 // trigger 
-};
-
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        const navItem = document.querySelector(`a[href="#${entry.target.id}"]`);
-        if (entry.isIntersecting) {
-            navLinks.forEach(link => link.classList.remove('active'));
-            if (navItem) {
-                navItem.classList.add('active');
-            }
-        }
-    });
-}, observerOptions);
-
-sections.forEach(section => {
-    if (section) {
-        observer.observe(section);
-    }
-});
-
-// ------
-
 document.addEventListener("DOMContentLoaded", function () {
 
     console.log("DOM is ready - hello main.js");
     document.body.classList.remove("load");
-    // document.getElementById('starfield-canvas').classList.remove('load');
 
     checkNavigation();
 
     function checkNavigation() {
         try {
-            // smooth scroll behavior for links
-            document.querySelectorAll('.nav-bar a, nav a.internal-link, .dropdown-content a').forEach(anchor => {
-                anchor.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    document.querySelector(this.getAttribute('href')).scrollIntoView({
-                        behavior: 'smooth'
-                    });
-                });
-            });
-
             const navBar = document.querySelector('.nav-bar');
             const closeBtn = document.querySelector('.close-btn');
             const showNav = document.querySelector('.show-nav');
