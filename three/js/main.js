@@ -30,25 +30,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 showNav.classList.remove('visible');
             });
 
-            const sectionRoles = document.getElementById('section-roles');
-            let hasOpenedOnce = false;
-
-            function handleScroll() {
-                if (!hasOpenedOnce && sectionRoles != null ) {
-                    const rect = sectionRoles.getBoundingClientRect();
-                    const scrollBuffer = 200;
-                    if (rect.top <= window.innerHeight - scrollBuffer && rect.bottom >= 0) {
-                        // #section-roles is visible, show nav-bar on desktop
-                        const mediaQuery = window.matchMedia('(min-width: 751px)');
-                        if (mediaQuery.matches) {
-                            navBar.classList.remove('hidden');
-                            showNav.classList.remove('visible');
-                            hasOpenedOnce = true;  // flag to prevent reopening
-                        }
-                    }
-                }
-            }
-
             // function to toggle navigation based on device size
             function toggleNavOnMobile() {
                 const mediaQuery = window.matchMedia('(min-width: 751px)');
@@ -61,10 +42,10 @@ document.addEventListener("DOMContentLoaded", function () {
                     // turned off to test
                     // might rewrite to open automatically after scrolling to trigger
                     
-                    // navBar.classList.remove('hidden');
-                    // showNav.classList.remove('visible');
-                    navBar.classList.add('hidden');
-                    showNav.classList.add('visible');
+                    navBar.classList.remove('hidden');
+                    showNav.classList.remove('visible');
+                    // navBar.classList.add('hidden');
+                    // showNav.classList.add('visible');
                 }
             }
 
