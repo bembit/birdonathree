@@ -1,0 +1,166 @@
+To handle clicks on the ship and change its spotlight's color, you can use raycasting to detect when the ship model is clicked and then update the spotlight's color.
+
+### Steps to Implement
+1. **Raycasting for Click Detection**:
+   - Use `THREE.Raycaster` to detect which object is clicked.
+   - Add the model to a list of clickable objects.
+
+2. **Access the Model's Spotlight**:
+   - Store the spotlight in the model's configuration or object hierarchy for easy reference.
+
+3. **Change Spotlight Color**:
+   - On a click, find the corresponding spotlight and update its color.
+
+---
+
+### Updated Code
+
+#### Add a Global `clickableModels` Array
+This array will store models that should respond to clicks.
+
+```javascript
+const clickableModels = [];
+```
+
+---
+
+#### Modify the `loadModel` Function
+Add models to the `clickableModels` array and ensure lights are stored in the model's hierarchy for easy reference.
+
+```javascript
+function loadModel(config) {
+    const loader = new GLTFLoader();
+
+    loader.load(
+        config.path,
+        (gltf) => {
+            const model = gltf.scene;
+            model.position.set(config.position.x, config.position.y, config.position.z);
+            model.scale.set(config.scale, config.scale, config.scale);
+
+            const group = new THREE.Group();
+            group.add(model);
+
+            // Add lights if defined
+            if (config.lights) {
+                config.lights.forEach((lightConfig) => {
+                    const LightType = THREE[lightConfig.type];
+                    const light = new LightType(
+                        lightConfig.color,
+                        lightConfig.intensity,
+                        lightConfig.distance
+                    );
+                    light.position.set(
+                        lightConfig.position.x,
+                        lightConfig.position.y,
+                        lightConfig.position.z
+                    );
+                    group.add(light);
+
+                    // Store the light in the model for future reference
+                    model.userData.light = light;
+                });
+            }
+
+            scene.add(group);
+
+            // Add to clickable models
+            clickableModels.push(model);
+
+            // Handle animations if needed
+            if (config.animations && gltf.animations.length > 0) {
+                const mixer = new THREE.AnimationMixer(model);
+                gltf.animations.forEach((clip) => {
+                    const action = mixer.clipAction(clip);
+                    action.play();
+                });
+                mixers.push(mixer);
+            }
+
+            // Add the model to the list of objects for camera tracking
+            if (config.lookAtCamera) {
+                cameraTrackingModels.push(model);
+            }
+        },
+        undefined,
+        (error) => console.error('Error loading model:', error)
+    );
+}
+```
+
+---
+
+#### Raycasting and Click Detection
+Add a click event listener to the renderer’s DOM element and use raycasting to find the clicked object.
+
+```javascript
+const raycaster = new THREE.Raycaster();
+const pointer = new THREE.Vector2();
+
+function onPointerClick(event) {
+    // Convert pointer position to normalized device coordinates (-1 to +1)
+    pointer.x = (event.clientX / window.innerWidth) * 2 - 1;
+    pointer.y = -(event.clientY / window.innerHeight) * 2 + 1;
+
+    // Set raycaster with the camera and pointer
+    raycaster.setFromCamera(pointer, camera);
+
+    // Check for intersections with clickable models
+    const intersects = raycaster.intersectObjects(clickableModels, true);
+
+    if (intersects.length > 0) {
+        const clickedModel = intersects[0].object;
+
+        // Access the spotlight from the model's userData
+        const light = clickedModel.userData.light;
+        if (light) {
+            // Change the light's color
+            light.color.set(Math.random() * 0xffffff); // Random color
+        }
+    }
+}
+
+// Add the click event listener
+window.addEventListener('click', onPointerClick);
+```
+
+---
+
+### Explanation
+1. **`userData` for Storing Lights**:
+   - Lights added to the model are stored in `userData` for quick access when interacting with the model.
+
+2. **Raycaster**:
+   - Detects clicks on models in the `clickableModels` array.
+
+3. **Event Listener**:
+   - On a click, the intersected model is checked for a spotlight in its `userData`, and the light's color is updated.
+
+---
+
+### Bonus: Custom Behavior for Each Model
+If you need unique behavior for different models, you can extend the configuration or store callbacks in `userData`.
+
+For example:
+```javascript
+const models = [
+    {
+        path: './space_fighter.glb',
+        position: { x: 12, y: 1, z: 50 },
+        scale: 0.1,
+        lookAtCamera: false,
+        animations: false,
+        lights: [
+            { type: 'SpotLight', color: 0x00ff00, intensity: 3, distance: 100, position: { x: 0, y: 5, z: -5 } }
+        ],
+        onClick: (model) => {
+            const light = model.userData.light;
+            if (light) {
+                light.color.set(0xff0000); // Specific color
+            }
+        }
+    },
+];
+```
+
+Let me know if you need further refinements!
