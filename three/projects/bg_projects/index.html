@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="theme-color" content="#000A15">
+    <title>birdonathree</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,200..1000;1,200..1000&family=Orbitron:wght@400..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../styles/colors.css">
+    <link rel="stylesheet" href="../../styles/animations.css">
+    <link rel="stylesheet" href="../../styles/styles.css">
+    <script src="https://kit.fontawesome.com/df3e6f116a.js" crossorigin="anonymous"></script>
+    <script src="../../js/main.js" defer></script>
+    <script src="../../js/search.js" defer></script>
+    <style>
+        #starfield-canvas:hover {
+            cursor: pointer;
+        }
+        #starfield-canvas {
+            z-index: 1;
+        }
+        .hero {
+            user-select: none;
+        }
+        .hide-ui {
+            display: none !important;
+        }
+        .nav-bar a:hover {
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body class="load">
+
+    <div class="nav-bar">
+        <audio id="audioWhisper" src="../assets/sounds/whisper.mp3"></audio>
+        <h4>Interface</h4>
+        <ul>
+            <span class="close-btn">×</span>
+            <li>
+                <a id="toggle-ui"><i style="margin-right: 7px;" class="fa-solid fa-star"></i> Toggle UI / screen</a>
+            </li>
+            <li>
+                <a id="toggle-starcount"><i style="margin-right: 7px;" class="fa-solid fa-star"></i>Toggle Bethesda Quality</a>
+            </li>
+            <li>
+                Change Speed:
+                <input type="range" id="speed-slider" min="0.1" max="1" step="0.1" value="0.25">
+            </li>
+            <li><a id="reset-view"><i style="margin-right: 10px;" class="fa-solid fa-arrow-up-from-bracket"></i> Reset View</a></li>
+        </ul>
+    </div>
+    
+
+    <div onclick="playSound('audioWhisper')" class="show-nav hidden-arrow"><i class="fa-solid fa-bars"></i></div>
+
+    
+    <main>
+        
+        <section class="hero" style="min-height: 100svh;">
+            
+            <!-- class="load"  -->
+            <canvas id="starfield-canvas"></canvas>
+    </main>
+
+    <script type="importmap">
+		{
+		  "imports": {
+			"three": "https://cdnjs.cloudflare.com/ajax/libs/three.js/0.170.0/three.module.js"
+		  }
+		}
+	</script>
+
+    <script type="module" src="./starfield.js"></script>
+
+</body>
+</html>

@@ -367,7 +367,7 @@ h3 {
 }
 
 .nav-bar ul li {
-    margin: 5px 0;
+    margin: 15px 0;
     font-weight: 700;
 }
 
@@ -495,7 +495,8 @@ h3 {
     width: 100%;
     transition: all 0.3s cubic-bezier(0.075, 0.82, 0.165, 1);
     min-height: 35vh;
-
+    background-position: center center;
+    background-size: cover;
 }
 
 .project-item:hover {

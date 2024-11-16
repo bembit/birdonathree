@@ -55,12 +55,12 @@
     },
     {
         "id": "7",
-        "title": "Dummy",
-        "dateCreated": "2024-10-01",
-        "subtitle": "TBA.",
-        "tags": ["Model", "Vite", "Animation", "Import"],
-        "url": "./model_test/",
-        "image": "../assets/img/projects/5.png"
+        "title": "Projects Section",
+        "dateCreated": "2024-11-16",
+        "subtitle": "Projects section initial state of the site from november 2024. Saved for reference.",
+        "tags": ["Movement", "Keyboard", "WASD", "UI", "Interface", "Space"],
+        "url": "./bg_projects/",
+        "image": "../assets/img/projects/7.png"
     },
     {
         "id": "8",
