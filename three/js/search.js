@@ -36,12 +36,15 @@ data().then(projects => {
         let createDiv = document.createElement('div');
         createDiv.classList.add('project-item');
 
-        createDiv.addEventListener('mouseover', () => {
-            createDiv.style.backgroundImage = `linear-gradient(to bottom, rgba(0, 0, 0, 0.85), rgba(0,0,0,0.75)), url(${project.image})`;
-        });
-        createDiv.addEventListener('mouseout', () => {
-            createDiv.style.backgroundImage = 'none';
-        });
+        // on hover maybe later
+        // createDiv.addEventListener('mouseover', () => {
+        //     createDiv.style.backgroundImage = `linear-gradient(to bottom, rgba(0, 0, 0, 0.85), rgba(0,0,0,0.75)), url(${project.image})`;
+        // });
+        // createDiv.addEventListener('mouseout', () => {
+        //     createDiv.style.backgroundImage = 'none';
+        // });
+
+        createDiv.style.backgroundImage = `linear-gradient(to bottom, rgba(0, 0, 0, 0.85), rgba(0,0,0,0.75)), url(${project.image})`;
 
         let createHeading3 = document.createElement('h3');
         createHeading3.innerText = project.title;

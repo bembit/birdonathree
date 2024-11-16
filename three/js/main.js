@@ -6,6 +6,15 @@ function playSound(soundId) {
     sound.play();
 }
 
+// smooth scroll to about section
+if (document.getElementById('about')) {
+    document.getElementById('about').addEventListener('click', () => {
+        document.querySelector('#features').scrollIntoView({
+            behavior: 'smooth'
+        });
+    });
+}
+
 document.addEventListener("DOMContentLoaded", function () {
 
     console.log("DOM is ready - hello main.js");
