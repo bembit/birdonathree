@@ -205,8 +205,10 @@ function animate() {
         // Zoom effect
         // so on zoom the images reset. probably the whole scene too
         // camera.position.z -= 0.0009;
+    
+    // accidentally changes so the speeds dont match with stars and it's not bad
     // quite fast tbh
-    camera.position.z -= 0.01;
+    camera.position.z -= 0.005;
     // }
 
     // what if I moved the images to the opposite direction at the same speed?
