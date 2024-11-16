@@ -1,4 +1,10 @@
-import * as THREE from 'three';
+import * as THREE from 'https://unpkg.com/three@0.125.1/build/three.module.js';
+import { GLTFLoader } from 'https://unpkg.com/three@0.125.1/examples/jsm/loaders/GLTFLoader.js';
+import { OrbitControls } from 'https://unpkg.com/three@0.125.1/examples/jsm/controls/OrbitControls.js';
+// import GLTFLoader from "three/examples/jsm/loaders/GLTFLoader.js";
+// import OrbitControls from "three/examples/jsm/controls/OrbitControls.js";
+
+// import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
@@ -30,6 +36,7 @@ for (let i = 0; i < starCount; i++) {
 starGeometry.setAttribute('position', new THREE.BufferAttribute(starPositions, 3));
 
 // Star color and material
+// ### tomorrow - swap points to sphere //  
 const starMaterial = new THREE.PointsMaterial({ color: 0xffffff, size: 0.2 });
 let stars = new THREE.Points(starGeometry, starMaterial);
 scene.add(stars);
@@ -104,10 +111,50 @@ function calculateMovement() {
     return movement;
 }
 
+// try models
+
+const clock = new THREE.Clock();
+
+let mixer;
+
+const loader = new GLTFLoader();
+
+let model;
+
+loader.load(
+    './astronaut_floating_in_space.glb',
+    (gltf) => {
+        model = gltf.scene; // Assign the model to the global variable
+        model.position.y = -1.7;
+        model.position.x = 2;
+        model.position.z = 47;
+        scene.add(model);
+
+        mixer = new THREE.AnimationMixer(model);
+
+        gltf.animations.forEach((clip) => {
+            const action = mixer.clipAction(clip);
+            action.play();
+        });
+    },
+    undefined,
+    (error) => {
+        console.error('An error happened', error);
+    }
+);
+
 // Animation loop
 function animate() {
     requestAnimationFrame(animate);
 
+// model and animations
+    if (model) {
+        model.lookAt(camera.position);
+    }
+
+	const delta = clock.getDelta();
+	if (mixer) mixer.update(delta);
+// 
     // Calculate movement based on keys and camera orientation
     const movement = calculateMovement();
     camera.position.add(movement);
@@ -117,12 +164,13 @@ function animate() {
     camera.rotation.y = rotationY; // Horizontal rotation (turn left/right)
 
     // Reset stars that move behind the camera
-    const positions = starGeometry.attributes.position.array;
-    for (let i = 0; i < starCount; i++) {
-        if (positions[i * 3 + 2] + camera.position.z > 5) {
-            positions[i * 3 + 2] -= 500;
-        }
-    }
+    // remove so we can turn immediately and see the stars
+    // const positions = starGeometry.attributes.position.array;
+    // for (let i = 0; i < starCount; i++) {
+    //     if (positions[i * 3 + 2] + camera.position.z > 5) {
+    //         positions[i * 3 + 2] -= 500;
+    //     }
+    // }
     starGeometry.attributes.position.needsUpdate = true;
 
     // Render scene

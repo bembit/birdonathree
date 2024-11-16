@@ -39,6 +39,15 @@
 
 <body class="load">
 
+    <!-- might add popup here -->
+    <!-- <div id="popup" class="popup">
+        <div class="popup-content">
+            <p>
+                Somehow all of this just works.
+            </p>
+        </div>
+    </div> -->
+
     <div class="nav-bar">
         <audio id="audioWhisper" src="../assets/sounds/whisper.mp3"></audio>
         <h4>Interface</h4>
@@ -60,7 +69,6 @@
     
 
     <div onclick="playSound('audioWhisper')" class="show-nav hidden-arrow"><i class="fa-solid fa-bars"></i></div>
-
     
     <main>
         
@@ -94,10 +102,10 @@
                         Look 
                     </h2>
                     <h2 class="gradient">
-                        around,
+                        Around,
                     </h2>
                     <h2 class="gradient">
-                        have fun.
+                        Have fun.
                     </h2>
                     <p class="subtitle">
                         Sublte foreshadowing.
@@ -123,19 +131,25 @@
         <footer class="footer">
             <p>Copyright © 2024 - built and designed by <a href="https://github.com/bembit">Me</a></p> 
             <p>Vanilla ❤️ on Cloudflare</p>
+            <!-- <p>Little astronaut by: <a href="https://sketchfab.com/nitwit.friends">nitwit.friends</a></p> -->
             <p>Linkedin AI Cringe fatigue 🤮💊</p>
         </footer>
 
     </main>
 
-    <script type="importmap">
+    <!-- <script type="importmap">
 		{
-		  "imports": {
-			"three": "https://cdnjs.cloudflare.com/ajax/libs/three.js/0.170.0/three.module.js"
-		  }
-		}
-	</script>
+		    "imports": {
+			    "three": "https://cdnjs.cloudflare.com/ajax/libs/three.js/0.170.0/three.module.js"
+            }
+        }
+    </script> -->
+    <!-- "GLTFLoader": "https://cdn.skypack.dev/three@0.170.0/examples/jsm/loaders/GLTFLoader.js" -->
 
+    <!-- <script type="module">
+        import { OrbitControls } from "https://cdn.skypack.dev/three@0.170.0/examples/jsm/controls/OrbitControls.js";
+        import { GLTFLoader } from "https://cdn.skypack.dev/three@0.170.0/examples/jsm/loaders/GLTFLoader.js";
+    </script> -->
     <script type="module" src="./starfield.js"></script>
 
 </body>
