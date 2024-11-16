@@ -13,6 +13,10 @@ camera.position.z = 50;
 // Target the canvas element
 const canvas = document.getElementById('starfield-canvas');
 
+// // Ambient Light for Base Illumination
+// const ambientLight = new THREE.AmbientLight(0xffffff, 1);
+// scene.add(ambientLight);
+
 // Renderer with the selected canvas
 const renderer = new THREE.WebGLRenderer({ canvas, alpha: true });
 renderer.setSize(window.innerWidth, window.innerHeight);
@@ -84,7 +88,7 @@ document.addEventListener('mousemove', (event) => {
 });
 
 // Movement vectors
-let movementSpeed = 0.25;
+let movementSpeed = 0.1;
 
 function calculateMovement() {
     const forward = new THREE.Vector3();
@@ -115,46 +119,205 @@ function calculateMovement() {
 
 const clock = new THREE.Clock();
 
-let mixer;
+// let mixer;
 
-const loader = new GLTFLoader();
+// const loader = new GLTFLoader();
 
-let model;
+// let model;
 
-loader.load(
-    './astronaut_floating_in_space.glb',
-    (gltf) => {
-        model = gltf.scene; // Assign the model to the global variable
-        model.position.y = -1.7;
-        model.position.x = 2;
-        model.position.z = 47;
-        scene.add(model);
+// loader.load(
+//     './astronaut_floating_in_space.glb',
+//     (gltf) => {
+//         model = gltf.scene; // Assign the model to the global variable
+//         model.position.y = -1.7;
+//         model.position.x = 2;
+//         model.position.z = 47;
+//         scene.add(model);
 
-        mixer = new THREE.AnimationMixer(model);
+//         mixer = new THREE.AnimationMixer(model);
 
-        gltf.animations.forEach((clip) => {
-            const action = mixer.clipAction(clip);
-            action.play();
-        });
+//         gltf.animations.forEach((clip) => {
+//             const action = mixer.clipAction(clip);
+//             action.play();
+//         });
+//     },
+//     undefined,
+//     (error) => {
+//         console.error('An error happened', error);
+//     }
+// );
+
+const cameraTrackingModels = [];
+
+const clickableModels = [];
+
+
+function loadModel(config) {
+
+    const loader = new GLTFLoader();
+
+
+    loader.load(
+        config.path,
+        (gltf) => {
+            const model = gltf.scene;
+            model.position.set(config.position.x, config.position.y, config.position.z);
+            model.scale.set(config.scale, config.scale, config.scale);
+
+            // Create a group for the model and its lights
+            const group = new THREE.Group();
+            group.add(model);
+
+            // Add lights if they are defined
+            if (config.lights) {
+                config.lights.forEach((lightConfig) => {
+                    const LightType = THREE[lightConfig.type]; // Dynamically create light type
+                    const light = new LightType(
+                        lightConfig.color,
+                        lightConfig.intensity,
+                        lightConfig.distance
+                    );
+                    light.position.set(
+                        lightConfig.position.x,
+                        lightConfig.position.y,
+                        lightConfig.position.z
+                    );
+                    group.add(light); // Add light to the group
+
+                    group.userData.light = light;
+
+                });
+            }
+
+            // Add the group to the scene
+            scene.add(group);
+
+            // Add to clickable models
+            clickableModels.push(model);
+
+            // Handle animations if needed
+            if (config.animations && gltf.animations.length > 0) {
+                const mixer = new THREE.AnimationMixer(model);
+                gltf.animations.forEach((clip) => {
+                    const action = mixer.clipAction(clip);
+                    action.play();
+                });
+                mixers.push(mixer);
+            }
+
+            // Add the model to the list of objects for camera tracking
+            if (config.lookAtCamera) {
+                cameraTrackingModels.push(model);
+            }
+
+        },
+        undefined,
+        (error) => console.error('Error loading model:', error)
+    );
+}
+
+
+// Global array for mixers (if animations are used)
+const mixers = [];
+
+// Example usage:
+// loadModel('./astronaut.glb', { x: 2, y: -1.4, z: 47 }, 1);
+// loadModel('./space_fighter.glb', { x: -10, y: 5, z: 50 }, 0.5);
+// loadModel('./planet.glb', { x: 20, y: -5, z: 60 }, 3, false);
+
+// const models = [
+//     { path: './astronaut.glb', position: { x: 2, y: -1.4, z: 47 }, scale: 1 },
+//     { path: './space_fighter.glb', position: { x: -10, y: 5, z: 50 }, scale: 0.1 },
+//     // { path: './planet.glb', position: { x: 20, y: -5, z: 60 }, scale: 3, animations: false }
+// ];
+
+// MAKE it an async loader tomorrow
+// check on animations don't just play all
+// or array it
+const models = [
+    {
+        path: './astronaut.glb',
+        position: { x: 2, y: -1.4, z: 47 },
+        scale: 1,
+        lookAtCamera: true,
+        // rotation?
+        // ship needs rotation and base float animation
+        animations: true,
+        lights: [
+            { type: 'PointLight', color: 0xffffff, intensity: 1, distance: 50, position: { x: 0, y: 2, z: 2 } }
+        ]
     },
-    undefined,
-    (error) => {
-        console.error('An error happened', error);
+    {
+        path: './space_fighter.glb',
+        position: { x: 12, y: 1, z: 50 },
+        scale: 0.1,
+        lookAtCamera: false,
+        animations: false,
+        lights: [
+            { type: 'SpotLight', color: 0x00ff00, intensity: 3, distance: 100, position: { x: 0, y: 5, z: -5 } }
+        ]
+    },
+    // Add more models as needed
+];
+
+// models.forEach((config) => {
+//     loadModel(config.path, config.position, config.scale, config.animations ?? true);
+// });
+
+models.forEach((modelConfig) => loadModel(modelConfig));
+
+
+const raycaster = new THREE.Raycaster();
+const pointer = new THREE.Vector2();
+
+function onPointerClick(event) {
+    // Convert pointer position to normalized device coordinates
+    pointer.x = (event.clientX / window.innerWidth) * 2 - 1;
+    pointer.y = -(event.clientY / window.innerHeight) * 2 + 1;
+
+    // Set raycaster
+    raycaster.setFromCamera(pointer, camera);
+
+    // Find intersections
+    const intersects = raycaster.intersectObjects(clickableModels, true);
+
+    if (intersects.length > 0) {
+        // Find the parent group of the clicked object
+        let clickedObject = intersects[0].object;
+        while (clickedObject.parent && !clickedObject.userData.light) {
+            clickedObject = clickedObject.parent; // Traverse up to the group
+        }
+
+        const light = clickedObject.userData.light;
+        if (light) {
+            // Toggle between red and green
+            const currentColor = light.color.getHex(); // Get current color as a number
+            const newColor = currentColor === 0x00ff00 ? 0xff0000 : 0x00ff00; // Toggle color
+            light.color.set(newColor); // Set the new color
+        }
+        // light.color.set(Math.random() * 0xffffff); // Set a random color
     }
-);
+}
+
+// Add the click event listener
+window.addEventListener('click', onPointerClick);
 
 // Animation loop
 function animate() {
     requestAnimationFrame(animate);
 
-// model and animations
-    if (model) {
-        model.lookAt(camera.position);
-    }
+    // model and animations
+    // console.log(models);
 
-	const delta = clock.getDelta();
-	if (mixer) mixer.update(delta);
-// 
+    // model.lookAt(camera.position);
+    // models.forEach(model => model.lookAt(camera.position));
+
+    // Update mixers for animations
+    const delta = clock.getDelta();
+    mixers.forEach((mixer) => mixer.update(delta));
+    // 
+    if (cameraTrackingModels) cameraTrackingModels.forEach(model => model.lookAt(camera.position));
+
     // Calculate movement based on keys and camera orientation
     const movement = calculateMovement();
     camera.position.add(movement);
