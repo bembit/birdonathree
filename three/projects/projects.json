@@ -46,15 +46,6 @@
     },
     {
         "id": "6",
-        "title": "Test Dummy",
-        "dateCreated": "2024-10-01",
-        "subtitle": "I like this model.",
-        "tags": ["Model", "Vite", "Animation", "Import", "Movement", "OrbitControls", "GLTFLoader"],
-        "url": "./model_test/",
-        "image": "../assets/img/projects/5.png"
-    },
-    {
-        "id": "7",
         "title": "Projects Section Base",
         "dateCreated": "2024-11-16",
         "subtitle": "Projects section, initial state of the site from november 2024. Saved for reference.",
@@ -63,165 +54,57 @@
         "image": "../assets/img/projects/7.png"
     },
     {
+        "id": "7",
+        "title": "Catwoman playground base",
+        "dateCreated": "2024-11-17",
+        "subtitle": "The project in Hungarian is kinda like: \"Mit szoptam te jó ég..\". A good starter for future stuff.",
+        "tags": ["Model", "Animation", "Rigged", "GLTF", "Catwoman Rigged", "Setup", "Template", "Starter"],
+        "url": "./catwoman_init/",
+        "image": "../assets/img/projects/8.png"
+    },
+    {
         "id": "8",
-        "title": "Dummy",
+        "title": "Test Dummy",
         "dateCreated": "2024-10-01",
         "subtitle": "TBA.",
         "tags": ["Model", "Vite", "Animation", "Import"],
+        "url": "./projects/model_test/",
+        "image": "../assets/img/projects/5.png"
+    },
+    {
+        "id": "9",
+        "title": "Test Dummy",
+        "dateCreated": "2024-10-01",
+        "subtitle": "TBA.",
+        "tags": ["Model", "Vite", "Animation", "Import"],
+        "url": "./projects/model_test/",
+        "image": "../assets/img/projects/5.png"
+    },
+    {
+        "id": "10",
+        "title": "Test Dummy",
+        "dateCreated": "2024-10-01",
+        "subtitle": "I like this model.",
+        "tags": ["Model", "Vite", "Animation", "Import", "Movement", "OrbitControls", "GLTFLoader"],
         "url": "./model_test/",
         "image": "../assets/img/projects/5.png"
     },
     {
-        "id": "9",
-        "title": "Dummy",
+        "id": "11",
+        "title": "Test Dummy",
         "dateCreated": "2024-10-01",
-        "subtitle": "TBA.",
-        "tags": ["Model", "Vite", "Animation", "Import"],
-        "url": "./projects/model_test/",
+        "subtitle": "I like this model.",
+        "tags": ["Model", "Vite", "Animation", "Import", "Movement", "OrbitControls", "GLTFLoader"],
+        "url": "./model_test/",
         "image": "../assets/img/projects/5.png"
     },
     {
-        "id": "1",
-        "title": "Solar",
+        "id": "12",
+        "title": "Test Dummy",
         "dateCreated": "2024-10-01",
-        "subtitle": "First look at ThreeJS",
-        "tags": ["Camera", "Mouse", "UI", "Basics", "Easy"],
-        "url": "./projects/solarsystem/",
-        "image": "../assets/img/projects/1.png"
-    },
-    {
-        "id": "2",
-        "title": "Heroic",
-        "dateCreated": "2024-10-01",
-        "subtitle": "Second small project",
-        "tags": ["Camera", "Keyboard", "Collision", "Distance", "UI"],
-        "url": "./projects/heroic/",
-        "image": "../assets/img/projects/2.png"
-    },
-    {
-        "id": "3",
-        "title": "Galaxy",
-        "dateCreated": "2024-10-01",
-        "subtitle": "Third small project",
-        "tags": ["Camera", "Mouse", "UI"],
-        "url": "./projects/galaxy/",
-        "image": "../assets/img/projects/3.png"
-    },
-    {
-        "id": "4",
-        "title": "Galaxies",
-        "dateCreated": "2024-10-01",
-        "subtitle": "Fourth small project",
-        "tags": ["Camera", "Mouse", "UI", "Movement", "Textures"],
-        "url": "./projects/galaxies/",
-        "image": "../assets/img/projects/4.png"
-    },
-    {
-        "id": "5",
-        "title": "Quick Model test",
-        "dateCreated": "2024-10-01",
-        "subtitle": "TBA.",
-        "tags": ["Model", "Vite", "Animation", "Import"],
-        "url": "./projects/model_test/",
-        "image": "../assets/img/projects/6.png"
-    },
-    {
-        "id": "6",
-        "title": "Dummy",
-        "dateCreated": "2024-10-01",
-        "subtitle": "TBA.",
-        "tags": ["Model", "Vite", "Animation", "Import"],
-        "url": "./projects/model_test/",
-        "image": "../assets/img/projects/5.png"
-    },
-    {
-        "id": "7",
-        "title": "Dummy",
-        "dateCreated": "2024-10-01",
-        "subtitle": "TBA.",
-        "tags": ["Model", "Vite", "Animation", "Import"],
-        "url": "./projects/model_test/",
-        "image": "../assets/img/projects/5.png"
-    },
-    {
-        "id": "8",
-        "title": "Dummy",
-        "dateCreated": "2024-10-01",
-        "subtitle": "TBA.",
-        "tags": ["Model", "Vite", "Animation", "Import"],
-        "url": "./projects/model_test/",
-        "image": "../assets/img/projects/5.png"
-    },
-    {
-        "id": "9",
-        "title": "Dummy",
-        "dateCreated": "2024-10-01",
-        "subtitle": "TBA.",
-        "tags": ["Model", "Vite", "Animation", "Import"],
-        "url": "./projects/model_test/",
-        "image": "../assets/img/projects/5.png"
-    },
-    {
-        "id": "1",
-        "title": "Solar",
-        "dateCreated": "2024-10-01",
-        "subtitle": "First look at ThreeJS",
-        "tags": ["Camera", "Mouse", "UI", "Basics", "Easy"],
-        "url": "./projects/solarsystem/",
-        "image": "../assets/img/projects/1.png"
-    },
-    {
-        "id": "2",
-        "title": "Heroic",
-        "dateCreated": "2024-10-01",
-        "subtitle": "Second small project",
-        "tags": ["Camera", "Keyboard", "Collision", "Distance", "UI"],
-        "url": "./projects/heroic/",
-        "image": "../assets/img/projects/2.png"
-    },
-    {
-        "id": "3",
-        "title": "Galaxy",
-        "dateCreated": "2024-10-01",
-        "subtitle": "Third small project",
-        "tags": ["Camera", "Mouse", "UI"],
-        "url": "./projects/galaxy/",
-        "image": "../assets/img/projects/3.png"
-    },
-    {
-        "id": "4",
-        "title": "Galaxies",
-        "dateCreated": "2024-10-01",
-        "subtitle": "Fourth small project",
-        "tags": ["Camera", "Mouse", "UI", "Movement", "Textures"],
-        "url": "./projects/galaxies/",
-        "image": "../assets/img/projects/4.png"
-    },
-    {
-        "id": "5",
-        "title": "Quick Model test",
-        "dateCreated": "2024-10-01",
-        "subtitle": "TBA.",
-        "tags": ["Model", "Vite", "Animation", "Import"],
-        "url": "./projects/model_test/",
-        "image": "../assets/img/projects/6.png"
-    },
-    {
-        "id": "6",
-        "title": "Dummy",
-        "dateCreated": "2024-10-01",
-        "subtitle": "TBA.",
-        "tags": ["Model", "Vite", "Animation", "Import"],
-        "url": "./projects/model_test/",
-        "image": "../assets/img/projects/5.png"
-    },
-    {
-        "id": "7",
-        "title": "Dummy",
-        "dateCreated": "2024-10-01",
-        "subtitle": "TBA.",
-        "tags": ["Model", "Vite", "Animation", "Import"],
-        "url": "./projects/model_test/",
+        "subtitle": "I like this model.",
+        "tags": ["Model", "Vite", "Animation", "Import", "Movement", "OrbitControls", "GLTFLoader"],
+        "url": "./model_test/",
         "image": "../assets/img/projects/5.png"
     }
 ]
