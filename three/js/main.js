@@ -20,6 +20,43 @@ document.addEventListener("DOMContentLoaded", function () {
     console.log("DOM is ready - hello main.js");
     document.body.classList.remove("load");
 
+    // Get elements
+    const popup = document.getElementById('popup');
+    const acceptCookies = document.getElementById('accept-cookies');
+    const declineCookies = document.getElementById('decline-cookies');
+    const overlay = document.getElementById('overlay');
+    const backgroundDim = document.getElementById('background-dim');
+
+    // Check localStorage
+    if (localStorage.getItem('popup') !== 'accepted') {
+        popup.classList.add('show');
+        backgroundDim.classList.add('show');
+        document.body.classList.add('no-scroll'); // Disable scrolling
+    } else {
+        // do something more elegant tomorrow
+        overlay.remove();
+        backgroundDim.remove();
+    }
+
+    // Handle Accept
+    acceptCookies.addEventListener('click', () => {
+        popup.classList.remove('show');
+        backgroundDim.classList.remove('show');
+        document.body.classList.remove('no-scroll'); // Re-enable scrolling
+        overlay.remove();
+        backgroundDim.remove();
+        localStorage.setItem('popup', 'accepted');
+    });
+
+    // Handle Decline
+    declineCookies.addEventListener('click', () => {
+        popup.classList.remove('show');
+        backgroundDim.classList.remove('show');
+        document.body.classList.remove('no-scroll'); // Re-enable scrolling
+        overlay.classList.add('show');
+    });
+
+
     checkNavigation();
 
     function checkNavigation() {
