@@ -30,11 +30,47 @@ data().then(projects => {
         return [...new Set(allTags)];
     };
 
+    // ###### Helpers for favorites
 
-    // Function to create a project item
+    // Track favorites
+    let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+
+    // Update LocalStorage
+    const updateFavoritesStorage = () => {
+        localStorage.setItem('favorites', JSON.stringify(favorites));
+        console.log('Favorites updated:', favorites);
+    };
+
+    // Check if a project is favorited
+    const isFavorited = (projectId) => favorites.includes(projectId);
+
+    // Toggle favorite status
+    const toggleFavorite = (projectId, button) => {
+        if (isFavorited(projectId)) {
+            favorites = favorites.filter(id => id !== projectId); // Remove from favorites
+            button.innerText = '🤍'; // Unfavorited state
+        } else {
+            favorites.push(projectId); // Add to favorites
+            button.innerText = '❤️'; // Favorited state
+        }
+        updateFavoritesStorage();
+        updateFavoritesCount(); // Optionally update a favorites counter in the UI
+        renderProjects(); // Optionally update the UI
+    };
+
+    // Update favorites count in the header or elsewhere
+    const updateFavoritesCount = () => {
+        const countElement = document.querySelector('.favorites-count');
+        if (countElement) {
+            countElement.innerText = favorites.length;
+        }
+    };
+
+    // ######## Function to create a project item
     const createProjectItem = (project) => {
         let createDiv = document.createElement('div');
         createDiv.classList.add('project-item');
+        createDiv.style.backgroundImage = `linear-gradient(to bottom, rgba(0, 0, 0, 0.85), rgba(0,0,0,0.75)), url(${project.image})`;
 
         // on hover maybe later
         // createDiv.addEventListener('mouseover', () => {
@@ -44,7 +80,14 @@ data().then(projects => {
         //     createDiv.style.backgroundImage = 'none';
         // });
 
-        createDiv.style.backgroundImage = `linear-gradient(to bottom, rgba(0, 0, 0, 0.85), rgba(0,0,0,0.75)), url(${project.image})`;
+        // Favorite button
+        let createFavoriteButton = document.createElement('button');
+        createFavoriteButton.innerText = isFavorited(project.id) ? '❤️' : '🤍';
+        createFavoriteButton.classList.add('favorite-btn');
+        createFavoriteButton.title = 'Add to favorites';
+        createFavoriteButton.addEventListener('click', () => {
+            toggleFavorite(project.id, createFavoriteButton);
+        });
 
         let createHeading3 = document.createElement('h3');
         createHeading3.innerText = project.title;
@@ -62,6 +105,8 @@ data().then(projects => {
         createAnchor.innerText = 'View';
         createAnchor.href = project.url;
         createAnchor.classList.add('btn');
+
+        createDiv.appendChild(createFavoriteButton);
 
         createDiv.appendChild(createHeading3);
         createDiv.appendChild(createDate);
@@ -94,13 +139,29 @@ data().then(projects => {
 
     // Render project items in increments
     const renderProjects = () => {
+        // Sort projects: prioritize favorites, then by dateCreated (newest first)
+        const sortedProjects = [...filteredProjects].sort((a, b) => {
+            const isAFavorited = favorites.includes(a.id);
+            const isBFavorited = favorites.includes(b.id);
+
+            // Prioritize favorites
+            if (isAFavorited && !isBFavorited) return -1; // `a` is a favorite
+            if (!isAFavorited && isBFavorited) return 1;  // `b` is a favorite
+
+            // If both or neither are favorites, sort by dateCreated (newest first)
+            const dateA = new Date(a.dateCreated);
+            const dateB = new Date(b.dateCreated);
+            return dateB - dateA; // Newest first
+        });
+
         container.innerHTML = '';
-        const projectsToDisplay = filteredProjects.slice(0, itemsToShow);
+        const projectsToDisplay = sortedProjects.slice(0, itemsToShow);
         projectsToDisplay.forEach(createProjectItem);
 
         // Show or hide "Show More" button
         loadMoreButton.style.display = itemsToShow < filteredProjects.length ? 'block' : 'none';
     };
+
 
     // Filter projects based on search input and selected tags
     const filterProjects = () => {

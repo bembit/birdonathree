@@ -2,7 +2,7 @@
     {
         "id": "1",
         "title": "Solar",
-        "dateCreated": "2024-10-01",
+        "dateCreated": "2024-11-01",
         "subtitle": "First look at ThreeJS",
         "tags": ["Camera", "Mouse", "UI", "Basics", "Easy", "Space"],
         "url": "./solarsystem/",
@@ -11,7 +11,7 @@
     {
         "id": "2",
         "title": "Heroic",
-        "dateCreated": "2024-10-01",
+        "dateCreated": "2024-11-02",
         "subtitle": "Second small project",
         "tags": ["Camera", "Keyboard", "Collision", "Distance", "UI", "Not Space"],
         "url": "./heroic/",
@@ -20,7 +20,7 @@
     {
         "id": "3",
         "title": "Galaxy",
-        "dateCreated": "2024-10-01",
+        "dateCreated": "2024-11-03",
         "subtitle": "Third small project",
         "tags": ["Camera", "Mouse", "UI"],
         "url": "./galaxy/",
@@ -29,7 +29,7 @@
     {
         "id": "4",
         "title": "Galaxies",
-        "dateCreated": "2024-10-01",
+        "dateCreated": "2024-11-05",
         "subtitle": "Fourth small project",
         "tags": ["Camera", "Mouse", "UI", "Movement", "Textures", "Keyboard", "space"],
         "url": "./galaxies/",
@@ -38,7 +38,7 @@
     {
         "id": "5",
         "title": "Quick Model test",
-        "dateCreated": "2024-10-01",
+        "dateCreated": "2024-11-09",
         "subtitle": "TBA.",
         "tags": ["Model", "Vite", "Animation", "Import"],
         "url": "./model_test/",
@@ -47,7 +47,7 @@
     {
         "id": "6",
         "title": "Projects Section Base",
-        "dateCreated": "2024-11-16",
+        "dateCreated": "2024-11-11",
         "subtitle": "Projects section, initial state of the site from november 2024. Saved for reference.",
         "tags": ["Movement", "Keyboard", "WASD", "UI", "Interface", "Space", "Mouse", "No Models"],
         "url": "./bg_projects/",
@@ -55,56 +55,29 @@
     },
     {
         "id": "7",
-        "title": "Catwoman playground base",
+        "title": "Catwoman model animations base",
         "dateCreated": "2024-11-17",
-        "subtitle": "The project in Hungarian is kinda like: \"Mit szoptam te jó ég..\". A good starter for future stuff.",
+        "subtitle": "The project in Hungarian is kinda like: \"Mit szoptam te jó ég..\". A good starter for future stuff. But this is only the alpha of the beta.",
         "tags": ["Model", "Animation", "Rigged", "GLTF", "Catwoman Rigged", "Setup", "Template", "Starter"],
-        "url": "./catwoman_init/",
+        "url": "./catwoman_init_animations/",
         "image": "../assets/img/projects/8.png"
     },
     {
         "id": "8",
-        "title": "Test Dummy",
-        "dateCreated": "2024-10-01",
-        "subtitle": "TBA.",
-        "tags": ["Model", "Vite", "Animation", "Import"],
-        "url": "./projects/model_test/",
+        "title": "Catwoman playground start",
+        "dateCreated": "2024-11-18",
+        "subtitle": "Want a TPS camera with basic movement and animations.",
+        "tags": ["Camera", "Movement", "Animation", "Third Person", "Catwoman", "Rigged", "GLTF", "Setup", "Template", "Starter"],
+        "url": "./catwoman_playground_start/",
         "image": "../assets/img/projects/5.png"
     },
     {
         "id": "9",
-        "title": "Test Dummy",
-        "dateCreated": "2024-10-01",
-        "subtitle": "TBA.",
+        "title": "Scene Vegetation",
+        "dateCreated": "2024-11-18",
+        "subtitle": "Figuring out how to do this model loading thing. Also a good time to dig into lights and shadows.",
         "tags": ["Model", "Vite", "Animation", "Import"],
-        "url": "./projects/model_test/",
-        "image": "../assets/img/projects/5.png"
-    },
-    {
-        "id": "10",
-        "title": "Test Dummy",
-        "dateCreated": "2024-10-01",
-        "subtitle": "I like this model.",
-        "tags": ["Model", "Vite", "Animation", "Import", "Movement", "OrbitControls", "GLTFLoader"],
-        "url": "./model_test/",
-        "image": "../assets/img/projects/5.png"
-    },
-    {
-        "id": "11",
-        "title": "Test Dummy",
-        "dateCreated": "2024-10-01",
-        "subtitle": "I like this model.",
-        "tags": ["Model", "Vite", "Animation", "Import", "Movement", "OrbitControls", "GLTFLoader"],
-        "url": "./model_test/",
-        "image": "../assets/img/projects/5.png"
-    },
-    {
-        "id": "12",
-        "title": "Test Dummy",
-        "dateCreated": "2024-10-01",
-        "subtitle": "I like this model.",
-        "tags": ["Model", "Vite", "Animation", "Import", "Movement", "OrbitControls", "GLTFLoader"],
-        "url": "./model_test/",
-        "image": "../assets/img/projects/5.png"
+        "url": "./model_loader_scene/",
+        "image": "../assets/img/projects/9.png"
     }
 ]
