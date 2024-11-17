@@ -68,17 +68,25 @@
     <div onclick="playSound('audioWhisper')" class="show-nav hidden-arrow"><i class="fa-solid fa-bars"></i></div>
 
     <!-- cookie ? -->
-    <!-- <div id="popup" class="popup">
+    <!-- on each page ideally -->
+    <!-- with screen res check / wifi check -->
+    <div id="background-dim" class="background-dim"></div>
+    <div id="popup" class="popup">
         <div class="popup-content">
-            <p>I don't use cookies or anything!
-                <br><br> Most parts of this CV is not optimized for mobile.
-                <br><br> Because it's a CV for desktop.
-                <br>I'm not going to optimize it for all the tri-fold screens
-                to run optimmally on 3G in an emulated samsung browser ontop of the himalayas.
-                <br>Grow up, buy a desktop PC.
-            </p>
+            <ul>
+                <li>I use Cloudflare to host this site.</li>
+                <li>That includes basic analytics to see where requests are coming from.</li>
+                <li>I use localStorage to store the state of this popup.</li>
+                <li>I use localStorage to store the state of favorite items if applicable.</li>
+            </ul>
+            <button id="decline-cookies">Decline</button>
+            <button id="accept-cookies">Accept</button>
         </div>
-    </div> -->
+    </div>
+
+    <div id="overlay" class="overlay">
+        <p>Game over. Insert coin.</p>
+    </div>
 
     <main>
     
