@@ -1,49 +1,23 @@
 import * as THREE from 'https://unpkg.com/three@0.125.1/build/three.module.js';
 import { GLTFLoader } from 'https://unpkg.com/three@0.125.1/examples/jsm/loaders/GLTFLoader.js';
 import { OrbitControls } from 'https://unpkg.com/three@0.125.1/examples/jsm/controls/OrbitControls.js';
-// import GLTFLoader from "three/examples/jsm/loaders/GLTFLoader.js";
-// import OrbitControls from "three/examples/jsm/controls/OrbitControls.js";
-
-// import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-camera.position.z = 50;
+camera.position.set(0, 2, 4);
+camera.lookAt(0, 0, 0);
 
 // Target the canvas element
 const canvas = document.getElementById('starfield-canvas');
 
 // // Ambient Light for Base Illumination
-// const ambientLight = new THREE.AmbientLight(0xffffff, 1);
-// scene.add(ambientLight);
+const ambientLight = new THREE.AmbientLight(0xffffff, 1);
+scene.add(ambientLight);
 
 // Renderer with the selected canvas
 const renderer = new THREE.WebGLRenderer({ canvas, alpha: true });
 renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.setPixelRatio(window.devicePixelRatio);
-
-// Starfield
-const starGeometry = new THREE.BufferGeometry();
-const starCount = 10000;
-const starPositions = new Float32Array(starCount * 3);
-
-for (let i = 0; i < starCount; i++) {
-    const distance = 50 + Math.random() * 450;
-    const theta = THREE.MathUtils.randFloatSpread(360);
-    const phi = THREE.MathUtils.randFloatSpread(360);
-
-    starPositions[i * 3] = distance * Math.sin(theta) * Math.cos(phi);
-    starPositions[i * 3 + 1] = distance * Math.sin(theta) * Math.sin(phi);
-    starPositions[i * 3 + 2] = distance * Math.cos(theta);
-}
-
-starGeometry.setAttribute('position', new THREE.BufferAttribute(starPositions, 3));
-
-// Star color and material
-// ### tomorrow - swap points to sphere //  
-const starMaterial = new THREE.PointsMaterial({ color: 0xffffff, size: 0.2 });
-let stars = new THREE.Points(starGeometry, starMaterial);
-scene.add(stars);
 
 // Track keys
 const keys = {
@@ -115,47 +89,16 @@ function calculateMovement() {
     return movement;
 }
 
-// try models
 
 const clock = new THREE.Clock();
 
-// let mixer;
-
-// const loader = new GLTFLoader();
-
-// let model;
-
-// loader.load(
-//     './astronaut_floating_in_space.glb',
-//     (gltf) => {
-//         model = gltf.scene; // Assign the model to the global variable
-//         model.position.y = -1.7;
-//         model.position.x = 2;
-//         model.position.z = 47;
-//         scene.add(model);
-
-//         mixer = new THREE.AnimationMixer(model);
-
-//         gltf.animations.forEach((clip) => {
-//             const action = mixer.clipAction(clip);
-//             action.play();
-//         });
-//     },
-//     undefined,
-//     (error) => {
-//         console.error('An error happened', error);
-//     }
-// );
-
 const cameraTrackingModels = [];
-
 const clickableModels = [];
-
+const modelAnimations = {}; // Store animations for each model
+console.log(modelAnimations);
 
 function loadModel(config) {
-
     const loader = new GLTFLoader();
-
 
     loader.load(
         config.path,
@@ -185,7 +128,6 @@ function loadModel(config) {
                     group.add(light); // Add light to the group
 
                     group.userData.light = light;
-
                 });
             }
 
@@ -195,76 +137,59 @@ function loadModel(config) {
             // Add to clickable models
             clickableModels.push(model);
 
-            // Handle animations if needed
-            if (config.animations && gltf.animations.length > 0) {
+            // animation sorcery
+            if (gltf.animations.length > 0) {
                 const mixer = new THREE.AnimationMixer(model);
-                gltf.animations.forEach((clip) => {
+                const actions = {};
+            
+                gltf.animations.forEach((clip, index) => {
                     const action = mixer.clipAction(clip);
-                    action.play();
+                    actions[clip.name] = action;
+                    console.log(`Animation [${index}] - Name: ${clip.name}`);
                 });
+            
+                // Play the first animation by default
+                const firstAnimationName = gltf.animations[0].name;
+                if (actions[firstAnimationName]) {
+                    actions[firstAnimationName].play();
+                    console.log(`Playing default animation: ${firstAnimationName}`);
+                }
+            
+                // Store for later use
+                modelAnimations[config.path] = { mixer, actions };
                 mixers.push(mixer);
+
+                // render. async loading on anims block ui render on load
+                renderAnimations();
+
             }
 
             // Add the model to the list of objects for camera tracking
             if (config.lookAtCamera) {
                 cameraTrackingModels.push(model);
             }
-
         },
         undefined,
         (error) => console.error('Error loading model:', error)
     );
 }
 
-
 // Global array for mixers (if animations are used)
 const mixers = [];
 
-// Example usage:
-// loadModel('./astronaut.glb', { x: 2, y: -1.4, z: 47 }, 1);
-// loadModel('./space_fighter.glb', { x: -10, y: 5, z: 50 }, 0.5);
-// loadModel('./planet.glb', { x: 20, y: -5, z: 60 }, 3, false);
-
-// const models = [
-//     { path: './astronaut.glb', position: { x: 2, y: -1.4, z: 47 }, scale: 1 },
-//     { path: './space_fighter.glb', position: { x: -10, y: 5, z: 50 }, scale: 0.1 },
-//     // { path: './planet.glb', position: { x: 20, y: -5, z: 60 }, scale: 3, animations: false }
-// ];
-
-// MAKE it an async loader tomorrow
-// check on animations don't just play all
-// or array it
-
-// ########## tomorrow. check that previous version without traversing back to parent
 const models = [
     {
-        path: '../models/astronaut.glb',
-        position: { x: 2, y: -1.4, z: 47 },
+        path: '../../models/catwoman_rigged.glb',
+        // position: { x: 2, y: -1.4, z: 47 },
+        position: { x: 0, y: 0, z: 0 },
         scale: 1,
-        lookAtCamera: true,
-        // rotation?
-        // ship needs rotation and base float animation
+        lookAtCamera: false,
         animations: true,
         lights: [
-            { type: 'PointLight', color: 0xffffff, intensity: 1, distance: 50, position: { x: 0, y: 2, z: 2 } }
+            { type: 'SpotLight', color: 0x0ffffff, intensity: 5, distance: 1000, position: { x: 0, y: 5, z: -5 } }
         ]
     },
-    {
-        path: '../models/space_fighter.glb',
-        position: { x: 12, y: 1, z: 50 },
-        scale: 0.1,
-        lookAtCamera: false,
-        animations: false,
-        lights: [
-            { type: 'SpotLight', color: 0x00ff00, intensity: 3, distance: 100, position: { x: 0, y: 5, z: -5 } }
-        ]
-    },
-    // Add more models as needed
 ];
-
-// models.forEach((config) => {
-//     loadModel(config.path, config.position, config.scale, config.animations ?? true);
-// });
 
 models.forEach((modelConfig) => loadModel(modelConfig));
 
@@ -289,30 +214,63 @@ function onPointerClick(event) {
         while (clickedObject.parent && !clickedObject.userData.light) {
             clickedObject = clickedObject.parent; // Traverse up to the group
         }
-
         const light = clickedObject.userData.light;
         if (light) {
-            // Toggle between red and green
-            const currentColor = light.color.getHex(); // Get current color as a number
-            const newColor = currentColor === 0x00ff00 ? 0xff0000 : 0x00ff00; // Toggle color
-            light.color.set(newColor); // Set the new color
+            console.log(light);
         }
-        // light.color.set(Math.random() * 0xffffff); // Set a random color
     }
 }
 
 // Add the click event listener
 window.addEventListener('click', onPointerClick);
 
+// render animations 
+// Select the <ul> inside the .nav-bar
+const navBarList = document.querySelector('.nav-bar ul');
+
+// Function to render animations as <li> elements
+function renderAnimations() {
+    // Clear existing content
+    navBarList.innerHTML = '';
+
+    // Check if there are animations to render
+    if (Object.keys(modelAnimations).length === 0) {
+        const emptyMessage = document.createElement('li');
+        emptyMessage.textContent = 'No animations loaded yet';
+        navBarList.appendChild(emptyMessage);
+        return;
+    }
+
+    // Loop through all the animations in the modelAnimations object
+    Object.entries(modelAnimations).forEach(([modelPath, { actions }]) => {
+        Object.keys(actions).forEach((animationName) => {
+            // Create an <li> element for each animation
+            const listItem = document.createElement('li');
+            listItem.textContent = `${modelPath}: ${animationName}`; // Include model path for clarity
+
+            // Add a click event listener to play the animation
+            listItem.addEventListener('click', () => {
+                // Stop all animations for the model
+                Object.values(actions).forEach((action) => action.stop());
+
+                // Play the clicked animation
+                actions[animationName].play();
+                console.log(`Playing animation: ${animationName}`);
+
+                // Highlight the active animation
+                Array.from(navBarList.children).forEach((li) => li.classList.remove('active'));
+                listItem.classList.add('active');
+            });
+
+            // Append the <li> to the <ul>
+            navBarList.appendChild(listItem);
+        });
+    });
+}
+
 // Animation loop
 function animate() {
     requestAnimationFrame(animate);
-
-    // model and animations
-    // console.log(models);
-
-    // model.lookAt(camera.position);
-    // models.forEach(model => model.lookAt(camera.position));
 
     // Update mixers for animations
     const delta = clock.getDelta();
@@ -328,16 +286,6 @@ function animate() {
     camera.rotation.x = rotationX; // Vertical rotation (look up/down)
     camera.rotation.y = rotationY; // Horizontal rotation (turn left/right)
 
-    // Reset stars that move behind the camera
-    // remove so we can turn immediately and see the stars
-    // const positions = starGeometry.attributes.position.array;
-    // for (let i = 0; i < starCount; i++) {
-    //     if (positions[i * 3 + 2] + camera.position.z > 5) {
-    //         positions[i * 3 + 2] -= 500;
-    //     }
-    // }
-    starGeometry.attributes.position.needsUpdate = true;
-
     // Render scene
     renderer.render(scene, camera);
 }
@@ -352,65 +300,3 @@ window.addEventListener('resize', () => {
     camera.updateProjectionMatrix();
 });
 
-// #################
-// options
-
-// Keep track of the star density toggle state
-let starDensityToggled = false;
-
-// Reset View Button
-document.getElementById('reset-view').addEventListener('click', () => {
-    camera.position.set(0, 0, 50); // Reset camera position
-    rotationX = 0; // Reset rotation
-    rotationY = 0;
-    console.log("View reset to starting position.");
-});
-
-// Toggle Star Density Button
-document.getElementById('toggle-starcount').addEventListener('click', () => {
-    if (starDensityToggled) {
-        // Reset to original star count
-        resetStarfield(starCount);
-    } else {
-        // Increase star count to 16x
-        resetStarfield(starCount * 16);
-    }
-    starDensityToggled = !starDensityToggled; // Toggle state
-    console.log(`Star density toggled: ${starDensityToggled ? 'High' : 'Normal'}`);
-});
-
-// Speed Slider
-document.getElementById('speed-slider').addEventListener('input', (event) => {
-    movementSpeed = parseFloat(event.target.value);
-    console.log(`Speed set to: ${movementSpeed}`);
-});
-
-document.getElementById('toggle-ui').addEventListener('click', () => {
-    // document.body.classList.toggle('hide-ui');
-    const uiElements = document.querySelectorAll('.container, .header, .footer');
-    uiElements.forEach(element => element.classList.toggle('hide-ui'));
-    console.log("UI toggled.");
-});
-
-
-// Recreate the starfield with new count
-function resetStarfield(newStarCount) {
-    scene.remove(stars); // Remove existing stars
-    const newStarPositions = new Float32Array(newStarCount * 3);
-
-    for (let i = 0; i < newStarCount; i++) {
-        const distance = 50 + Math.random() * 450;
-        const theta = THREE.MathUtils.randFloatSpread(360);
-        const phi = THREE.MathUtils.randFloatSpread(360);
-
-        newStarPositions[i * 3] = distance * Math.sin(theta) * Math.cos(phi);
-        newStarPositions[i * 3 + 1] = distance * Math.sin(theta) * Math.sin(phi);
-        newStarPositions[i * 3 + 2] = distance * Math.cos(theta);
-    }
-
-    starGeometry.setAttribute('position', new THREE.BufferAttribute(newStarPositions, 3));
-    starGeometry.attributes.position.needsUpdate = true;
-
-    stars = new THREE.Points(starGeometry, starMaterial);
-    scene.add(stars); // Add new stars to the scene
-}
