@@ -234,9 +234,11 @@ const mixers = [];
 // MAKE it an async loader tomorrow
 // check on animations don't just play all
 // or array it
+
+// ########## tomorrow. check that previous version without traversing back to parent
 const models = [
     {
-        path: './astronaut.glb',
+        path: '../models/astronaut.glb',
         position: { x: 2, y: -1.4, z: 47 },
         scale: 1,
         lookAtCamera: true,
@@ -248,7 +250,7 @@ const models = [
         ]
     },
     {
-        path: './space_fighter.glb',
+        path: '../models/space_fighter.glb',
         position: { x: 12, y: 1, z: 50 },
         scale: 0.1,
         lookAtCamera: false,
