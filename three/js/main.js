@@ -88,10 +88,10 @@ document.addEventListener("DOMContentLoaded", function () {
                     // turned off to test
                     // might rewrite to open automatically after scrolling to trigger
                     
-                    navBar.classList.remove('hidden');
-                    showNav.classList.remove('visible');
-                    // navBar.classList.add('hidden');
-                    // showNav.classList.add('visible');
+                    // navBar.classList.remove('hidden');
+                    // showNav.classList.remove('visible');
+                    navBar.classList.add('hidden');
+                    showNav.classList.add('visible');
                 }
             }
 
