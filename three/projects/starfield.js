@@ -115,47 +115,22 @@ function calculateMovement() {
     return movement;
 }
 
-// try models
-
 const clock = new THREE.Clock();
 
-// let mixer;
+// Global arrays 
+// mixers (if animations are used)
+const mixers = [];
 
-// const loader = new GLTFLoader();
-
-// let model;
-
-// loader.load(
-//     './astronaut_floating_in_space.glb',
-//     (gltf) => {
-//         model = gltf.scene; // Assign the model to the global variable
-//         model.position.y = -1.7;
-//         model.position.x = 2;
-//         model.position.z = 47;
-//         scene.add(model);
-
-//         mixer = new THREE.AnimationMixer(model);
-
-//         gltf.animations.forEach((clip) => {
-//             const action = mixer.clipAction(clip);
-//             action.play();
-//         });
-//     },
-//     undefined,
-//     (error) => {
-//         console.error('An error happened', error);
-//     }
-// );
-
+// 
 const cameraTrackingModels = [];
 
+// Clickable models - should be just.. models
 const clickableModels = [];
 
 
 function loadModel(config) {
 
     const loader = new GLTFLoader();
-
 
     loader.load(
         config.path,
@@ -217,9 +192,6 @@ function loadModel(config) {
 }
 
 
-// Global array for mixers (if animations are used)
-const mixers = [];
-
 // Example usage:
 // loadModel('./astronaut.glb', { x: 2, y: -1.4, z: 47 }, 1);
 // loadModel('./space_fighter.glb', { x: -10, y: 5, z: 50 }, 0.5);
@@ -273,9 +245,19 @@ const raycaster = new THREE.Raycaster();
 const pointer = new THREE.Vector2();
 
 function onPointerClick(event) {
-    // Convert pointer position to normalized device coordinates
-    pointer.x = (event.clientX / window.innerWidth) * 2 - 1;
-    pointer.y = -(event.clientY / window.innerHeight) * 2 + 1;
+    // hack around clicking on models to close the nav
+    if (
+        !event.target.closest('#close-btn') &&
+        !event.target.closest('.nav-bar') &&
+        !event.target.closest('.show-nav')
+    ) {
+        console.log("clicked");
+        // Convert pointer position to normalized device coordinates
+        pointer.x = (event.clientX / window.innerWidth) * 2 - 1;
+        pointer.y = -(event.clientY / window.innerHeight) * 2 + 1;
+    }
+    // pointer.x = (event.clientX / window.innerWidth) * 2 - 1;
+    // pointer.y = -(event.clientY / window.innerHeight) * 2 + 1;
 
     // Set raycaster
     raycaster.setFromCamera(pointer, camera);
@@ -292,6 +274,7 @@ function onPointerClick(event) {
 
         const light = clickedObject.userData.light;
         if (light) {
+            console.log(light);
             // Toggle between red and green
             const currentColor = light.color.getHex(); // Get current color as a number
             const newColor = currentColor === 0x00ff00 ? 0xff0000 : 0x00ff00; // Toggle color
@@ -303,6 +286,17 @@ function onPointerClick(event) {
 
 // Add the click event listener
 window.addEventListener('click', onPointerClick);
+
+// Add the click event listener
+// window.addEventListener('click', () => {
+//     // console.log(event.target);
+//     if (
+//         !event.target.closest('#close-btn')
+//         // !event.target.closest('#about') &&
+//     ) {
+//         onPointerClick(); // Zoom back to the initial camera position
+//     }
+// });
 
 // Animation loop
 function animate() {
