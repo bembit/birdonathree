@@ -629,6 +629,7 @@ body.no-scroll {
         padding: 5px;
         background-color: var(--bg-color);
         text-transform: capitalize;
+        font-size: 14px;
     }
 }
 

@@ -34,28 +34,23 @@
     </style>
 </head>
 
-<!-- split them by boxes of 6. 3rd 4th basis of 60%?  -->
-<!-- how would I approach saving the state, so on refresh the view stays as is? -->
-
 <body class="load">
 
-    <!-- might add popup here -->
-    <!-- <div id="popup" class="popup">
-        <div class="popup-content">
-            <p>
-                Somehow all of this just works.
-            </p>
-        </div>
-    </div> -->
-
+    <audio id="audioBackgroundTheme" src="../assets/sounds/galaxys_endless_expanse.mp3" loop></audio>
+    
     <div class="nav-bar">
         <audio id="audioWhisper" src="../assets/sounds/whisper.mp3"></audio>
         <h4>Interface</h4>
+        <h5>WASD + mouse drag</h5>
         <ul>
             <!-- investigate this -->
             <span id="close-btn" class="close-btn">×</span>
+            <!-- turn off music -->
             <li>
-                <a id="toggle-ui"><i style="margin-right: 7px;" class="fa-solid fa-star"></i> Toggle UI / screen</a>
+                <a id="toggle-music"><i style="margin-right: 7px;" class="fa-solid fa-music"></i> Pause music <i class="fa-solid fa-pause"></i></a>
+            </li>
+            <li>
+                <a id="toggle-ui"><i style="margin-right: 7px;" class="fa-solid fa-desktop"></i> Toggle UI / screen</a>
             </li>
             <li>
                 <a id="toggle-starcount"><i style="margin-right: 7px;" class="fa-solid fa-star"></i>Toggle Bethesda Details</a>
@@ -64,13 +59,13 @@
                 Change Speed:
                 <input type="range" id="speed-slider" min="0.1" max="1" step="0.1" value="0.1">
             </li>
-            <li><a id="reset-view"><i style="margin-right: 10px;" class="fa-solid fa-arrow-up-from-bracket"></i> Reset View</a></li>
-
-            <li>credits</li>
+            <li><a id="reset-view"><i style="margin-right: 10px;" class="fa-solid fa-camera"></i> Reset View</a></li>
+            
+            <li><a href="">Credits for Models</a></li>
         </ul>
     </div>
     
-
+    
     <div onclick="playSound('audioWhisper')" class="show-nav hidden-arrow"><i class="fa-solid fa-bars"></i></div>
     
     <main>
@@ -111,7 +106,8 @@
                         Have fun.
                     </h2>
                     <p class="subtitle">
-                        Sublte foreshadowing.
+                        Work in progress. Some things <br>
+                        are not bugged.
                     </p>
                 </div>
 
@@ -153,6 +149,32 @@
         import { GLTFLoader } from "https://cdn.skypack.dev/three@0.170.0/examples/jsm/loaders/GLTFLoader.js";
     </script> -->
     <script type="module" src="./starfield.js"></script>
+    <!-- let's keep music here -->
+    <!-- google violation -->
+    <script>
+        // added here in case I add to main too
+        function PlayBackgroundMusic() {
+            const audio = document.getElementById('audioBackgroundTheme');
+            audio.volume = 0.05; // set volume (0 to 1) - 1 is "fun".
+            audio.play();
+        }
 
+        // pause music, resume music
+        const audioBackgroundTheme = document.getElementById('toggle-music');
+        audioBackgroundTheme.addEventListener('click', () => {
+            const audio = document.getElementById('audioBackgroundTheme');
+            if (audio.paused) {
+                audio.play();
+                audioBackgroundTheme.innerHTML = '<i style="margin-right: 7px;" class="fa-solid fa-music"></i> Pause music';
+            } else {
+                audio.pause();
+                audioBackgroundTheme.innerHTML = '<i style="margin-right: 7px;" class="fa-solid fa-music"></i> Resume music';
+            }
+        });
+        
+        document.addEventListener("DOMContentLoaded", function () {
+            PlayBackgroundMusic();
+        });
+    </script>
 </body>
 </html>
