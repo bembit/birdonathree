@@ -90,6 +90,7 @@ data().then(projects => {
         });
 
         let createHeading3 = document.createElement('h3');
+        createHeading3.classList.add('gradient');
         createHeading3.innerText = project.title;
 
         let createDate = document.createElement('p');
@@ -192,4 +193,54 @@ data().then(projects => {
 
     // Initial render
     renderProjects();
+
+
+    // Favorites dropdown
+    console.log(favorites)
+    // Example favorites array
+    // Populate dropdown menu
+    const dropdownLink = document.getElementById("dropdown");
+    const dropdownMenu = document.getElementById("dropdown-menu");
+    
+    // Function to map favorite IDs to project data
+    const getFavoriteProjects = () => {
+        return favorites.map(favoriteId => {
+            return projects.find(project => project.id === favoriteId);
+        }).filter(Boolean); // Filter out undefined in case of mismatched IDs
+    };
+
+    // Populate dropdown menu
+    const populateDropdown = () => {
+        dropdownMenu.innerHTML = ''; // Clear previous items
+        const favoriteProjects = getFavoriteProjects(); // Get favorite projects
+
+        if (favoriteProjects.length > 0) {
+            favoriteProjects.forEach(favorite => {
+                const listItem = document.createElement("li");
+                listItem.innerHTML = `<div class="project-item-favorite">
+                                        <a href="${favorite.url}">${favorite.title}</a>
+                                        <img style="width: 100px;" src="${favorite.image}">
+
+                                        </div>`; 
+                dropdownMenu.appendChild(listItem);
+            });
+        } else {
+            dropdownMenu.innerHTML = '<li>No favorites yet.</li>';
+        }
+    };
+
+    // Toggle dropdown visibility
+    dropdownLink.addEventListener("click", (event) => {
+        event.preventDefault(); // Prevent default link behavior
+        const isVisible = dropdownMenu.style.display === "flex";
+        dropdownMenu.style.display = isVisible ? "none" : "flex";
+        if (!isVisible) populateDropdown(); // Populate only when opening
+    });
+    
+    // Hide dropdown when clicking outside
+    document.addEventListener("click", (event) => {
+        if (!dropdownLink.contains(event.target) && !dropdownMenu.contains(event.target)) {
+            dropdownMenu.style.display = "none";
+        }
+    });
 });

@@ -246,6 +246,8 @@ const pointer = new THREE.Vector2();
 
 function onPointerClick(event) {
     // hack around clicking on models to close the nav
+    // somethings is not right with clicking the lights
+    // I mean it's a kinda cool accidental feature now :D
     if (
         !event.target.closest('#close-btn') &&
         !event.target.closest('.nav-bar') &&

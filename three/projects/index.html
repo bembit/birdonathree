@@ -34,6 +34,13 @@
     </style>
 </head>
 
+<!-- TODO -->
+<!-- 1. clear search x -->
+<!-- 2. hide most filters with an arrow.  -->
+<!-- 3. style the divs -->
+<!-- 4. add basic responsive design -->
+<!-- 5. add favorites dropdown -->
+
 <body class="load">
 
     <audio id="audioBackgroundTheme" src="../assets/sounds/galaxys_endless_expanse.mp3" loop></audio>
@@ -80,9 +87,12 @@
                     <ul>
                         <li><a class="internal-link" href="#top">birdonathree.com</a></li>
                         <li>|</li>
-                        <li><a class="internal-link" href="#">blogTBA</a></li>
+                        <li><a href="#">blogTBA</a></li>
                         <li>|</li>
-                        <li><a class="internal-link" href="#">favorites</a></li>
+                        <li>
+                            <a id="dropdown">favorites 👇</a>
+                            <ul class="dropdown-menu" id="dropdown-menu"></ul>
+                        </li>
                         <li>|</li>
                         <li><a href="mailto:hello@madbence.com"><i class="fa-solid fa-envelope"></i> hello@madbence.com</a></li>
                         <li>|</li>
