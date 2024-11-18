@@ -57,7 +57,7 @@
         "id": "7",
         "title": "Catwoman model animations base",
         "dateCreated": "2024-11-17",
-        "subtitle": "The project in Hungarian is kinda like: \"Mit szoptam te jó ég..\". A good starter for future stuff. But this is only the alpha of the beta.",
+        "subtitle": "Basic model viewer with animations. A good starter for future stuff. But this is only the alpha of the beta.",
         "tags": ["Model", "Animation", "Rigged", "GLTF", "Catwoman Rigged", "Setup", "Template", "Starter"],
         "url": "./catwoman_init_animations/",
         "image": "../assets/img/projects/8.png"
@@ -73,10 +73,10 @@
     },
     {
         "id": "9",
-        "title": "Scene Vegetation",
+        "title": "Scene with some models base",
         "dateCreated": "2024-11-18",
         "subtitle": "Figuring out how to do this model loading thing. Also a good time to dig into lights and shadows.",
-        "tags": ["Model", "Vite", "Animation", "Import"],
+        "tags": ["Model", "Vite", "Animation", "Import", "Test", "Lights", "Shadows", "3D"],
         "url": "./model_loader_scene/",
         "image": "../assets/img/projects/9.png"
     }
