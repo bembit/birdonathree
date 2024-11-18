@@ -209,20 +209,40 @@ data().then(projects => {
         }).filter(Boolean); // Filter out undefined in case of mismatched IDs
     };
 
+    // Add onclick to ignore clicks.
     // Populate dropdown menu
     const populateDropdown = () => {
         dropdownMenu.innerHTML = ''; // Clear previous items
         const favoriteProjects = getFavoriteProjects(); // Get favorite projects
 
+        // Remove from favorites tomorrow here too then rerender the dropdown, update the count, and so on? maybe..
+        // if (isFavorited(projectId)) {
+            // favorites = favorites.filter(id => id !== projectId); 
+
+        // Favorite button
+        // let createFavoriteButton = document.createElement('button');
+        // createFavoriteButton.innerText = isFavorited(project.id) ? '❤️' : '🤍';
+        // createFavoriteButton.classList.add('favorite-btn');
+        // createFavoriteButton.title = 'Add to favorites';
+        // createFavoriteButton.addEventListener('click', () => {
+        //     toggleFavorite(project.id, createFavoriteButton);
+        // });
+        // dropdownMenu.appendChild(createFavoriteButton);
+
         if (favoriteProjects.length > 0) {
             favoriteProjects.forEach(favorite => {
                 const listItem = document.createElement("li");
-                listItem.innerHTML = `<div class="project-item-favorite">
-                                        <a href="${favorite.url}">${favorite.title}</a>
-                                        <img style="width: 100px;" src="${favorite.image}">
-
-                                        </div>`; 
+                listItem.innerHTML = `<a href="${favorite.url}" class="project-item project-item-favorite">
+                                        <h4 >${favorite.title}</h4>
+                                        <img src="${favorite.image}">
+                                        </a>
+                                        `; 
                 dropdownMenu.appendChild(listItem);
+                // const linkToAll = document.createElement("a");
+                // linkToAll.innerHTML = "View All";
+                // linkToAll.href = "#";
+                // dropdownMenu.appendChild(linkToAll);
+                // <a href="">View all saved</a>
             });
         } else {
             dropdownMenu.innerHTML = '<li>No favorites yet.</li>';

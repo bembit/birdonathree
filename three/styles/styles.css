@@ -158,11 +158,11 @@ footer a {
 }
 
 .dropdown-menu {
-    display: none; /* Initially hidden */
+    display: none; 
     position: absolute;
     transform: translateX(-50%);
-    background-color: #000000;
-    border: 1px solid #ddd;
+    /* background-color: #000000; */
+    border: 1px solid #f50909;
     list-style: none;
     margin: 0;
     padding: 0;
@@ -172,6 +172,8 @@ footer a {
     flex-wrap: wrap;
     /* gn */
     z-index: 100000;
+    /* width: 300px;
+    max-width: 300px; */
 }
   
 .dropdown-menu li {
@@ -180,8 +182,8 @@ footer a {
     flex-basis: 33%;
 }
 
-.project-item-favorite {
-    border: 1px solid #ddd;
+.dropdown-menu li img {
+    height: 65px;
 }
   
 .dropdown-menu li:hover {
@@ -347,7 +349,9 @@ h3 {
     align-items: center;
     margin-top: var(--margin-l);
     margin-bottom: var(--margin-l);
-    z-index: 1;
+    /* this is not bad, text moving behind models */
+    /* it's the nav's z-index that's bad */
+    /* z-index: 1; */
 }
 
 .hero .titles {
@@ -607,6 +611,15 @@ body.no-scroll {
     min-height: 35vh;
     background-position: center center;
     background-size: cover;
+}
+
+.project-item-favorite {
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    min-height: initial;
+    /* width: 150px; */
+    opacity: 0.95;
 }
 
 .project-item:hover {
