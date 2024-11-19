@@ -65,8 +65,8 @@
     {
         "id": "8",
         "title": "Catwoman playground start",
-        "dateCreated": "TBA",
-        "subtitle": "Want a TPS camera with basic movement and animations.",
+        "dateCreated": "2024-11-19",
+        "subtitle": "First look at TPS camera. Want a TPS camera with basic movement and animations.",
         "tags": ["Camera", "Movement", "Animation", "Third Person", "Rigged", "GLTF", "Setup", "Template", "Starter"],
         "url": "./catwoman_playground_start/",
         "image": "../assets/img/projects/5.png"
