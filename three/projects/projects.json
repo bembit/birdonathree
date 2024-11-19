@@ -42,7 +42,7 @@
         "subtitle": "Tested Vite for building. Luckily imports from CDNs work just fine so I don't have to do the npm game to have fun.",
         "tags": ["Model", "Vite", "Animation", "Import"],
         "url": "./5.model_test/",
-        "image": "../assets/img/projects/6.png"
+        "image": "../assets/img/projects/5.png"
     },
     {
         "id": "6",
@@ -83,9 +83,9 @@
     {
         "id": "10",
         "title": "More animations, camerawork?",
-        "dateCreated": "2024-11-19",
-        "subtitle": "Zoom in out, jump.",
-        "tags": ["Model", "Vite", "Animation", "Import", "Test", "Lights", "Shadows", "3D"],
+        "dateCreated": "2024-11-20",
+        "subtitle": "Zoom in out, jump. Whoever coded the first jump animation was a genius.",
+        "tags": ["Model", "Shadows", "Animation", "Jump", "WASD", "Zoom", "Mouse", "Lights", "3D"],
         "url": "./10.catwoman_advanced_cam_anim/",
         "image": "../assets/img/projects/8.png"
     }

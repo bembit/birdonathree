@@ -5,6 +5,14 @@ import { OrbitControls } from 'https://unpkg.com/three@0.125.1/examples/jsm/cont
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
 
+// Third-Person Camera Variables
+const cameraOffset = new THREE.Vector3(0, 4, -6); // Camera position relative to player
+const cameraTargetOffset = new THREE.Vector3(0, 1, 0); // Target position offset (player's head level)
+let rotationAngle = -1.5; // Horizontal rotation around the player
+
+// Target the canvas element
+const canvas = document.getElementById('starfield-canvas');
+
 // Create a green grass tile
 const grassGeometry = new THREE.PlaneGeometry(255, 255); // Width and height of the tile
 const grassMaterial = new THREE.MeshLambertMaterial({ color: 0x333333 }); // Green color
@@ -13,24 +21,41 @@ const grassTile = new THREE.Mesh(grassGeometry, grassMaterial);
 // Rotate the tile to lie flat on the ground
 grassTile.rotation.x = -Math.PI / 2; // Rotate to face upward
 grassTile.position.set(0, 0, 0); // Place it at the center of the scene
+grassTile.receiveShadow = true; // Enable shadows for the grass tile
 scene.add(grassTile);
-
-// Third-Person Camera Variables
-const cameraOffset = new THREE.Vector3(0, 4, -6); // Camera position relative to player
-const cameraTargetOffset = new THREE.Vector3(0, 1, 0); // Target position offset (player's head level)
-let rotationAngle = 0; // Horizontal rotation around the player
-
-// Target the canvas element
-const canvas = document.getElementById('starfield-canvas');
 
 // // Ambient Light for Base Illumination
 const ambientLight = new THREE.AmbientLight(0xffffff, 1);
 scene.add(ambientLight);
 
+// Create directional light
+const sunlight = new THREE.DirectionalLight(0xffffff, 1); // White light with intensity 1
+// ok dude shadows too
+sunlight.position.set(10, 20, 10); // Position it above and at an angle
+scene.add(sunlight);
+sunlight.castShadow = true;
+
+// Configure shadow properties for better performance
+sunlight.shadow.mapSize.width = 2048; // Higher value = sharper shadows (default is 512)
+sunlight.shadow.mapSize.height = 2048;
+sunlight.shadow.camera.near = 0.5; // Start of shadow casting
+sunlight.shadow.camera.far = 50; // End of shadow casting
+sunlight.shadow.camera.left = -10; // Adjust bounds to cover your scene
+sunlight.shadow.camera.right = 10;
+sunlight.shadow.camera.top = 10;
+sunlight.shadow.camera.bottom = -10;
+
+// Enable shadow casting for the light
+
 // Renderer with the selected canvas
 const renderer = new THREE.WebGLRenderer({ canvas, alpha: true });
 renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.setPixelRatio(window.devicePixelRatio);
+
+renderer.shadowMap.enabled = true; // Enable shadows
+renderer.shadowMap.type = THREE.PCFSoftShadowMap; // Use soft shadows (optional)
+
+
 
 // Track keys
 const keys = {
@@ -89,46 +114,140 @@ function calculatePlayerMovement() {
 let currentAnimation = null; // Track the current animation
 const transitionDuration = 0.5; // Time in seconds for transitions
 
+let isJumping = false; // Flag to track if the player is jumping
+let jumpHeight = 1; // Adjust the height of the jump
+// let gravity = -0.005; // Gravity effect to bring the player down after jumping
+let gravity = -0.002;
+// let gravity = -0.001;
+let velocityY = 1; // Vertical velocity for jumping
+
+let jumpDuration = 100;
+
+const initialJumpVelocity = (jumpDuration / 2) * Math.abs(gravity); // (time to peak) * abs(gravity)
+
+let horizontalVelocity = new THREE.Vector3(); // To store horizontal movement (X, Z)
+
+// Update the player movement, including jump handling
 function updatePlayerMovement() {
     if (!player) return;
+    
+    let playerAnimations = modelAnimations[models[0].path]?.actions; // Ensure animations are loaded
 
-    const movement = calculatePlayerMovement();
-    player.position.add(movement);
+    // Calculate horizontal movement
+    const movement = calculatePlayerMovement(); // Get horizontal movement (X, Z)
+    horizontalVelocity.copy(movement); // Store the horizontal velocity
 
-    // Check if the player is moving
-    const isMoving = movement.length() > 0;
+    // Handle jumping
+    if (isJumping) {
+        // Apply gravity to simulate falling
+        velocityY += gravity;
 
-    // Access animations using modelAnimations and the model path
-    const playerAnimations = modelAnimations[models[0].path]?.actions; // Ensure animations are loaded
-    if (!playerAnimations) return;
+        // Apply vertical movement
+        player.position.y += velocityY;
 
-    const runningAnimation = playerAnimations['run']; 
-    const standingAnimation = playerAnimations['stand']; 
-
-    if (isMoving) {
-        if (currentAnimation !== runningAnimation) {
-            // Transition to running animation
-            if (currentAnimation) currentAnimation.fadeOut(transitionDuration);
-            runningAnimation.reset().fadeIn(transitionDuration).play();
-            currentAnimation = runningAnimation;
+        // If the player reaches the ground again, end the jump
+        if (player.position.y <= 0) {
+            player.position.y = 0; // Keep player at ground level
+            isJumping = false; // End the jump
+            velocityY = 0; // Reset vertical velocity
         }
 
-        // Smoothly rotate player to face the movement direction
-        const lookDirection = movement.clone().normalize();
-        const targetQuaternion = new THREE.Quaternion().setFromUnitVectors(
-            new THREE.Vector3(0, 0, 1), // Default forward direction
-            lookDirection
-        );
-        player.quaternion.slerp(targetQuaternion, 0.1); // Adjust 0.1 for smoother or faster turning
+        // Apply horizontal movement while jumping
+        player.position.x += horizontalVelocity.x;
+        player.position.z += horizontalVelocity.z;
+
+        // Trigger the jump animation (only if not already in the jump animation)
+        const jumpAnimation = playerAnimations['jumpUp'];
+        if (currentAnimation !== jumpAnimation) {
+            if (currentAnimation) currentAnimation.fadeOut(transitionDuration);
+            jumpAnimation.reset().fadeIn(transitionDuration).play();
+            currentAnimation = jumpAnimation;
+        }
     } else {
-        if (currentAnimation !== standingAnimation) {
-            // Transition to standing animation
-            if (currentAnimation) currentAnimation.fadeOut(transitionDuration);
-            standingAnimation.reset().fadeIn(transitionDuration).play();
-            currentAnimation = standingAnimation;
+        // Handle standing or running animations when not jumping
+        const isMoving = movement.length() > 0;
+
+        if (isMoving) {
+            if (currentAnimation !== playerAnimations['run']) {
+                // Transition to running animation
+                if (currentAnimation) currentAnimation.fadeOut(transitionDuration);
+                playerAnimations['run'].reset().fadeIn(transitionDuration).play();
+                currentAnimation = playerAnimations['run'];
+            }
+
+            // Smoothly rotate player to face the movement direction
+            const lookDirection = movement.clone().normalize();
+            const targetQuaternion = new THREE.Quaternion().setFromUnitVectors(
+                new THREE.Vector3(0, 0, 1), // Default forward direction
+                lookDirection
+            );
+            player.quaternion.slerp(targetQuaternion, 0.1); // Adjust 0.1 for smoother or faster turning
+        } else {
+            if (currentAnimation !== playerAnimations['stand']) {
+                // Transition to standing animation
+                if (currentAnimation) currentAnimation.fadeOut(transitionDuration);
+                playerAnimations['stand'].reset().fadeIn(transitionDuration).play();
+                currentAnimation = playerAnimations['stand'];
+            }
         }
+
+        // Apply horizontal movement when not jumping
+        player.position.x += horizontalVelocity.x;
+        player.position.z += horizontalVelocity.z;
     }
 }
+
+// Trigger jump (bind to a key press or action)
+document.addEventListener('keydown', (event) => {
+    if (event.key === ' ' && !isJumping) { // Spacebar to jump
+        isJumping = true;
+        // velocityY = jumpHeight; // Apply initial vertical velocity
+        velocityY = initialJumpVelocity; // Apply initial vertical velocity
+        console.log(velocityY);
+    }
+});
+
+
+// function updatePlayerMovement() {
+//     if (!player) return;
+
+//     const movement = calculatePlayerMovement();
+//     player.position.add(movement);
+
+//     // Check if the player is moving
+//     const isMoving = movement.length() > 0;
+
+//     // Access animations using modelAnimations and the model path
+//     const playerAnimations = modelAnimations[models[0].path]?.actions; // Ensure animations are loaded
+//     if (!playerAnimations) return;
+
+//     const runningAnimation = playerAnimations['run']; 
+//     const standingAnimation = playerAnimations['stand']; 
+
+//     if (isMoving) {
+//         if (currentAnimation !== runningAnimation) {
+//             // Transition to running animation
+//             if (currentAnimation) currentAnimation.fadeOut(transitionDuration);
+//             runningAnimation.reset().fadeIn(transitionDuration).play();
+//             currentAnimation = runningAnimation;
+//         }
+
+//         // Smoothly rotate player to face the movement direction
+//         const lookDirection = movement.clone().normalize();
+//         const targetQuaternion = new THREE.Quaternion().setFromUnitVectors(
+//             new THREE.Vector3(0, 0, 1), // Default forward direction
+//             lookDirection
+//         );
+//         player.quaternion.slerp(targetQuaternion, 0.1); // Adjust 0.1 for smoother or faster turning
+//     } else {
+//         if (currentAnimation !== standingAnimation) {
+//             // Transition to standing animation
+//             if (currentAnimation) currentAnimation.fadeOut(transitionDuration);
+//             standingAnimation.reset().fadeIn(transitionDuration).play();
+//             currentAnimation = standingAnimation;
+//         }
+//     }
+// }
 
 
 // define gltf
@@ -168,12 +287,12 @@ function updatePlayerMovement() {
 document.addEventListener('mousemove', (event) => {
     if (!isCanvasActive) return; // Rotate only when the canvas is active
 
-    const sensitivity = 0.002; // Adjust sensitivity
+    const sensitivity = 0.003; // Adjust sensitivity
     rotationAngle -= event.movementX * sensitivity; // Rotate horizontally
 
     // TODO: Add vertical rotation
     // 1. these needs more math and to reduce horizontal while both are in action.
-    const verticalOffset = cameraOffset.y + event.movementY * sensitivity * 0.5;
+    const verticalOffset = cameraOffset.y + event.movementY * sensitivity * 2;
     cameraOffset.y = THREE.MathUtils.clamp(verticalOffset, 2, 8); // Limit vertical range
 });
 
@@ -194,33 +313,27 @@ document.addEventListener('mousemove', (event) => {
 // }
 
 // Camera zoom limits
-const minZoom = 3; // Minimum distance from the player
-const maxZoom = 10; // Maximum distance from the player
+const minZoom = 2; // Minimum distance from the player
+const maxZoom = 15; // Maximum distance from the player
 let zoomDistance = 6; // Initial zoom distance (matches the z-offset in cameraOffset)
 
 // Update TPS Camera with zoom
 function updateTPSCamera() {
     if (!player) return; // Ensure the player model is loaded
 
-    // Rotate the camera around the player based on input
-    camera.position.set(
-        player.position.x + cameraOffset.x * Math.cos(rotationAngle) - cameraOffset.z * Math.sin(rotationAngle),
-        player.position.y + cameraOffset.y,
-        player.position.z + cameraOffset.x * Math.sin(rotationAngle) + cameraOffset.z * Math.cos(rotationAngle)
-    );
-
+    // init rotationAngle was set to -1.5 to offset the updateTPSCamera
     camera.position.set(
         player.position.x + zoomDistance * Math.cos(rotationAngle), // Zoom dynamically adjusts x-axis offset
         player.position.y + cameraOffset.y,                        // Maintain vertical height
         player.position.z + zoomDistance * Math.sin(rotationAngle) // Zoom dynamically adjusts z-axis offset
     );
 
-    // Look at the player
+    // Look at the player character
     const targetPosition = player.position.clone().add(cameraTargetOffset);
     camera.lookAt(targetPosition);
 }
 
-// Add scroll event for zoom
+// scroll event for zoom
 // could use some smoothing later
 // easing, linear functions.
 canvas.addEventListener('wheel', (event) => {
@@ -241,6 +354,10 @@ console.log(modelAnimations);
 let movementSpeed = 0.1;
 
 let player;
+
+// player.castShadow = true;
+// player.receiveShadow = true;
+
 // Load the player model
 function loadModel(config) {
     const loader = new GLTFLoader();
@@ -254,6 +371,15 @@ function loadModel(config) {
 
             // Add to scene
             scene.add(model);
+            model.traverse((child) => {
+                if (child.isMesh) {
+                    child.castShadow = true;
+                    child.receiveShadow = true; // Enable shadows for the player
+                }
+            });
+            
+            // model.castShadow = true; // Enable shadows for the player
+            // model.receiveShadow = true;
             player = model; // Assign the model to the player
 
             // Handle animations
