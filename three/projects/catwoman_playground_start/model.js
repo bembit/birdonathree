@@ -4,8 +4,21 @@ import { OrbitControls } from 'https://unpkg.com/three@0.125.1/examples/jsm/cont
 
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-camera.position.set(0, 2, 4);
-camera.lookAt(0, 0, 0);
+
+// Create a green grass tile
+const grassGeometry = new THREE.PlaneGeometry(255, 255); // Width and height of the tile
+const grassMaterial = new THREE.MeshLambertMaterial({ color: 0xffffff }); // Green color
+const grassTile = new THREE.Mesh(grassGeometry, grassMaterial);
+
+// Rotate the tile to lie flat on the ground
+grassTile.rotation.x = -Math.PI / 2; // Rotate to face upward
+grassTile.position.set(0, 0, 0); // Place it at the center of the scene
+scene.add(grassTile);
+
+// Third-Person Camera Variables
+const cameraOffset = new THREE.Vector3(0, 4, -6); // Camera position relative to player
+const cameraTargetOffset = new THREE.Vector3(0, 1, 0); // Target position offset (player's head level)
+let rotationAngle = 0; // Horizontal rotation around the player
 
 // Target the canvas element
 const canvas = document.getElementById('starfield-canvas');
@@ -33,9 +46,6 @@ document.addEventListener('keyup', (event) => {
     if (event.key in keys) keys[event.key] = false;
 });
 
-// Camera rotation
-let rotationX = 0; // Vertical rotation
-let rotationY = 0; // Horizontal rotation
 let isCanvasActive = false; // Track if the canvas is active
 
 canvas.addEventListener('mousedown', () => {
@@ -50,53 +60,182 @@ canvas.addEventListener('mouseout', () => {
     isCanvasActive = false; // Deactivate when mouse leaves the canvas
 });
 
-document.addEventListener('mousemove', (event) => {
-    if (!isCanvasActive) return; // Only track movement if the canvas is active
+// Update player movement function
+function calculatePlayerMovement() {
+    const direction = new THREE.Vector3();
+    if (keys.w) direction.z += 1; // Forward
+    if (keys.s) direction.z -= 1; // Backward
+    if (keys.a) direction.x += 1; // Left
+    if (keys.d) direction.x -= 1; // Right
 
-    const sensitivity = 0.002; // Adjust this to make the mouse movement more or less sensitive
-    rotationY -= event.movementX * sensitivity; // Rotate around Y-axis (turn left/right)
-    rotationX -= event.movementY * sensitivity; // Rotate around X-axis (look up/down)
+    // Ensure direction is aligned with the camera's orientation
+    const cameraForward = new THREE.Vector3();
+    const cameraRight = new THREE.Vector3();
 
-    // Limit the vertical rotation to avoid flipping
-    rotationX = Math.max(-Math.PI / 2, Math.min(Math.PI / 2, rotationX));
-});
+    camera.getWorldDirection(cameraForward); // Camera forward direction
+    cameraForward.y = 0; // Ignore vertical movement
+    cameraForward.normalize();
 
-// Movement vectors
-let movementSpeed = 0.1;
+    cameraRight.crossVectors(camera.up, cameraForward); // Camera right direction
 
-function calculateMovement() {
-    const forward = new THREE.Vector3();
-    const right = new THREE.Vector3();
+    // Calculate movement vector relative to camera orientation
+    const moveVector = new THREE.Vector3()
+        .addScaledVector(cameraForward, direction.z)
+        .addScaledVector(cameraRight, direction.x);
 
-    // Get the forward vector from the camera
-    camera.getWorldDirection(forward);
+    return moveVector.normalize().multiplyScalar(movementSpeed);
+}
 
-    // Calculate the right vector by taking the cross product of forward and the world up vector
-    right.crossVectors(forward, camera.up);
+let currentAnimation = null; // Track the current animation
+const transitionDuration = 0.5; // Time in seconds for transitions
 
-    forward.normalize();
-    right.normalize();
+function updatePlayerMovement() {
+    if (!player) return;
 
-    // Movement vector
-    const movement = new THREE.Vector3();
+    const movement = calculatePlayerMovement();
+    player.position.add(movement);
 
-    if (keys.w) movement.add(forward); // Move forward
-    if (keys.s) movement.add(forward.clone().negate()); // Move backward
-    if (keys.a) movement.add(right.clone().negate()); // Move left
-    if (keys.d) movement.add(right); // Move right
+    // Check if the player is moving
+    const isMoving = movement.length() > 0;
 
-    movement.normalize().multiplyScalar(movementSpeed); // Scale to speed
-    return movement;
+    // Access animations using modelAnimations and the model path
+    const playerAnimations = modelAnimations[models[0].path]?.actions; // Ensure animations are loaded
+    if (!playerAnimations) return;
+
+    const runningAnimation = playerAnimations['run']; 
+    const standingAnimation = playerAnimations['stand']; 
+
+    if (isMoving) {
+        if (currentAnimation !== runningAnimation) {
+            // Transition to running animation
+            if (currentAnimation) currentAnimation.fadeOut(transitionDuration);
+            runningAnimation.reset().fadeIn(transitionDuration).play();
+            currentAnimation = runningAnimation;
+        }
+
+        // Smoothly rotate player to face the movement direction
+        const lookDirection = movement.clone().normalize();
+        const targetQuaternion = new THREE.Quaternion().setFromUnitVectors(
+            new THREE.Vector3(0, 0, 1), // Default forward direction
+            lookDirection
+        );
+        player.quaternion.slerp(targetQuaternion, 0.1); // Adjust 0.1 for smoother or faster turning
+    } else {
+        if (currentAnimation !== standingAnimation) {
+            // Transition to standing animation
+            if (currentAnimation) currentAnimation.fadeOut(transitionDuration);
+            standingAnimation.reset().fadeIn(transitionDuration).play();
+            currentAnimation = standingAnimation;
+        }
+    }
 }
 
 
+// define gltf
+// function updatePlayerMovement() {
+//     if (!player) return;
+
+//     const movement = calculatePlayerMovement();
+//     player.position.add(movement);
+
+//     // Check if the player is moving
+//     const isMoving = movement.length() > 0;
+
+//     // Play the running animation if moving
+//     if (isMoving) {
+//         const runningAnimation = modelAnimations[models[0].path].actions[gltf.animations[5].name];
+//         if (currentAnimation !== runningAnimation) {
+//             if (currentAnimation) currentAnimation.stop();
+//             runningAnimation.play();
+//             currentAnimation = runningAnimation;
+//         }
+
+//         // Optional: Rotate player to face the movement direction
+//         const lookDirection = movement.clone().normalize();
+//         player.lookAt(player.position.clone().add(lookDirection));
+//     } else {
+//         // Play the standing animation if not moving
+//         const standingAnimation = modelAnimations[models[0].path].actions[gltf.animations[4].name];
+//         if (currentAnimation !== standingAnimation) {
+//             if (currentAnimation) currentAnimation.stop();
+//             standingAnimation.play();
+//             currentAnimation = standingAnimation;
+//         }
+//     }
+// }
+
+// Mouse movement to rotate camera around the player
+document.addEventListener('mousemove', (event) => {
+    if (!isCanvasActive) return; // Rotate only when the canvas is active
+
+    const sensitivity = 0.002; // Adjust sensitivity
+    rotationAngle -= event.movementX * sensitivity; // Rotate horizontally
+
+    // TODO: Add vertical rotation
+    // 1. these needs more math and to reduce horizontal while both are in action.
+    const verticalOffset = cameraOffset.y + event.movementY * sensitivity * 0.5;
+    cameraOffset.y = THREE.MathUtils.clamp(verticalOffset, 2, 8); // Limit vertical range
+});
+
+// // Update TPS Camera
+// function updateTPSCamera() {
+//     if (!player) return;
+
+//     // Rotate the camera around the player
+//     camera.position.set(
+//         player.position.x + cameraOffset.x * Math.cos(rotationAngle) - cameraOffset.z * Math.sin(rotationAngle),
+//         player.position.y + cameraOffset.y,
+//         player.position.z + cameraOffset.x * Math.sin(rotationAngle) + cameraOffset.z * Math.cos(rotationAngle)
+//     );
+
+//     // Look at the player
+//     const targetPosition = player.position.clone().add(cameraTargetOffset);
+//     camera.lookAt(targetPosition);
+// }
+
+// Camera zoom limits
+const minZoom = 3; // Minimum distance from the player
+const maxZoom = 10; // Maximum distance from the player
+let zoomDistance = 6; // Initial zoom distance (matches the z-offset in cameraOffset)
+
+// Update TPS Camera with zoom
+function updateTPSCamera() {
+    if (!player) return; // Ensure the player model is loaded
+
+    // Rotate the camera around the player based on input
+    camera.position.set(
+        player.position.x + zoomDistance * Math.cos(rotationAngle),
+        player.position.y + cameraOffset.y,
+        player.position.z + zoomDistance * Math.sin(rotationAngle)
+    );
+
+    // Look at the player
+    const targetPosition = player.position.clone().add(cameraTargetOffset);
+    camera.lookAt(targetPosition);
+}
+
+// Add scroll event for zoom
+// could use some smoothing later
+// easing, linear functions.
+canvas.addEventListener('wheel', (event) => {
+    event.preventDefault(); // Prevent default scrolling behavior
+
+    const zoomSpeed = 0.5; // Adjust zoom speed
+    zoomDistance += event.deltaY * 0.01 * zoomSpeed; // Zoom in or out based on scroll direction
+
+    // Clamp zoom distance between min and max
+    zoomDistance = Math.max(minZoom, Math.min(maxZoom, zoomDistance));
+});
+
 const clock = new THREE.Clock();
 
-const cameraTrackingModels = [];
-const clickableModels = [];
 const modelAnimations = {}; // Store animations for each model
 console.log(modelAnimations);
 
+let movementSpeed = 0.1;
+
+let player;
+// Load the player model
 function loadModel(config) {
     const loader = new GLTFLoader();
 
@@ -107,66 +246,24 @@ function loadModel(config) {
             model.position.set(config.position.x, config.position.y, config.position.z);
             model.scale.set(config.scale, config.scale, config.scale);
 
-            // Create a group for the model and its lights
-            const group = new THREE.Group();
-            group.add(model);
+            // Add to scene
+            scene.add(model);
+            player = model; // Assign the model to the player
 
-            // Add lights if they are defined
-            if (config.lights) {
-                config.lights.forEach((lightConfig) => {
-                    const LightType = THREE[lightConfig.type]; // Dynamically create light type
-                    const light = new LightType(
-                        lightConfig.color,
-                        lightConfig.intensity,
-                        lightConfig.distance
-                    );
-                    light.position.set(
-                        lightConfig.position.x,
-                        lightConfig.position.y,
-                        lightConfig.position.z
-                    );
-                    group.add(light); // Add light to the group
-
-                    group.userData.light = light;
-                });
-            }
-
-            // Add the group to the scene
-            scene.add(group);
-
-            // Add to clickable models
-            clickableModels.push(model);
-
-            // animation sorcery
+            // Handle animations
             if (gltf.animations.length > 0) {
                 const mixer = new THREE.AnimationMixer(model);
                 const actions = {};
-            
-                gltf.animations.forEach((clip, index) => {
+
+                gltf.animations.forEach((clip) => {
                     const action = mixer.clipAction(clip);
                     actions[clip.name] = action;
-                    console.log(`Animation [${index}] - Name: ${clip.name}`);
                 });
-            
-                // Play the first animation by default
-                const firstAnimationName = gltf.animations[0].name;
-                if (actions[firstAnimationName]) {
-                    actions[firstAnimationName].play();
-                    console.log(`Playing default animation: ${firstAnimationName}`);
-                }
-            
-                // Store for later use
-                modelAnimations[config.path] = { mixer, actions };
+
+                actions[gltf.animations[4].name].play(); // play the "stand" animation
                 mixers.push(mixer);
-
-                // render. async loading on anims block ui render on load
+                modelAnimations[config.path] = { mixer, actions };
                 renderAnimations();
-
-            }
-
-            // Add the model to the list of objects for camera tracking
-            if (config.lookAtCamera) {
-                cameraTrackingModels.push(model);
             }
         },
         undefined,
@@ -189,40 +286,21 @@ const models = [
             { type: 'SpotLight', color: 0x0ffffff, intensity: 5, distance: 1000, position: { x: 0, y: 5, z: -5 } }
         ]
     },
+    {
+        path: '../../models/catwoman_rigged.glb',
+        // position: { x: 2, y: -1.4, z: 47 },
+        position: { x: 2, y: 0, z: 1 },
+        scale: 1,
+        lookAtCamera: false,
+        animations: true,
+        lights: [
+            { type: 'SpotLight', color: 0x0ffffff, intensity: 5, distance: 1000, position: { x: 0, y: 5, z: -5 } }
+        ]
+    },
 ];
 
 models.forEach((modelConfig) => loadModel(modelConfig));
 
-
-const raycaster = new THREE.Raycaster();
-const pointer = new THREE.Vector2();
-
-function onPointerClick(event) {
-    // Convert pointer position to normalized device coordinates
-    pointer.x = (event.clientX / window.innerWidth) * 2 - 1;
-    pointer.y = -(event.clientY / window.innerHeight) * 2 + 1;
-
-    // Set raycaster
-    raycaster.setFromCamera(pointer, camera);
-
-    // Find intersections
-    const intersects = raycaster.intersectObjects(clickableModels, true);
-
-    if (intersects.length > 0) {
-        // Find the parent group of the clicked object
-        let clickedObject = intersects[0].object;
-        while (clickedObject.parent && !clickedObject.userData.light) {
-            clickedObject = clickedObject.parent; // Traverse up to the group
-        }
-        const light = clickedObject.userData.light;
-        if (light) {
-            console.log(light);
-        }
-    }
-}
-
-// Add the click event listener
-window.addEventListener('click', onPointerClick);
 
 // render animations 
 // Select the <ul> inside the .nav-bar
@@ -272,21 +350,15 @@ function renderAnimations() {
 function animate() {
     requestAnimationFrame(animate);
 
-    // Update mixers for animations
+    // Update mixers
     const delta = clock.getDelta();
     mixers.forEach((mixer) => mixer.update(delta));
-    // 
-    if (cameraTrackingModels) cameraTrackingModels.forEach(model => model.lookAt(camera.position));
 
-    // Calculate movement based on keys and camera orientation
-    const movement = calculateMovement();
-    camera.position.add(movement);
+    // Update player movement and TPS camera
+    updatePlayerMovement();
+    updateTPSCamera();
 
-    // Apply mouse-based rotation to the camera
-    camera.rotation.x = rotationX; // Vertical rotation (look up/down)
-    camera.rotation.y = rotationY; // Horizontal rotation (turn left/right)
-
-    // Render scene
+    // Render the scene
     renderer.render(scene, camera);
 }
 
