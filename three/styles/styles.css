@@ -175,6 +175,11 @@ footer a {
     /* width: 300px;
     max-width: 300px; */
 }
+
+#dropdown:hover {
+    cursor: pointer;
+    color: red;
+}
   
 .dropdown-menu li {
     padding: 10px;
