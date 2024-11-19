@@ -7,7 +7,7 @@ const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerH
 
 // Create a green grass tile
 const grassGeometry = new THREE.PlaneGeometry(255, 255); // Width and height of the tile
-const grassMaterial = new THREE.MeshLambertMaterial({ color: 0xffffff }); // Green color
+const grassMaterial = new THREE.MeshLambertMaterial({ color: 0x333333 }); // Green color
 const grassTile = new THREE.Mesh(grassGeometry, grassMaterial);
 
 // Rotate the tile to lie flat on the ground
@@ -204,9 +204,11 @@ function updateTPSCamera() {
 
     // Rotate the camera around the player based on input
     camera.position.set(
-        player.position.x + zoomDistance * Math.cos(rotationAngle),
+        player.position.x + cameraOffset.x * Math.cos(rotationAngle) - cameraOffset.z * Math.sin(rotationAngle),
+        // player.position.x + zoomDistance * Math.cos(rotationAngle),
         player.position.y + cameraOffset.y,
-        player.position.z + zoomDistance * Math.sin(rotationAngle)
+        player.position.z + cameraOffset.x * Math.sin(rotationAngle) + cameraOffset.z * Math.cos(rotationAngle)
+        // player.position.z + zoomDistance * Math.sin(rotationAngle)
     );
 
     // Look at the player
