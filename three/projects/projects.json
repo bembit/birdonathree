@@ -1,47 +1,47 @@
 [
     {
         "id": "1",
-        "title": "Solar",
+        "title": "\"Solar\" Sytem",
         "dateCreated": "2024-11-01",
-        "subtitle": "First look at ThreeJS",
+        "subtitle": "First look at ThreeJS. Balls spinning to be honest. I got hooked instantly.",
         "tags": ["Camera", "Mouse", "UI", "Basics", "Easy", "Space"],
-        "url": "./solarsystem/",
+        "url": "./1.solarsystem/",
         "image": "../assets/img/projects/1.png"
     },
     {
         "id": "2",
         "title": "Heroic",
         "dateCreated": "2024-11-02",
-        "subtitle": "Second small project",
+        "subtitle": "Second small project was exploring WASD keyboard movements, ranges and collision.",
         "tags": ["Camera", "Keyboard", "Collision", "Distance", "UI", "Not Space"],
-        "url": "./heroic/",
+        "url": "./2.heroic/",
         "image": "../assets/img/projects/2.png"
     },
     {
         "id": "3",
         "title": "Galaxy",
         "dateCreated": "2024-11-03",
-        "subtitle": "Third small project",
+        "subtitle": "I love sci-fi, sue me. I wanted more understanding of camera and motion.",
         "tags": ["Camera", "Mouse", "UI"],
-        "url": "./galaxy/",
+        "url": "./3.galaxy/",
         "image": "../assets/img/projects/3.png"
     },
     {
         "id": "4",
         "title": "Galaxies",
         "dateCreated": "2024-11-05",
-        "subtitle": "Fourth small project",
+        "subtitle": "Still no camera masterpiece. But this spawned the idea of the landing page zooming. Also some more on keyboard interactions.",
         "tags": ["Camera", "Mouse", "UI", "Movement", "Textures", "Keyboard", "space"],
-        "url": "./galaxies/",
+        "url": "./4.galaxies/",
         "image": "../assets/img/projects/4.png"
     },
     {
         "id": "5",
         "title": "Quick Model test",
         "dateCreated": "2024-11-09",
-        "subtitle": "TBA.",
+        "subtitle": "Tested Vite for building. Luckily imports from CDNs work just fine so I don't have to do the npm game to have fun.",
         "tags": ["Model", "Vite", "Animation", "Import"],
-        "url": "./model_test/",
+        "url": "./5.model_test/",
         "image": "../assets/img/projects/6.png"
     },
     {
@@ -50,34 +50,43 @@
         "dateCreated": "2024-11-11",
         "subtitle": "Projects section, initial state of the site from november 2024. Saved for reference.",
         "tags": ["Movement", "Keyboard", "WASD", "UI", "Interface", "Space", "Mouse", "No Models"],
-        "url": "./bg_projects/",
+        "url": "./6.projects_section_base/",
         "image": "../assets/img/projects/7.png"
     },
     {
         "id": "7",
-        "title": "Catwoman model animations base",
+        "title": "Model animation loader base",
         "dateCreated": "2024-11-17",
         "subtitle": "Basic model viewer with animations. A good starter for future stuff. But this is only the alpha of the beta.",
         "tags": ["Model", "Animation", "Rigged", "GLTF", "Setup", "Template", "Starter"],
-        "url": "./catwoman_init_animations/",
+        "url": "./7.animation_loader_base/",
         "image": "../assets/img/projects/8.png"
     },
     {
         "id": "8",
-        "title": "Catwoman playground start",
+        "title": "Catwoman movement and TPS cam start",
         "dateCreated": "2024-11-19",
         "subtitle": "First look at TPS camera. Want a TPS camera with basic movement and animations.",
         "tags": ["Camera", "Movement", "Animation", "Third Person", "Rigged", "GLTF", "Setup", "Template", "Starter"],
-        "url": "./catwoman_playground_start/",
-        "image": "../assets/img/projects/5.png"
+        "url": "./8.catwoman_movement_start/",
+        "image": "../assets/img/projects/10.png"
     },
     {
         "id": "9",
-        "title": "Scene with some models base",
+        "title": "Base scene for shadows?",
         "dateCreated": "2024-11-18",
         "subtitle": "Figuring out how to do this model loading thing. Also a good time to dig into lights and shadows.",
         "tags": ["Model", "Vite", "Animation", "Import", "Test", "Lights", "Shadows", "3D"],
-        "url": "./model_loader_scene/",
+        "url": "./9.scene_shadows_test_models/",
         "image": "../assets/img/projects/9.png"
+    },
+    {
+        "id": "10",
+        "title": "More animations, camerawork?",
+        "dateCreated": "2024-11-19",
+        "subtitle": "Zoom in out, jump.",
+        "tags": ["Model", "Vite", "Animation", "Import", "Test", "Lights", "Shadows", "3D"],
+        "url": "./10.catwoman_advanced_cam_anim/",
+        "image": "../assets/img/projects/8.png"
     }
 ]
