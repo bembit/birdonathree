@@ -58,7 +58,7 @@
         "title": "Catwoman model animations base",
         "dateCreated": "2024-11-17",
         "subtitle": "Basic model viewer with animations. A good starter for future stuff. But this is only the alpha of the beta.",
-        "tags": ["Model", "Animation", "Rigged", "GLTF", "Catwoman Rigged", "Setup", "Template", "Starter"],
+        "tags": ["Model", "Animation", "Rigged", "GLTF", "Setup", "Template", "Starter"],
         "url": "./catwoman_init_animations/",
         "image": "../assets/img/projects/8.png"
     },
@@ -67,7 +67,7 @@
         "title": "Catwoman playground start",
         "dateCreated": "TBA",
         "subtitle": "Want a TPS camera with basic movement and animations.",
-        "tags": ["Camera", "Movement", "Animation", "Third Person", "Catwoman", "Rigged", "GLTF", "Setup", "Template", "Starter"],
+        "tags": ["Camera", "Movement", "Animation", "Third Person", "Rigged", "GLTF", "Setup", "Template", "Starter"],
         "url": "./catwoman_playground_start/",
         "image": "../assets/img/projects/5.png"
     },

@@ -470,6 +470,8 @@ body.no-scroll {
     box-shadow: var(--box-shadow);
 
     min-width: 200px;
+
+    user-select: none;
 }
 
 .nav-bar ul {
