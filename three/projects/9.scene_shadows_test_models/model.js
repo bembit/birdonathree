@@ -1,6 +1,5 @@
 import * as THREE from 'https://unpkg.com/three@0.125.1/build/three.module.js';
 import { GLTFLoader } from 'https://unpkg.com/three@0.125.1/examples/jsm/loaders/GLTFLoader.js';
-import { OrbitControls } from 'https://unpkg.com/three@0.125.1/examples/jsm/controls/OrbitControls.js';
 
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
@@ -22,6 +21,7 @@ const grassTile = new THREE.Mesh(grassGeometry, grassMaterial);
 // Rotate the tile to lie flat on the ground
 grassTile.rotation.x = -Math.PI / 2; // Rotate to face upward
 grassTile.position.set(0, 0, 0); // Place it at the center of the scene
+grassTile.receiveShadow  = true;
 scene.add(grassTile);
 
 // Add light to illuminate the tile
@@ -29,10 +29,54 @@ const light = new THREE.DirectionalLight(0xffffff, 1);
 light.position.set(25, 25, -50);
 scene.add(light);
 
+// Add sunlight
+const sunlight = new THREE.DirectionalLight(0xffffff, 1);
+sunlight.position.set(10, 20, 10);
+scene.add(sunlight);
+sunlight.castShadow = true;
+
+// Reference to the parent element where sliders will be appended
+const navBarUl = document.querySelector('.nav-bar ul');
+
+// Shadow properties directly tied to sunlight.shadow
+const shadowProperties = {
+    "mapSize.width": () => sunlight.shadow.mapSize.width,
+    "mapSize.height": () => sunlight.shadow.mapSize.height,
+    "camera.near": () => sunlight.shadow.camera.near,
+    "camera.far": () => sunlight.shadow.camera.far,
+    "camera.left": () => sunlight.shadow.camera.left,
+    "camera.right": () => sunlight.shadow.camera.right,
+    "camera.top": () => sunlight.shadow.camera.top,
+    "camera.bottom": () => sunlight.shadow.camera.bottom
+};
+
+// Configure shadow map
+// sunlight.shadow.mapSize.width = 2048;
+// sunlight.shadow.mapSize.height = 2048;
+// sunlight.shadow.camera.near = 0.5;
+// sunlight.shadow.camera.far = 50;
+// sunlight.shadow.camera.left = -10;
+// sunlight.shadow.camera.right = 10;
+// sunlight.shadow.camera.top = 10;
+// sunlight.shadow.camera.bottom = -10;
+
+sunlight.shadow.mapSize.width = 2048;
+sunlight.shadow.mapSize.height = 2048;
+sunlight.shadow.camera.near = 2;
+sunlight.shadow.camera.far = 150;
+sunlight.shadow.camera.left = -150;
+sunlight.shadow.camera.right = 150;
+sunlight.shadow.camera.top = 150;
+sunlight.shadow.camera.bottom = -150;
+
 // Renderer with the selected canvas
 const renderer = new THREE.WebGLRenderer({ canvas, alpha: true });
 renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.setPixelRatio(window.devicePixelRatio);
+
+// Enable renderer shadows
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
 // Track keys
 const keys = {
@@ -122,6 +166,13 @@ function loadModel(config) {
             model.position.set(config.position.x, config.position.y, config.position.z);
             model.scale.set(config.scale, config.scale, config.scale);
 
+            model.traverse((child) => {
+                if (child.isMesh) {
+                    child.castShadow = true;
+                    child.recieveShadow = true;
+                }
+            });
+
             // Create a group for the model and its lights
             const group = new THREE.Group();
             group.add(model);
@@ -175,7 +226,7 @@ function loadModel(config) {
                 mixers.push(mixer);
 
                 // render. async loading on anims block ui render on load
-                renderAnimations();
+                // renderAnimations();
 
             }
 
@@ -238,6 +289,50 @@ const models = [
         ]
     },
     {
+        path: '../../models/env_scene/vegetation/stylized_tree.glb',
+        // position: { x: 2, y: -1.4, z: 47 },
+        position: { x: -5, y: 0, z: 15 },
+        scale: 20,
+        lookAtCamera: false,
+        animations: false,
+        lights: [
+            { type: 'SpotLight', color: 0x0ffffff, intensity: 1, distance: 100, position: { x: 0, y: 5, z: -5 } }
+        ]
+    },
+    {
+        path: '../../models/env_scene/vegetation/stylized_tree.glb',
+        // position: { x: 2, y: -1.4, z: 47 },
+        position: { x: 5, y: 0, z: 15 },
+        scale: 20,
+        lookAtCamera: false,
+        animations: false,
+        lights: [
+            { type: 'SpotLight', color: 0x0ffffff, intensity: 1, distance: 100, position: { x: 0, y: 5, z: -5 } }
+        ]
+    },
+    {
+        path: '../../models/env_scene/vegetation/stylized_tree.glb',
+        // position: { x: 2, y: -1.4, z: 47 },
+        position: { x: 5, y: 0, z: -15 },
+        scale: 20,
+        lookAtCamera: false,
+        animations: false,
+        lights: [
+            { type: 'SpotLight', color: 0x0ffffff, intensity: 1, distance: 100, position: { x: 0, y: 5, z: -5 } }
+        ]
+    },
+    {
+        path: '../../models/env_scene/vegetation/stylized_tree.glb',
+        // position: { x: 2, y: -1.4, z: 47 },
+        position: { x: 19, y: 0, z: 5 },
+        scale: 20,
+        lookAtCamera: false,
+        animations: false,
+        lights: [
+            { type: 'SpotLight', color: 0x0ffffff, intensity: 1, distance: 100, position: { x: 0, y: 5, z: -5 } }
+        ]
+    },
+    {
         path: '../../models/env_scene/vegetation/tree.glb',
         // position: { x: 2, y: -1.4, z: 47 },
         position: { x: 0, y: 0, z: 0 },
@@ -259,17 +354,17 @@ const models = [
             { type: 'SpotLight', color: 0x0fffffff, intensity: 1, distance: 1000, position: { x: 0, y: 5, z: -5 } }
         ]
     },
-    // {
-    //     path: '../../models/catwoman_rigged.glb',
-    //     // position: { x: 2, y: -1.4, z: 47 },
-    //     position: { x: 0, y: 25, z: 0 },
-    //     scale: 1,
-    //     lookAtCamera: false,
-    //     animations: false,
-    //     lights: [
-    //         { type: 'SpotLight', color: 0x0fffffff, intensity: 1, distance: 1000, position: { x: 0, y: 5, z: -5 } }
-    //     ]
-    // },
+    {
+        path: '../../models/catwoman_rigged.glb',
+        // position: { x: 2, y: -1.4, z: 47 },
+        position: { x: 6, y: 0, z: 3 },
+        scale: 1,
+        lookAtCamera: false,
+        animations: false,
+        lights: [
+            { type: 'SpotLight', color: 0x0fffffff, intensity: 1, distance: 1000, position: { x: 0, y: 5, z: -5 } }
+        ]
+    },
     {
         path: '../../models/catwoman_rigged.glb',
         // position: { x: 2, y: -1.4, z: 47 },
@@ -316,50 +411,6 @@ function onPointerClick(event) {
 
 // Add the click event listener
 window.addEventListener('click', onPointerClick);
-
-// render animations 
-// Select the <ul> inside the .nav-bar
-const navBarList = document.querySelector('.nav-bar ul');
-
-// Function to render animations as <li> elements
-function renderAnimations() {
-    // Clear existing content
-    navBarList.innerHTML = '';
-
-    // Check if there are animations to render
-    if (Object.keys(modelAnimations).length === 0) {
-        const emptyMessage = document.createElement('li');
-        emptyMessage.textContent = 'No animations loaded yet';
-        navBarList.appendChild(emptyMessage);
-        return;
-    }
-
-    // Loop through all the animations in the modelAnimations object
-    Object.entries(modelAnimations).forEach(([modelPath, { actions }]) => {
-        Object.keys(actions).forEach((animationName) => {
-            // Create an <li> element for each animation
-            const listItem = document.createElement('li');
-            listItem.textContent = `${modelPath}: ${animationName}`; // Include model path for clarity
-
-            // Add a click event listener to play the animation
-            listItem.addEventListener('click', () => {
-                // Stop all animations for the model
-                Object.values(actions).forEach((action) => action.stop());
-
-                // Play the clicked animation
-                actions[animationName].play();
-                console.log(`Playing animation: ${animationName}`);
-
-                // Highlight the active animation
-                Array.from(navBarList.children).forEach((li) => li.classList.remove('active'));
-                listItem.classList.add('active');
-            });
-
-            // Append the <li> to the <ul>
-            navBarList.appendChild(listItem);
-        });
-    });
-}
 
 // Animation loop
 function animate() {
