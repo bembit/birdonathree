@@ -66,9 +66,8 @@ data().then(projects => {
             countElement.innerText = favorites.length;
         }
     };
-
+    // initial
     updateFavoritesCount();
-
 
     // ######## Function to create a project item
     const createProjectItem = (project) => {
@@ -124,8 +123,8 @@ data().then(projects => {
 
     // generate unique tags
     // add tags by alphabetical order
-    // Limit for initially visible tags
-    const INITIAL_VISIBLE_TAGS = 5;
+    // or just hide all the filters by default?
+    const INITIAL_VISIBLE_TAGS = 0;
 
     // Track whether all tags are currently shown
     let isShown = false;
@@ -134,10 +133,11 @@ data().then(projects => {
     const showAllButton = document.createElement('button');
     const hideAllButton = document.createElement('button');
 
-    showAllButton.innerText = 'Show All';
+    showAllButton.innerText = 'Show tags';
     showAllButton.classList.add('btn');
 
-    hideAllButton.innerText = 'Hide All';
+    // add btn to clear tags
+    hideAllButton.innerText = 'Hide tags';
     hideAllButton.classList.add('btn');
 
     // Render tags with toggleable buttons
@@ -189,7 +189,8 @@ data().then(projects => {
         tagsContainer.appendChild(tagItem);
     };
 
-    // Generate and sort unique tags
+    // generate and sort unique tags
+    // sort by occurance? like, most used tags? idontknow
     const uniqueTags = generateUniqueTags(projects).sort((a, b) => a.localeCompare(b));
 
     // Render the initial tags
@@ -241,24 +242,66 @@ data().then(projects => {
         loadMoreButton.style.display = itemsToShow < filteredProjects.length ? 'block' : 'none';
     };
 
+    // Create "Clear Filters" button once (to avoid duplicating elements)
+    const clearFiltersButton = document.createElement('button');
+    clearFiltersButton.innerText = 'Clear Filters';
+    clearFiltersButton.classList.add('btn');
+
+    // Clear all selected tags when "Clear Filters" button is clicked
+    clearFiltersButton.addEventListener('click', () => {
+        selectedTags.clear(); // Clear all selected tags
+        // searchInput.value = ''; 
+        isShown = false; // Reset to default tag display
+        renderTags(); // Re-render tags
+        filterProjects(); // Re-apply project filtering
+    });
 
     // Filter projects based on search input and selected tags
     const filterProjects = () => {
         const searchText = searchInput.value.toLowerCase();
 
+        const clearSearchInput = document.getElementById('clear-search-input');
+        clearSearchInput.addEventListener('click', () => {
+            searchInput.value = '';
+            filterProjects();
+        });
+        
+        // Filter the projects
         filteredProjects = projects.filter(project => {
             const matchesText = project.title.toLowerCase().includes(searchText) ||
                                 project.subtitle.toLowerCase().includes(searchText);
             
             const projectTagsLowercase = project.tags.map(tag => tag.toLowerCase());
             const matchesTags = Array.from(selectedTags).every(tag => projectTagsLowercase.includes(tag));
-    
+            
             return matchesText && matchesTags;
         });
-    
+
+        // Update the UI based on selected tags
+        if (selectedTags.size > 0) {
+            // this needs to be reworked once more to be able to open more filters even if one is already selected.
+            showAllButton.style.display = 'none';
+            hideAllButton.style.display = 'none';
+
+            // Show "Clear Filters" button
+            if (!tagsContainer.contains(clearFiltersButton)) {
+                tagsContainer.appendChild(clearFiltersButton);
+            }
+        } else {
+            // Show "Show All" and "Hide All" buttons
+            showAllButton.style.display = 'block';
+            hideAllButton.style.display = 'block';
+
+            // Hide "Clear Filters" button
+            if (tagsContainer.contains(clearFiltersButton)) {
+                tagsContainer.removeChild(clearFiltersButton);
+            }
+        }
+
         itemsToShow = ITEMS_INCREMENT; // Reset to initial count on new filter
-        renderProjects();
+        renderProjects(); // Render the filtered projects
     };
+
 
     // Load more projects on button click
     loadMoreButton.addEventListener('click', () => {
