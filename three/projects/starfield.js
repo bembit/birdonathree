@@ -88,11 +88,14 @@ document.addEventListener('mousemove', (event) => {
 });
 
 // Movement vectors
+// this needs to be accessed
 let movementSpeed = 0.1;
 
 function calculateMovement() {
     const forward = new THREE.Vector3();
     const right = new THREE.Vector3();
+
+    const searchInput = document.querySelector('.search-container input[type="text"]');
 
     // Get the forward vector from the camera
     camera.getWorldDirection(forward);
@@ -106,11 +109,17 @@ function calculateMovement() {
     // Movement vector
     const movement = new THREE.Vector3();
 
+    // or just when highlighted?
+    if (searchInput.value.length !== 0) {
+        movementSpeed = 0;
+        return movement;
+    }
+    // hacky
+    movementSpeed = 0.1;
     if (keys.w) movement.add(forward); // Move forward
     if (keys.s) movement.add(forward.clone().negate()); // Move backward
     if (keys.a) movement.add(right.clone().negate()); // Move left
     if (keys.d) movement.add(right); // Move right
-
     movement.normalize().multiplyScalar(movementSpeed); // Scale to speed
     return movement;
 }
@@ -191,18 +200,6 @@ function loadModel(config) {
     );
 }
 
-
-// Example usage:
-// loadModel('./astronaut.glb', { x: 2, y: -1.4, z: 47 }, 1);
-// loadModel('./space_fighter.glb', { x: -10, y: 5, z: 50 }, 0.5);
-// loadModel('./planet.glb', { x: 20, y: -5, z: 60 }, 3, false);
-
-// const models = [
-//     { path: './astronaut.glb', position: { x: 2, y: -1.4, z: 47 }, scale: 1 },
-//     { path: './space_fighter.glb', position: { x: -10, y: 5, z: 50 }, scale: 0.1 },
-//     // { path: './planet.glb', position: { x: 20, y: -5, z: 60 }, scale: 3, animations: false }
-// ];
-
 // MAKE it an async loader tomorrow
 // check on animations don't just play all
 // or array it
@@ -233,10 +230,6 @@ const models = [
     },
     // Add more models as needed
 ];
-
-// models.forEach((config) => {
-//     loadModel(config.path, config.position, config.scale, config.animations ?? true);
-// });
 
 models.forEach((modelConfig) => loadModel(modelConfig));
 
@@ -289,7 +282,7 @@ function onPointerClick(event) {
 // Add the click event listener
 window.addEventListener('click', onPointerClick);
 
-// Add the click event listener
+// this for something else
 // window.addEventListener('click', () => {
 //     // console.log(event.target);
 //     if (
@@ -303,12 +296,6 @@ window.addEventListener('click', onPointerClick);
 // Animation loop
 function animate() {
     requestAnimationFrame(animate);
-
-    // model and animations
-    // console.log(models);
-
-    // model.lookAt(camera.position);
-    // models.forEach(model => model.lookAt(camera.position));
 
     // Update mixers for animations
     const delta = clock.getDelta();

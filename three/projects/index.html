@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="../styles/styles.css">
     <script src="https://kit.fontawesome.com/df3e6f116a.js" crossorigin="anonymous"></script>
     <script src="../js/main.js" defer></script>
-    <script src="../js/search.js" defer></script>
+    <script src="../js/projects.js" defer></script>
     <style>
         #starfield-canvas:hover {
             cursor: pointer;
@@ -31,21 +31,38 @@
         .nav-bar a:hover {
             cursor: pointer;
         }
-        .tags-container ul > a.btn {
-
+        @media screen and (max-width: 768px) {
+            header nav ul li:not(:nth-of-type(5)):not(.dropdown-menu > li) {
+                display: none;
+            }
+            .dropdown-menu {
+                flex-direction: column;
+                background-color: black;
+                transform: initial;
+                margin-top: 25px;
+            }
+            .project-item {
+                flex-basis: initial;
+            }
+            .search-container {
+                max-width: 100%;
+            }
         }
     </style>
 </head>
 
 <!-- TODO -->
-<!-- 1. clear search x -->
+<!-- X 1. clear search x -->
 <!-- X 2. hide most filters with an arrow.  -->
-<!-- 3. style the divs -->
-<!-- 4. add basic responsive design -->
+<!-- X 3. added filter clear -->
+<!-- X 4. while search typing turn off movement with wasd -->
 <!-- X 5. add favorites dropdown -->
-<!-- 6. fix bg music -->
-<!-- while search typing turn off movement with wasd -->
-<!-- add remove from favourites btn to dropdown -->
+
+<!-- 6. add remove from favourites btn to dropdown -->
+
+<!-- O. style the divs -->
+<!-- O. add basic responsive design -->
+<!-- O. fix bg music -->
 
 <body class="load">
 
@@ -130,6 +147,7 @@
 
                 <div class="search-container">
                     <div>
+                        <!-- this should be rendered with js on condition of having input > 0 -->
                         <input type="text" placeholder="Search.."><button id="clear-search-input">clear search</button>
                     </div>
                     <div class="tags-container">
@@ -138,6 +156,8 @@
                         </ul>
                     </div>
                 </div>
+
+                <h3 class="gradient">Warning! <br>High quality models and low quality code.</h3>
 
                 <div class="all-projects-container">
 
