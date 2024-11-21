@@ -1,6 +1,5 @@
 import * as THREE from 'https://unpkg.com/three@0.125.1/build/three.module.js';
 import { GLTFLoader } from 'https://unpkg.com/three@0.125.1/examples/jsm/loaders/GLTFLoader.js';
-import { OrbitControls } from 'https://unpkg.com/three@0.125.1/examples/jsm/controls/OrbitControls.js';
 
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
@@ -30,7 +29,6 @@ scene.add(ambientLight);
 
 // Create directional light
 const sunlight = new THREE.DirectionalLight(0xffffff, 1); // White light with intensity 1
-// ok dude shadows too
 sunlight.position.set(10, 20, 10); // Position it above and at an angle
 scene.add(sunlight);
 sunlight.castShadow = true;
@@ -40,12 +38,10 @@ sunlight.shadow.mapSize.width = 2048; // Higher value = sharper shadows (default
 sunlight.shadow.mapSize.height = 2048;
 sunlight.shadow.camera.near = 0.5; // Start of shadow casting
 sunlight.shadow.camera.far = 50; // End of shadow casting
-sunlight.shadow.camera.left = -10; // Adjust bounds to cover your scene
+sunlight.shadow.camera.left = -10; // Adjust bounds to cover scene
 sunlight.shadow.camera.right = 10;
 sunlight.shadow.camera.top = 10;
 sunlight.shadow.camera.bottom = -10;
-
-// Enable shadow casting for the light
 
 // Renderer with the selected canvas
 const renderer = new THREE.WebGLRenderer({ canvas, alpha: true });
@@ -54,8 +50,6 @@ renderer.setPixelRatio(window.devicePixelRatio);
 
 renderer.shadowMap.enabled = true; // Enable shadows
 renderer.shadowMap.type = THREE.PCFSoftShadowMap; // Use soft shadows (optional)
-
-
 
 // Track keys
 const keys = {
@@ -115,12 +109,10 @@ let currentAnimation = null; // Track the current animation
 const transitionDuration = 0.5; // Time in seconds for transitions
 
 let isJumping = false; // Flag to track if the player is jumping
-let jumpHeight = 1; // Adjust the height of the jump
-// let gravity = -0.005; // Gravity effect to bring the player down after jumping
+// let jumpHeight = 1; // Adjust the height of the jump
+// let gravity = -0.005; 
 let gravity = -0.002;
-// let gravity = -0.001;
 let velocityY = 1; // Vertical velocity for jumping
-
 let jumpDuration = 100;
 
 const initialJumpVelocity = (jumpDuration / 2) * Math.abs(gravity); // (time to peak) * abs(gravity)
@@ -208,80 +200,7 @@ document.addEventListener('keydown', (event) => {
 });
 
 
-// function updatePlayerMovement() {
-//     if (!player) return;
 
-//     const movement = calculatePlayerMovement();
-//     player.position.add(movement);
-
-//     // Check if the player is moving
-//     const isMoving = movement.length() > 0;
-
-//     // Access animations using modelAnimations and the model path
-//     const playerAnimations = modelAnimations[models[0].path]?.actions; // Ensure animations are loaded
-//     if (!playerAnimations) return;
-
-//     const runningAnimation = playerAnimations['run']; 
-//     const standingAnimation = playerAnimations['stand']; 
-
-//     if (isMoving) {
-//         if (currentAnimation !== runningAnimation) {
-//             // Transition to running animation
-//             if (currentAnimation) currentAnimation.fadeOut(transitionDuration);
-//             runningAnimation.reset().fadeIn(transitionDuration).play();
-//             currentAnimation = runningAnimation;
-//         }
-
-//         // Smoothly rotate player to face the movement direction
-//         const lookDirection = movement.clone().normalize();
-//         const targetQuaternion = new THREE.Quaternion().setFromUnitVectors(
-//             new THREE.Vector3(0, 0, 1), // Default forward direction
-//             lookDirection
-//         );
-//         player.quaternion.slerp(targetQuaternion, 0.1); // Adjust 0.1 for smoother or faster turning
-//     } else {
-//         if (currentAnimation !== standingAnimation) {
-//             // Transition to standing animation
-//             if (currentAnimation) currentAnimation.fadeOut(transitionDuration);
-//             standingAnimation.reset().fadeIn(transitionDuration).play();
-//             currentAnimation = standingAnimation;
-//         }
-//     }
-// }
-
-
-// define gltf
-// function updatePlayerMovement() {
-//     if (!player) return;
-
-//     const movement = calculatePlayerMovement();
-//     player.position.add(movement);
-
-//     // Check if the player is moving
-//     const isMoving = movement.length() > 0;
-
-//     // Play the running animation if moving
-//     if (isMoving) {
-//         const runningAnimation = modelAnimations[models[0].path].actions[gltf.animations[5].name];
-//         if (currentAnimation !== runningAnimation) {
-//             if (currentAnimation) currentAnimation.stop();
-//             runningAnimation.play();
-//             currentAnimation = runningAnimation;
-//         }
-
-//         // Optional: Rotate player to face the movement direction
-//         const lookDirection = movement.clone().normalize();
-//         player.lookAt(player.position.clone().add(lookDirection));
-//     } else {
-//         // Play the standing animation if not moving
-//         const standingAnimation = modelAnimations[models[0].path].actions[gltf.animations[4].name];
-//         if (currentAnimation !== standingAnimation) {
-//             if (currentAnimation) currentAnimation.stop();
-//             standingAnimation.play();
-//             currentAnimation = standingAnimation;
-//         }
-//     }
-// }
 
 // Mouse movement to rotate camera around the player
 document.addEventListener('mousemove', (event) => {
@@ -296,21 +215,6 @@ document.addEventListener('mousemove', (event) => {
     cameraOffset.y = THREE.MathUtils.clamp(verticalOffset, 2, 8); // Limit vertical range
 });
 
-// // Update TPS Camera
-// function updateTPSCamera() {
-//     if (!player) return;
-
-//     // Rotate the camera around the player
-//     camera.position.set(
-//         player.position.x + cameraOffset.x * Math.cos(rotationAngle) - cameraOffset.z * Math.sin(rotationAngle),
-//         player.position.y + cameraOffset.y,
-//         player.position.z + cameraOffset.x * Math.sin(rotationAngle) + cameraOffset.z * Math.cos(rotationAngle)
-//     );
-
-//     // Look at the player
-//     const targetPosition = player.position.clone().add(cameraTargetOffset);
-//     camera.lookAt(targetPosition);
-// }
 
 // Camera zoom limits
 const minZoom = 2; // Minimum distance from the player
@@ -355,30 +259,24 @@ let movementSpeed = 0.1;
 
 let player;
 
-// player.castShadow = true;
-// player.receiveShadow = true;
-
 // Load the player model
 function loadModel(config) {
     const loader = new GLTFLoader();
 
-    loader.load(
-        config.path,
-        (gltf) => {
+    loader.load(config.path,(gltf) => {
             const model = gltf.scene;
             model.position.set(config.position.x, config.position.y, config.position.z);
             model.scale.set(config.scale, config.scale, config.scale);
 
-            // Add to scene
             scene.add(model);
+            // Enable shadows for the player
             model.traverse((child) => {
                 if (child.isMesh) {
                     child.castShadow = true;
-                    child.receiveShadow = true; // Enable shadows for the player
+                    child.receiveShadow = true;
                 }
             });
-            
-            // model.castShadow = true; // Enable shadows for the player
+            // shadows are in meshes, not in the model itself
             // model.receiveShadow = true;
             player = model; // Assign the model to the player
 
@@ -403,13 +301,12 @@ function loadModel(config) {
     );
 }
 
-// Global array for mixers (if animations are used)
+// global array for mixers (if animations are used)
 const mixers = [];
 
 const models = [
     {
         path: '../../models/catwoman_rigged.glb',
-        // position: { x: 2, y: -1.4, z: 47 },
         position: { x: 0, y: 0, z: 0 },
         scale: 1,
         lookAtCamera: false,
@@ -420,7 +317,6 @@ const models = [
     },
     {
         path: '../../models/catwoman_rigged.glb',
-        // position: { x: 2, y: -1.4, z: 47 },
         position: { x: 2, y: 0, z: 1 },
         scale: 1,
         lookAtCamera: false,
@@ -435,15 +331,13 @@ models.forEach((modelConfig) => loadModel(modelConfig));
 
 
 // render animations 
-// Select the <ul> inside the .nav-bar
 const navBarList = document.querySelector('.nav-bar ul');
 
-// Function to render animations as <li> elements
 function renderAnimations() {
-    // Clear existing content
+    
     navBarList.innerHTML = '';
 
-    // Check if there are animations to render
+    // heck if there are animations to render
     if (Object.keys(modelAnimations).length === 0) {
         const emptyMessage = document.createElement('li');
         emptyMessage.textContent = 'No animations loaded yet';
@@ -451,14 +345,14 @@ function renderAnimations() {
         return;
     }
 
-    // Loop through all the animations in the modelAnimations object
+    // loop animations in the modelAnimations object
     Object.entries(modelAnimations).forEach(([modelPath, { actions }]) => {
         Object.keys(actions).forEach((animationName) => {
             // Create an <li> element for each animation
             const listItem = document.createElement('li');
-            listItem.textContent = `${modelPath}: ${animationName}`; // Include model path for clarity
+            listItem.textContent = `${modelPath}: ${animationName}`; // optional test: include model path for clarity
 
-            // Add a click event listener to play the animation
+            // click event listener to play the animation
             listItem.addEventListener('click', () => {
                 // Stop all animations for the model
                 Object.values(actions).forEach((action) => action.stop());

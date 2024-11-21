@@ -55,7 +55,8 @@ data().then(projects => {
         }
         updateFavoritesStorage();
         updateFavoritesCount(); // Optionally update a favorites counter in the UI
-        renderProjects(); // Optionally update the UI
+        // optionally update the UI. if favorite soring is enabled
+        // renderProjects();
     };
 
     // Update favorites count in the header or elsewhere
@@ -65,6 +66,8 @@ data().then(projects => {
             countElement.innerText = favorites.length;
         }
     };
+    // initial
+    updateFavoritesCount();
 
     // ######## Function to create a project item
     const createProjectItem = (project) => {
@@ -120,11 +123,58 @@ data().then(projects => {
 
     // generate unique tags
     // add tags by alphabetical order
-    const uniqueTags = generateUniqueTags(projects).sort((a, b) => a.localeCompare(b));
+    // or just hide all the filters by default?
+    const INITIAL_VISIBLE_TAGS = 0;
 
-    uniqueTags.forEach(tag => {
+    // Track whether all tags are currently shown
+    let isShown = false;
+
+    // Create buttons
+    const showAllButton = document.createElement('button');
+    const hideAllButton = document.createElement('button');
+
+    showAllButton.innerText = 'Show tags';
+    showAllButton.classList.add('btn');
+
+    // add btn to clear tags
+    hideAllButton.innerText = 'Hide tags';
+    hideAllButton.classList.add('btn');
+
+    // Render tags with toggleable buttons
+    const renderTags = () => {
+        tagsContainer.innerHTML = ''; // Clear existing tags
+
+        if (isShown) {
+            // Show all tags
+            uniqueTags.forEach(tag => createTagItem(tag));
+            tagsContainer.appendChild(hideAllButton); // Add "Hide All" button
+        } else {
+            // Show limited tags
+            uniqueTags.slice(0, INITIAL_VISIBLE_TAGS).forEach(tag => createTagItem(tag));
+            if (uniqueTags.length > INITIAL_VISIBLE_TAGS) {
+                tagsContainer.appendChild(showAllButton); // Add "Show All" button
+            }
+        }
+    };
+
+    // Handle "Show All" button click
+    showAllButton.addEventListener('click', () => {
+        isShown = true; // Set state to show all tags
+        renderTags(); // Re-render the tags
+    });
+
+    // Handle "Hide All" button click
+    hideAllButton.addEventListener('click', () => {
+        isShown = false; // Set state to hide extra tags
+        renderTags(); // Re-render the tags
+    });
+
+    // Create individual tag items
+    const createTagItem = (tag) => {
         const tagItem = document.createElement('li');
         tagItem.innerText = tag;
+
+        // Toggle selected state on click
         tagItem.addEventListener('click', () => {
             if (selectedTags.has(tag)) {
                 selectedTags.delete(tag);
@@ -135,19 +185,48 @@ data().then(projects => {
             }
             filterProjects();
         });
+
         tagsContainer.appendChild(tagItem);
-    });
+    };
+
+    // generate and sort unique tags
+    // sort by occurance? like, most used tags? idontknow
+    const uniqueTags = generateUniqueTags(projects).sort((a, b) => a.localeCompare(b));
+
+    // Render the initial tags
+    renderTags();
+
+
+    // const uniqueTags = generateUniqueTags(projects).sort((a, b) => a.localeCompare(b));
+
+    // uniqueTags.forEach(tag => {
+    //     const tagItem = document.createElement('li');
+    //     tagItem.innerText = tag;
+    //     tagItem.addEventListener('click', () => {
+    //         if (selectedTags.has(tag)) {
+    //             selectedTags.delete(tag);
+    //             tagItem.classList.remove('selected');
+    //         } else {
+    //             selectedTags.add(tag);
+    //             tagItem.classList.add('selected');
+    //         }
+    //         filterProjects();
+    //     });
+    //     tagsContainer.appendChild(tagItem);
+    // });
 
     // Render project items in increments
     const renderProjects = () => {
         // Sort projects: prioritize favorites, then by dateCreated (newest first)
         const sortedProjects = [...filteredProjects].sort((a, b) => {
-            const isAFavorited = favorites.includes(a.id);
-            const isBFavorited = favorites.includes(b.id);
+            
+            // turned off for now, dropdown is better
+            // const isAFavorited = favorites.includes(a.id);
+            // const isBFavorited = favorites.includes(b.id);
 
-            // Prioritize favorites
-            if (isAFavorited && !isBFavorited) return -1; // `a` is a favorite
-            if (!isAFavorited && isBFavorited) return 1;  // `b` is a favorite
+            // // Prioritize favorites
+            // if (isAFavorited && !isBFavorited) return -1; // `a` is a favorite
+            // if (!isAFavorited && isBFavorited) return 1;  // `b` is a favorite
 
             // If both or neither are favorites, sort by dateCreated (newest first)
             const dateA = new Date(a.dateCreated);
@@ -163,24 +242,66 @@ data().then(projects => {
         loadMoreButton.style.display = itemsToShow < filteredProjects.length ? 'block' : 'none';
     };
 
+    // Create "Clear Filters" button once (to avoid duplicating elements)
+    const clearFiltersButton = document.createElement('button');
+    clearFiltersButton.innerText = 'Clear Filters';
+    clearFiltersButton.classList.add('btn');
+
+    // Clear all selected tags when "Clear Filters" button is clicked
+    clearFiltersButton.addEventListener('click', () => {
+        selectedTags.clear(); // Clear all selected tags
+        // searchInput.value = ''; 
+        isShown = false; // Reset to default tag display
+        renderTags(); // Re-render tags
+        filterProjects(); // Re-apply project filtering
+    });
 
     // Filter projects based on search input and selected tags
     const filterProjects = () => {
         const searchText = searchInput.value.toLowerCase();
 
+        const clearSearchInput = document.getElementById('clear-search-input');
+        clearSearchInput.addEventListener('click', () => {
+            searchInput.value = '';
+            filterProjects();
+        });
+        
+        // Filter the projects
         filteredProjects = projects.filter(project => {
             const matchesText = project.title.toLowerCase().includes(searchText) ||
                                 project.subtitle.toLowerCase().includes(searchText);
             
             const projectTagsLowercase = project.tags.map(tag => tag.toLowerCase());
             const matchesTags = Array.from(selectedTags).every(tag => projectTagsLowercase.includes(tag));
-    
+            
             return matchesText && matchesTags;
         });
-    
+
+        // Update the UI based on selected tags
+        if (selectedTags.size > 0) {
+            // this needs to be reworked once more to be able to open more filters even if one is already selected.
+            showAllButton.style.display = 'none';
+            hideAllButton.style.display = 'none';
+
+            // Show "Clear Filters" button
+            if (!tagsContainer.contains(clearFiltersButton)) {
+                tagsContainer.appendChild(clearFiltersButton);
+            }
+        } else {
+            // Show "Show All" and "Hide All" buttons
+            showAllButton.style.display = 'block';
+            hideAllButton.style.display = 'block';
+
+            // Hide "Clear Filters" button
+            if (tagsContainer.contains(clearFiltersButton)) {
+                tagsContainer.removeChild(clearFiltersButton);
+            }
+        }
+
         itemsToShow = ITEMS_INCREMENT; // Reset to initial count on new filter
-        renderProjects();
+        renderProjects(); // Render the filtered projects
     };
+
 
     // Load more projects on button click
     loadMoreButton.addEventListener('click', () => {
