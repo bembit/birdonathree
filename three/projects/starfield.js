@@ -106,7 +106,7 @@ function calculateMovement() {
     forward.normalize();
     right.normalize();
 
-    // Movement vector
+    // whats the vector victor?
     const movement = new THREE.Vector3();
 
     // or just when highlighted?
@@ -115,7 +115,15 @@ function calculateMovement() {
         return movement;
     }
     // hacky
-    movementSpeed = 0.1;
+    // movementSpeed = 0.1;
+    // not so bad
+    let trackPreviousSpeed = document.getElementById('speed-slider').value;
+    movementSpeed = parseFloat(trackPreviousSpeed);
+    // document.getElementById('speed-slider').addEventListener('input', (event) => {
+    //     movementSpeed = parseFloat(event.target.value);
+    //     console.log(`Speed set to: ${movementSpeed}`);
+    // });
+
     if (keys.w) movement.add(forward); // Move forward
     if (keys.s) movement.add(forward.clone().negate()); // Move backward
     if (keys.a) movement.add(right.clone().negate()); // Move left

@@ -46,6 +46,10 @@
             }
             .search-container {
                 max-width: 100%;
+                width: 100%;
+            }
+            .hero-intro {
+                align-self: baseline;
             }
         }
     </style>
@@ -70,8 +74,7 @@
     
     <div class="nav-bar">
         <audio id="audioWhisper" src="../assets/sounds/whisper.mp3"></audio>
-        <h4>Interface</h4>
-        <h5>WASD + mouse drag</h5>
+        <h4>WASD + mouse drag</h4>
         <ul>
             <!-- investigate this -->
             <span id="close-btn" class="close-btn">×</span>
@@ -146,9 +149,9 @@
                 </div>
 
                 <div class="search-container">
-                    <div>
+                    <div class="search-input-container">
                         <!-- this should be rendered with js on condition of having input > 0 -->
-                        <input type="text" placeholder="Search.."><button id="clear-search-input">clear search</button>
+                        <input type="text" placeholder="Search..">
                     </div>
                     <div class="tags-container">
                         <ul>
@@ -157,7 +160,7 @@
                     </div>
                 </div>
 
-                <h3 class="gradient">Warning! <br>High quality models and low quality code.</h3>
+                <h3 class="gradient">High quality models and low quality code.</h3>
 
                 <div class="all-projects-container">
 

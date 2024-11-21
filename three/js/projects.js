@@ -259,15 +259,32 @@ data().then(projects => {
         filterProjects(); // Re-apply project filtering
     });
 
+
+    // clear btn
+    const clearSearchInput = document.createElement('button');
+    clearSearchInput.innerText = 'Clear Search';
+    // clearSearchInput.classList.add('btn');
+
+    clearSearchInput.addEventListener('click', () => {
+        searchInput.value = ''; // Clear search input
+        clearSearchInput.remove(); // Remove the button
+        filterProjects(); // Re-run filtering logic
+    });
+
     // Filter projects based on search input and selected tags
     const filterProjects = () => {
         const searchText = searchInput.value.toLowerCase();
 
-        const clearSearchInput = document.getElementById('clear-search-input');
-        clearSearchInput.addEventListener('click', () => {
-            searchInput.value = '';
-            filterProjects();
-        });
+        // Reference to the container holding the input field
+        const searchContainer = searchInput.parentNode;
+
+        // Add the button only if there's text in the input and it's not already added
+        if (searchText.length > 0 && !searchContainer.contains(clearSearchInput)) {
+            searchContainer.appendChild(clearSearchInput);
+        } else if (searchText.length === 0 && searchContainer.contains(clearSearchInput)) {
+            // Remove the button if the input is cleared
+            clearSearchInput.remove();
+        }
         
         // Filter the projects
         filteredProjects = projects.filter(project => {
@@ -312,8 +329,20 @@ data().then(projects => {
         renderProjects();
     });
 
-    // Listen to search input changes
-    searchInput.addEventListener('input', filterProjects);
+
+    const debounce = (func, delay) => {
+        let timeout;
+        return (...args) => {
+            clearTimeout(timeout);
+            timeout = setTimeout(() => func.apply(this, args), delay);
+        };
+    };
+    
+    // debounce this
+    // searchInput.addEventListener('input', debounce(filterProjects, 500));
+    // searchInput.addEventListener('input', filterProjects);
+    searchInput.addEventListener('input', debounce(filterProjects, 300));
+    
 
     // Initial render
     renderProjects();
