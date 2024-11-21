@@ -161,8 +161,8 @@ footer a {
     display: none; 
     position: absolute;
     transform: translateX(-50%);
-    /* background-color: #000000; */
-    border: 1px solid #f50909;
+    background-color: #000000;
+    border: 1px solid var(--bg-color);
     list-style: none;
     margin: 0;
     padding: 0;
@@ -192,7 +192,7 @@ footer a {
 }
   
 .dropdown-menu li:hover {
-    background-color: red;
+    background-color: var(--bg-color);
 }
 
 .dropdown-content a {
@@ -692,13 +692,37 @@ body.no-scroll {
     display: inline-flex; */
 }
 
-.search-container {
+/* .search-container {
     display: flex;
     flex-direction: column;
     justify-content: center;
     z-index: 1;
     margin-bottom: var(--margin-s);
+    min-width: 50%;
     max-width: 50%;
+} */
+
+.search-container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 50%;
+    /* min-width: 800px; */
+    border: 2px solid rgba(79, 225, 149, 0.25);
+    background-image: var(--gradient-opacity);
+    padding: 25px 45px;
+    border-radius: var(--border-radius--none);
+    margin-bottom: var(--margin-l);
+    margin-top: 10px;
+    gap: 5px;
+    box-shadow: var(--box-shadow);
+    z-index: 1;
+}
+
+.search-input-container {
+    display: flex;
+    flex-direction: row;
 }
 
 .search-container .tags-container ul {
@@ -726,6 +750,7 @@ body.no-scroll {
     cursor: pointer;
 }
 
+/* this should be JS too */
 .tags-container ul li.selected {
     background-color: #3aaa18;
     font-weight: bold;
