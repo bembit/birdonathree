@@ -56,6 +56,7 @@ data().then(projects => {
         updateFavoritesStorage();
         updateFavoritesCount(); // Optionally update a favorites counter in the UI
         // optionally update the UI. if favorite soring is enabled
+        // rerender for unfavoriting?
         // renderProjects();
     };
 
@@ -142,7 +143,7 @@ data().then(projects => {
 
     // Render tags with toggleable buttons
     const renderTags = () => {
-        tagsContainer.innerHTML = ''; // Clear existing tags
+        tagsContainer.innerHTML = '';
 
         if (isShown) {
             // Show all tags
@@ -197,6 +198,7 @@ data().then(projects => {
     renderTags();
 
 
+    // ###### old filters
     // const uniqueTags = generateUniqueTags(projects).sort((a, b) => a.localeCompare(b));
 
     // uniqueTags.forEach(tag => {
@@ -252,7 +254,8 @@ data().then(projects => {
         selectedTags.clear(); // Clear all selected tags
         // searchInput.value = ''; 
         isShown = false; // Reset to default tag display
-        renderTags(); // Re-render tags
+        // dont rerender just remove the CSS active styles.
+        // renderTags(); // Re-render tags
         filterProjects(); // Re-apply project filtering
     });
 
@@ -340,24 +343,30 @@ data().then(projects => {
         // if (isFavorited(projectId)) {
             // favorites = favorites.filter(id => id !== projectId); 
 
-        // Favorite button
-        // let createFavoriteButton = document.createElement('button');
-        // createFavoriteButton.innerText = isFavorited(project.id) ? '❤️' : '🤍';
-        // createFavoriteButton.classList.add('favorite-btn');
-        // createFavoriteButton.title = 'Add to favorites';
-        // createFavoriteButton.addEventListener('click', () => {
-        //     toggleFavorite(project.id, createFavoriteButton);
-        // });
-        // dropdownMenu.appendChild(createFavoriteButton);
-
         if (favoriteProjects.length > 0) {
+
             favoriteProjects.forEach(favorite => {
+
+                // or should I do the sneaky webshop way and put them on a separate page?
+                // question is, should we rerender fucking everything or not?
+                // or should I use React? hah good one.
+                console.log(favoriteProjects);
+
+                let createFavoriteButton = document.createElement('button');
+                createFavoriteButton.innerText = isFavorited(favorite.id) ? '❤️' : '🤍';
+                createFavoriteButton.classList.add('favorite-btn');
+                createFavoriteButton.title = 'Add to favorites';
+                createFavoriteButton.addEventListener('click', () => {
+                    toggleFavorite(favorite.id, createFavoriteButton);
+                });
+
                 const listItem = document.createElement("li");
                 listItem.innerHTML = `<a href="${favorite.url}" class="project-item project-item-favorite">
                                         <h4 >${favorite.title}</h4>
                                         <img src="${favorite.image}">
                                         </a>
-                                        `; 
+                                        `;
+                listItem.appendChild(createFavoriteButton);
                 dropdownMenu.appendChild(listItem);
                 // const linkToAll = document.createElement("a");
                 // linkToAll.innerHTML = "View All";
