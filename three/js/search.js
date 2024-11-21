@@ -55,7 +55,8 @@ data().then(projects => {
         }
         updateFavoritesStorage();
         updateFavoritesCount(); // Optionally update a favorites counter in the UI
-        renderProjects(); // Optionally update the UI
+        // optionally update the UI. if favorite soring is enabled
+        // renderProjects();
     };
 
     // Update favorites count in the header or elsewhere
@@ -65,6 +66,9 @@ data().then(projects => {
             countElement.innerText = favorites.length;
         }
     };
+
+    updateFavoritesCount();
+
 
     // ######## Function to create a project item
     const createProjectItem = (project) => {
@@ -120,11 +124,57 @@ data().then(projects => {
 
     // generate unique tags
     // add tags by alphabetical order
-    const uniqueTags = generateUniqueTags(projects).sort((a, b) => a.localeCompare(b));
+    // Limit for initially visible tags
+    const INITIAL_VISIBLE_TAGS = 5;
 
-    uniqueTags.forEach(tag => {
+    // Track whether all tags are currently shown
+    let isShown = false;
+
+    // Create buttons
+    const showAllButton = document.createElement('button');
+    const hideAllButton = document.createElement('button');
+
+    showAllButton.innerText = 'Show All';
+    showAllButton.classList.add('btn');
+
+    hideAllButton.innerText = 'Hide All';
+    hideAllButton.classList.add('btn');
+
+    // Render tags with toggleable buttons
+    const renderTags = () => {
+        tagsContainer.innerHTML = ''; // Clear existing tags
+
+        if (isShown) {
+            // Show all tags
+            uniqueTags.forEach(tag => createTagItem(tag));
+            tagsContainer.appendChild(hideAllButton); // Add "Hide All" button
+        } else {
+            // Show limited tags
+            uniqueTags.slice(0, INITIAL_VISIBLE_TAGS).forEach(tag => createTagItem(tag));
+            if (uniqueTags.length > INITIAL_VISIBLE_TAGS) {
+                tagsContainer.appendChild(showAllButton); // Add "Show All" button
+            }
+        }
+    };
+
+    // Handle "Show All" button click
+    showAllButton.addEventListener('click', () => {
+        isShown = true; // Set state to show all tags
+        renderTags(); // Re-render the tags
+    });
+
+    // Handle "Hide All" button click
+    hideAllButton.addEventListener('click', () => {
+        isShown = false; // Set state to hide extra tags
+        renderTags(); // Re-render the tags
+    });
+
+    // Create individual tag items
+    const createTagItem = (tag) => {
         const tagItem = document.createElement('li');
         tagItem.innerText = tag;
+
+        // Toggle selected state on click
         tagItem.addEventListener('click', () => {
             if (selectedTags.has(tag)) {
                 selectedTags.delete(tag);
@@ -135,19 +185,47 @@ data().then(projects => {
             }
             filterProjects();
         });
+
         tagsContainer.appendChild(tagItem);
-    });
+    };
+
+    // Generate and sort unique tags
+    const uniqueTags = generateUniqueTags(projects).sort((a, b) => a.localeCompare(b));
+
+    // Render the initial tags
+    renderTags();
+
+
+    // const uniqueTags = generateUniqueTags(projects).sort((a, b) => a.localeCompare(b));
+
+    // uniqueTags.forEach(tag => {
+    //     const tagItem = document.createElement('li');
+    //     tagItem.innerText = tag;
+    //     tagItem.addEventListener('click', () => {
+    //         if (selectedTags.has(tag)) {
+    //             selectedTags.delete(tag);
+    //             tagItem.classList.remove('selected');
+    //         } else {
+    //             selectedTags.add(tag);
+    //             tagItem.classList.add('selected');
+    //         }
+    //         filterProjects();
+    //     });
+    //     tagsContainer.appendChild(tagItem);
+    // });
 
     // Render project items in increments
     const renderProjects = () => {
         // Sort projects: prioritize favorites, then by dateCreated (newest first)
         const sortedProjects = [...filteredProjects].sort((a, b) => {
-            const isAFavorited = favorites.includes(a.id);
-            const isBFavorited = favorites.includes(b.id);
+            
+            // turned off for now, dropdown is better
+            // const isAFavorited = favorites.includes(a.id);
+            // const isBFavorited = favorites.includes(b.id);
 
-            // Prioritize favorites
-            if (isAFavorited && !isBFavorited) return -1; // `a` is a favorite
-            if (!isAFavorited && isBFavorited) return 1;  // `b` is a favorite
+            // // Prioritize favorites
+            // if (isAFavorited && !isBFavorited) return -1; // `a` is a favorite
+            // if (!isAFavorited && isBFavorited) return 1;  // `b` is a favorite
 
             // If both or neither are favorites, sort by dateCreated (newest first)
             const dateA = new Date(a.dateCreated);

@@ -715,6 +715,10 @@ body.no-scroll {
         text-transform: capitalize;
         font-size: 14px;
     }
+    button.btn {
+        margin-bottom: 0;
+        margin-top: 0;
+    }
 }
 
 .search-container .tags-container ul li:hover {

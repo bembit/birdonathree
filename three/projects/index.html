@@ -31,20 +31,23 @@
         .nav-bar a:hover {
             cursor: pointer;
         }
+        .tags-container ul > a.btn {
+
+        }
     </style>
 </head>
 
 <!-- TODO -->
 <!-- 1. clear search x -->
-<!-- 2. hide most filters with an arrow.  -->
+<!-- X 2. hide most filters with an arrow.  -->
 <!-- 3. style the divs -->
 <!-- 4. add basic responsive design -->
-<!-- 5. add favorites dropdown -->
+<!-- X 5. add favorites dropdown -->
 <!-- 6. fix bg music -->
 
 <body class="load">
 
-    <audio id="audioBackgroundTheme" src="../assets/sounds/galaxys_endless_expanse.mp3" loop></audio>
+    <!-- <audio id="audioBackgroundTheme" src="../assets/sounds/galaxys_endless_expanse.mp3" loop></audio> -->
     
     <div class="nav-bar">
         <audio id="audioWhisper" src="../assets/sounds/whisper.mp3"></audio>
@@ -91,7 +94,7 @@
                         <li><a href="#">notes</a></li>
                         <li>|</li>
                         <li>
-                            <a id="dropdown">saved stuff 👇</a>
+                            <a id="dropdown">saved stuff 👇 <span class="favorites-count"></span></a>
                             <ul class="dropdown-menu" id="dropdown-menu"></ul>
                         </li>
                         <li>|</li>
