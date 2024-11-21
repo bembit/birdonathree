@@ -87,6 +87,8 @@ function calculatePlayerMovement() {
 }
 
 let currentAnimation = null; // Track the current animation
+
+
 const transitionDuration = 0.5; // Time in seconds for transitions
 
 function updatePlayerMovement() {
@@ -113,13 +115,10 @@ function updatePlayerMovement() {
             currentAnimation = runningAnimation;
         }
 
-        // Smoothly rotate player to face the movement direction
+        // rotate player to face the movement direction
         const lookDirection = movement.clone().normalize();
-        const targetQuaternion = new THREE.Quaternion().setFromUnitVectors(
-            new THREE.Vector3(0, 0, 1), // Default forward direction
-            lookDirection
-        );
-        player.quaternion.slerp(targetQuaternion, 0.1); // Adjust 0.1 for smoother or faster turning
+        player.lookAt(player.position.clone().add(lookDirection));
+
     } else {
         if (currentAnimation !== standingAnimation) {
             // Transition to standing animation
@@ -129,40 +128,6 @@ function updatePlayerMovement() {
         }
     }
 }
-
-
-// define gltf
-// function updatePlayerMovement() {
-//     if (!player) return;
-
-//     const movement = calculatePlayerMovement();
-//     player.position.add(movement);
-
-//     // Check if the player is moving
-//     const isMoving = movement.length() > 0;
-
-//     // Play the running animation if moving
-//     if (isMoving) {
-//         const runningAnimation = modelAnimations[models[0].path].actions[gltf.animations[5].name];
-//         if (currentAnimation !== runningAnimation) {
-//             if (currentAnimation) currentAnimation.stop();
-//             runningAnimation.play();
-//             currentAnimation = runningAnimation;
-//         }
-
-//         // Optional: Rotate player to face the movement direction
-//         const lookDirection = movement.clone().normalize();
-//         player.lookAt(player.position.clone().add(lookDirection));
-//     } else {
-//         // Play the standing animation if not moving
-//         const standingAnimation = modelAnimations[models[0].path].actions[gltf.animations[4].name];
-//         if (currentAnimation !== standingAnimation) {
-//             if (currentAnimation) currentAnimation.stop();
-//             standingAnimation.play();
-//             currentAnimation = standingAnimation;
-//         }
-//     }
-// }
 
 // Mouse movement to rotate camera around the player
 document.addEventListener('mousemove', (event) => {
@@ -177,22 +142,6 @@ document.addEventListener('mousemove', (event) => {
     cameraOffset.y = THREE.MathUtils.clamp(verticalOffset, 2, 8); // Limit vertical range
 });
 
-// // Update TPS Camera
-// function updateTPSCamera() {
-//     if (!player) return;
-
-//     // Rotate the camera around the player
-//     camera.position.set(
-//         player.position.x + cameraOffset.x * Math.cos(rotationAngle) - cameraOffset.z * Math.sin(rotationAngle),
-//         player.position.y + cameraOffset.y,
-//         player.position.z + cameraOffset.x * Math.sin(rotationAngle) + cameraOffset.z * Math.cos(rotationAngle)
-//     );
-
-//     // Look at the player
-//     const targetPosition = player.position.clone().add(cameraTargetOffset);
-//     camera.lookAt(targetPosition);
-// }
-
 // Camera zoom limits
 const minZoom = 3; // Minimum distance from the player
 const maxZoom = 10; // Maximum distance from the player
@@ -205,29 +154,14 @@ function updateTPSCamera() {
     // Rotate the camera around the player based on input
     camera.position.set(
         player.position.x + cameraOffset.x * Math.cos(rotationAngle) - cameraOffset.z * Math.sin(rotationAngle),
-        // player.position.x + zoomDistance * Math.cos(rotationAngle),
         player.position.y + cameraOffset.y,
         player.position.z + cameraOffset.x * Math.sin(rotationAngle) + cameraOffset.z * Math.cos(rotationAngle)
-        // player.position.z + zoomDistance * Math.sin(rotationAngle)
     );
 
     // Look at the player
     const targetPosition = player.position.clone().add(cameraTargetOffset);
     camera.lookAt(targetPosition);
 }
-
-// Add scroll event for zoom
-// could use some smoothing later
-// easing, linear functions.
-canvas.addEventListener('wheel', (event) => {
-    event.preventDefault(); // Prevent default scrolling behavior
-
-    const zoomSpeed = 0.5; // Adjust zoom speed
-    zoomDistance += event.deltaY * 0.01 * zoomSpeed; // Zoom in or out based on scroll direction
-
-    // Clamp zoom distance between min and max
-    zoomDistance = Math.max(minZoom, Math.min(maxZoom, zoomDistance));
-});
 
 const clock = new THREE.Clock();
 
