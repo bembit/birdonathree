@@ -390,9 +390,11 @@ data().then(projects => {
                 });
 
                 const listItem = document.createElement("li");
-                listItem.innerHTML = `<a href="${favorite.url}" class="project-item project-item-favorite">
+                // project-item 
+                // <img src="${favorite.image}">
+                listItem.innerHTML = `<a href="${favorite.url}" class="project-item-favorite">
                                         <h4 >${favorite.title}</h4>
-                                        <img src="${favorite.image}">
+                                        <div style="background-image: url(${favorite.image})"></div>
                                         </a>
                                         `;
                 listItem.appendChild(createFavoriteButton);

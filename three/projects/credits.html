@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="theme-color" content="#000A15">
+    <title>birdonathree</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,200..1000;1,200..1000&family=Orbitron:wght@400..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../styles/colors.css">
+    <link rel="stylesheet" href="../styles/animations.css">
+    <link rel="stylesheet" href="../styles/styles.css">
+    <script src="https://kit.fontawesome.com/df3e6f116a.js" crossorigin="anonymous"></script>
+    <script src="../js/main.js" defer></script>
+    <style>
+        #features a, a:visited {
+            color: var(--secondary);
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body class="load">
+
+    <main>
+    
+        <section class="hero">
+            
+            <!-- class="load"  -->
+            <canvas id="starfield-canvas"></canvas>
+
+            <header id="top" class="header">
+                <nav>
+                    <ul>
+                        <li><a class="internal-link" href="#top">birdonathree.com</a></li>
+                        <li>|</li>
+                        <li><a href="mailto:hello@madbence.com"><i class="fa-solid fa-envelope"></i> hello@madbence.com</a></li>
+                        <li>|</li>
+                        <li><a href="https://linkedin.com/in/madbence"><i class="fa-brands fa-linkedin"></i> linkedin</a></li>
+                        <li>|</li>
+                        <li><a href="https://github.com/bembit"><i class="fa-brands fa-github"></i> github</a></li>
+                    </ul>
+                </nav>
+            </header>
+
+            <div class="container" style="min-height: 88svh;">
+
+                <div class="hero-intro">
+                    <h2 class="gradient">
+                        Credits. 
+                    </h2>
+                </div>
+
+            <h3>Models used are from the following sources:</h3>
+            <ul id="features" class="features">
+                <li><span class="gradient">!</span> <span>Model <a href="https://sketchfab.com/3d-models/catwoman-rigged-hatchxr-3562beab94e6432ca9a3fe645206c255">Catwoman Rigged HatchXR</a> by <a href="https://sketchfab.com/nitwit.friends">Nitwit.Friends</a> @SketchFab</span></li>
+                <li><span class="gradient">!</span> <span>Model <a href="https://sketchfab.com/3d-models/astronaut-floating-in-space-8d486996594a4714be1adf0d20745aa4">Astronaut In Space</a> by <a href="https://sketchfab.com/nitwit.friends">Nitwit.Friends</a> @SketchFab</span></li>
+                <li><span class="gradient">!</span> <span>Model <a href="https://sketchfab.com/3d-models/space-fighter-e766136d4871441289d37d44a4bbcd3b">Space Fighter</a> by <a href="https://sketchfab.com/comrade1280">comrade1280</a> @SketchFab</span></li>
+                <li><span class="gradient">!</span> <span>Music <a href="https://www.fesliyanstudios.com/royalty-free-music/download/galaxys-endless-expanse/3007">Galaxy's Endless Expanse</a> by <a href="https://www.youtube.com/@FesliyanStudios">David Robson</a> @FesliyanStudios</span></li>
+            </ul>
+            <div style="z-index: 2;">
+                <p>Creative Commons Attribution 4.0 International License</p>
+                <a href="https://creativecommons.org/licenses/by/4.0/"><img src="https://i.creativecommons.org/l/by/4.0/88x31.png" alt="Creative Commons License" /></a>
+            </div>
+        </div>
+
+        
+        </section>
+
+
+        <footer>
+            <p>Copyright © 2024 - built and designed by <a href="https://github.com/bembit">Me</a></p> 
+            <p>Vanilla ❤️ on Cloudflare</p>
+            <p>No unnecessary frameworks 🚫</p>
+        </footer>
+
+    </main>
+    <script type="importmap">
+		{
+		  "imports": {
+			"three": "https://cdnjs.cloudflare.com/ajax/libs/three.js/0.170.0/three.module.js"
+		  }
+		}
+	</script>
+    <script type="module" src="./starfield.js"></script>
+</body>
+</html>
