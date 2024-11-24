@@ -9,7 +9,7 @@ function playSound(soundId) {
 // smooth scroll to about section
 if (document.getElementById('about')) {
     document.getElementById('about').addEventListener('click', () => {
-        document.querySelector('#features').scrollIntoView({
+        document.querySelector('#about-contact').scrollIntoView({
             behavior: 'smooth'
         });
     });
@@ -55,7 +55,6 @@ document.addEventListener("DOMContentLoaded", function () {
     //     document.body.classList.remove('no-scroll'); // Re-enable scrolling
     //     overlay.classList.add('show');
     // });
-
 
     checkNavigation();
 
