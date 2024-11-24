@@ -331,14 +331,15 @@ window.addEventListener('resize', () => {
     camera.updateProjectionMatrix();
 });
 
-// thumb controls
+// ################ thumb controls
+// this should always align the camera, face to movement direction when left thumbstick is used.
 
 if (window.innerWidth < 768) {
     createThumbsticks();
 }
 
 function createThumbsticks() {
-    // Left thumbstick for movement
+    // movement
     const leftStick = document.createElement('div');
     leftStick.id = 'left-stick';
     leftStick.innerHTML = "Move";
@@ -354,7 +355,7 @@ function createThumbsticks() {
     `;
     document.body.appendChild(leftStick);
 
-    // Right thumbstick for camera control
+    // camera control
     const rightStick = document.createElement('div');
     rightStick.id = 'right-stick';
     rightStick.innerHTML = "Look";
@@ -370,6 +371,7 @@ function createThumbsticks() {
     `;
     document.body.appendChild(rightStick);
 
+    // extras, like jump
     const jumpButton = document.createElement('button');
     jumpButton.id = 'jump-button';
     jumpButton.innerHTML = "Jump";
@@ -385,7 +387,6 @@ function createThumbsticks() {
     `;
     document.body.appendChild(jumpButton);
 
-    // Initialize event listeners for thumbsticks
     initializeThumbstickEvents();
 }
 
@@ -394,7 +395,10 @@ const jumpButton = document.getElementById("jump-button");
 jumpButton.addEventListener('touchstart', (event) => {
     if (!isJumping) {
         isJumping = true;
-        velocityY = initialJumpVelocity; // Apply initial vertical velocity
+        // math diff between desktop and mobile?
+        // or this framerate specific?
+        // yes it is!
+        velocityY = initialJumpVelocity;
         console.log(velocityY);
     }
 });
@@ -414,7 +418,8 @@ function initializeThumbstickEvents() {
             const deltaY = moveTouch.clientY - center.y;
 
             if (isLeftStick) {
-                leftStickDelta.x = -deltaX / (rect.width / 2); // Normalize to [-1, 1]
+                // normalize to [-1, 1] --- Dive
+                leftStickDelta.x = -deltaX / (rect.width / 2);
                 leftStickDelta.y = deltaY / (rect.height / 2);
             } else {
                 rightStickDelta.x = deltaX / (rect.width / 2);
