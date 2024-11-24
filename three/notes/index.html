@@ -9,19 +9,22 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,200..1000;1,200..1000&family=Orbitron:wght@400..900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../../styles/colors.css">
-    <link rel="stylesheet" href="../../styles/animations.css">
-    <link rel="stylesheet" href="../../styles/styles.css">
-    <!-- Highlight.js CSS for styling -->
+    <link rel="stylesheet" href="../styles/colors.css">
+    <link rel="stylesheet" href="../styles/animations.css">
+    <link rel="stylesheet" href="../styles/styles.css">
+    <!-- Highlight.js styles -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css">
     <script src="https://kit.fontawesome.com/df3e6f116a.js" crossorigin="anonymous"></script>
-    <script src="../../js/main.js" defer></script>
+    <script src="../js/main.js" defer></script>
     <style>
         #markdown-container {
             /* font-family: 'Courier New', Courier, monospace; */
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             font-size: 130%;
             padding-bottom: var(--margin-xl);
+        }
+        li a:hover {
+            cursor: pointer;
         }
         ul,ol,p,h1,h2,h3,h4,h5,h6,pre,hr {
             margin-bottom: 1rem;
@@ -36,16 +39,25 @@
             list-style: inside square;
             margin-bottom: 0.5rem;
         }
+        /* legit handling of long code blocks */
+        @media screen and (max-width: 768px) {
+            #markdown-container {
+                width: 100%;
+                pre, code {
+                    display: none;
+                }
+            }
+        }
     </style>
 </head>
 
 <body class="load">
     <!-- list of bg music? -->
-    <audio id="audioBackgroundTheme" src="../../assets/sounds/music/galaxys_endless_expanse.mp3" loop></audio>
+    <audio id="audioBackgroundTheme" src="../assets/sounds/music/galaxys_endless_expanse.mp3" loop></audio>
     
     <!-- nav bars?? -->
-    <div class="nav-bar">
-        <audio id="audioWhisper" src="../../assets/sounds/whisper.mp3"></audio>
+    <div class="nav-bar nav-bar-notes">
+        <audio id="audioWhisper" src="../assets/sounds/whisper.mp3"></audio>
         <h4>Notes</h4>
         <ul>
             <span id="close-btn" class="close-btn">×</span>
@@ -57,21 +69,19 @@
             <!-- next song, prev song with names. -->
             
             <!-- volume -->
-
-            <li><a href="./credits.html">Credits for Models/Assets</a></li>
         </ul>
     </div>
 
     <div onclick="playSound('audioWhisper')" class="show-nav hidden-arrow"><i class="fa-solid fa-bars"></i></div>
 
-    <div class="nav-bar nav-bar-notes">
+    <!-- <div class="nav-bar nav-bar-notes">
         <audio id="audioWhisper" src="../../assets/sounds/whisper.mp3"></audio>
         <h4>Notes:</h4>
         <ul>
             <span id="close-btn" class="close-btn">×</span>
 
         </ul>
-    </div>
+    </div> -->
 
     <main>
     
@@ -80,7 +90,7 @@
             <header id="top" class="header">
                 <nav>
                     <ul>
-                        <li><a class="internal-link" href="#top">birdonathree.com</a></li>
+                        <li><a href="/three/">birdonathree.com</a></li>
                         <li>|</li>
                         <li><a href="mailto:hello@madbence.com"><i class="fa-solid fa-envelope"></i> hello@madbence.com</a></li>
                         <li>|</li>
@@ -94,24 +104,21 @@
             <div class="container" style="min-height: 88svh;">
 
                 <div class="hero-intro">
-                    <h2 class="gradient">
+                    <h2 id="note-title" class="gradient">
                         <!-- Notes 1-10.  -->
                         <!-- Changing the Stars from points to something else -->
-                        Notes markdown test
+                        Select a note to load.
                     </h2>
                 </div>
 
                 <!-- showdown.js -->
                 <div id="markdown-container"></div>
 
-                </div>
-                
+            </div>
             
         </div>
-
         
         </section>
-
 
         <footer>
             <p>Copyright © 2024 - built and designed by <a href="https://github.com/bembit">Me</a></p> 
@@ -121,11 +128,12 @@
 
     </main>
 
-    <!-- Highlight.js script -->
+    <!-- highlight.js script -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/javascript.min.js"></script>
     <!-- showdown js -->
     <script src="https://cdn.jsdelivr.net/npm/showdown/dist/showdown.min.js"></script>
+
     <script>
         function loadMarkdown(file) {
             fetch(file)
@@ -135,7 +143,7 @@
                     const html = converter.makeHtml(markdown);
                     document.getElementById('markdown-container').innerHTML = html;
     
-                    // Apply syntax highlighting
+                    // syntax highlighting
                     document.querySelectorAll('pre code').forEach((block) => {
                         hljs.highlightElement(block);
                     });
@@ -146,21 +154,25 @@
                 });
         }
     
-        loadMarkdown('notes.md');
+        // initial load for now
+        // loadMarkdown('./notes/1.points_to_speheres.md');
         
         // render a button for each note
         const notes = [
             {
-                name: 'notes.md',
-                content: 'Something descriptive'
+                name: '1. Points to Spheres',
+                path: './notes/1.points_to_speheres.md',
+                content: 'Brainstorming of options to change stars from points to spheres.'
             },
             {
-                name: 'notes2.md',
-                content: 'Something descriptive'
+                name: '2. Model Loading',
+                path: './notes/2.model_loading.md',
+                content: 'Different ways to load models based on complexity.'
             },
             {
-                name: 'notes3.md',
-                content: 'Something descriptive'
+                name: '3. Clicking and raycasting',
+                path: './notes/3.clicking_and_raycasting.md',
+                content: 'Clicking on models and raycasting to change their lights.'
             }
         ];
 
@@ -176,17 +188,16 @@
 
             // swap between notes
             btn.addEventListener('click', () => {
-                loadMarkdown(note.name);
+                loadMarkdown(note.path);
+                document.getElementById('note-title').innerHTML = note.name;
             });
+
 
             document.querySelector('.nav-bar-notes ul').appendChild(listItem);
             listItem.appendChild(btn);
+            
         });
         
-
-
-
-    
         // added here in case I add to main too
         function PlayBackgroundMusic() {
             const audio = document.getElementById('audioBackgroundTheme');
@@ -195,6 +206,7 @@
         }
 
         // render a button for each music
+        // maybe one day
         // swap between music
 
         // pause music, resume music

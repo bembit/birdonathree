@@ -36,10 +36,14 @@
                 display: none;
             }
             .dropdown-menu {
-                flex-direction: column;
+                /* flex-direction: column; */
                 background-color: black;
                 transform: initial;
                 margin-top: 25px;
+                z-index: 3 !important;
+            }
+            .dropdown-menu li {
+                flex-basis: 25%;
             }
             .project-item {
                 flex-basis: initial;
