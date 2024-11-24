@@ -23,7 +23,7 @@
             font-size: 130%;
             padding-bottom: var(--margin-xl);
         }
-        ul,ol,p,h1,h2,h3,h4,h5,h6,pre {
+        ul,ol,p,h1,h2,h3,h4,h5,h6,pre,hr {
             margin-bottom: 1rem;
         }
         h1,h2,h3 {
@@ -32,7 +32,7 @@
         h4,h5,h6 {
             color: var(--secondary);
         }
-        li {
+        li:not(nav li):not(.nav-bar li) {
             list-style: inside square;
             margin-bottom: 0.5rem;
         }
@@ -40,12 +40,44 @@
 </head>
 
 <body class="load">
+    <!-- list of bg music? -->
+    <audio id="audioBackgroundTheme" src="../../assets/sounds/music/galaxys_endless_expanse.mp3" loop></audio>
+    
+    <!-- nav bars?? -->
+    <div class="nav-bar">
+        <audio id="audioWhisper" src="../../assets/sounds/whisper.mp3"></audio>
+        <h4>Notes</h4>
+        <ul>
+            <span id="close-btn" class="close-btn">×</span>
+            <!-- turn off music -->
+            <li>
+                <a id="toggle-music"><i style="margin-right: 7px;" class="fa-solid fa-music"></i> Pause music <i class="fa-solid fa-pause"></i></a>
+            </li>
+
+            <!-- next song, prev song with names. -->
+            
+            <!-- volume -->
+
+            <li><a href="./credits.html">Credits for Models/Assets</a></li>
+        </ul>
+    </div>
+
+    <div onclick="playSound('audioWhisper')" class="show-nav hidden-arrow"><i class="fa-solid fa-bars"></i></div>
+
+    <div class="nav-bar nav-bar-notes">
+        <audio id="audioWhisper" src="../../assets/sounds/whisper.mp3"></audio>
+        <h4>Notes:</h4>
+        <ul>
+            <span id="close-btn" class="close-btn">×</span>
+
+        </ul>
+    </div>
 
     <main>
     
         <section class="hero">
             
-            <!-- <header id="top" class="header">
+            <header id="top" class="header">
                 <nav>
                     <ul>
                         <li><a class="internal-link" href="#top">birdonathree.com</a></li>
@@ -57,14 +89,15 @@
                         <li><a href="https://github.com/bembit"><i class="fa-brands fa-github"></i> github</a></li>
                     </ul>
                 </nav>
-            </header> -->
+            </header>
 
             <div class="container" style="min-height: 88svh;">
 
                 <div class="hero-intro">
                     <h2 class="gradient">
                         <!-- Notes 1-10.  -->
-                        Changing the Stars from points to something else
+                        <!-- Changing the Stars from points to something else -->
+                        Notes markdown test
                     </h2>
                 </div>
 
@@ -114,6 +147,72 @@
         }
     
         loadMarkdown('notes.md');
+        
+        // render a button for each note
+        const notes = [
+            {
+                name: 'notes.md',
+                content: 'Something descriptive'
+            },
+            {
+                name: 'notes2.md',
+                content: 'Something descriptive'
+            },
+            {
+                name: 'notes3.md',
+                content: 'Something descriptive'
+            }
+        ];
+
+        notes.forEach((note) => {
+            const listItem = document.createElement('li');
+            const btn = document.createElement('a');
+            btn.innerHTML = note.name;
+
+            // set some hover attributes
+            btn.setAttribute('title', note.content);
+            // btn.setAttribute('popover', 'manual');
+            btn.setAttribute('aria-describedby', note.content);
+
+            // swap between notes
+            btn.addEventListener('click', () => {
+                loadMarkdown(note.name);
+            });
+
+            document.querySelector('.nav-bar-notes ul').appendChild(listItem);
+            listItem.appendChild(btn);
+        });
+        
+
+
+
+    
+        // added here in case I add to main too
+        function PlayBackgroundMusic() {
+            const audio = document.getElementById('audioBackgroundTheme');
+            audio.volume = 0.05; // set volume (0 to 1) - 1 is "fun".
+            audio.play();
+        }
+
+        // render a button for each music
+        // swap between music
+
+        // pause music, resume music
+        const audioBackgroundTheme = document.getElementById('toggle-music');
+        audioBackgroundTheme.addEventListener('click', () => {
+            const audio = document.getElementById('audioBackgroundTheme');
+            if (audio.paused) {
+                audio.play();
+                audioBackgroundTheme.innerHTML = '<i style="margin-right: 7px;" class="fa-solid fa-music"></i> Pause music';
+            } else {
+                audio.pause();
+                audioBackgroundTheme.innerHTML = '<i style="margin-right: 7px;" class="fa-solid fa-music"></i> Resume music';
+            }
+        });
+        
+        document.addEventListener("DOMContentLoaded", function () {
+            PlayBackgroundMusic();
+        });
     </script>
     
 </body>

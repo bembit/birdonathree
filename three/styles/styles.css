@@ -500,6 +500,13 @@ body.no-scroll {
     user-select: none;
 }
 
+.nav-bar-notes {
+    position: fixed;
+    bottom: initial;
+    top: 20px;
+    right: 20px;
+}
+
 .nav-bar ul {
     list-style-type: none;
     padding: 0;
