@@ -133,6 +133,7 @@ function updatePlayerMovement() {
         if (player.position.y <= 0) {
             player.position.y = 0; // Keep player at ground level
             isJumping = false; // End the jump
+            console.log("jump end", isJumping);
             velocityY = 0; // Reset vertical velocity
         }
 
@@ -336,6 +337,32 @@ window.addEventListener('resize', () => {
 
 if (window.innerWidth < 768) {
     createThumbsticks();
+} else {
+    let alertDiv = document.createElement('div');
+        alertDiv.id = 'alert-div';
+        alertDiv.style.position = 'absolute';
+        alertDiv.style.top = '50%';
+        alertDiv.style.left = '50%';
+        alertDiv.style.transform = 'translate(-50%, -50%)';
+        alertDiv.style.backgroundColor = '#333';
+        alertDiv.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.5)';
+        alertDiv.style.color = '#fff';
+        alertDiv.style.padding = '10px';
+        alertDiv.style.borderRadius = '5px';
+        alertDiv.style.display = 'flex';
+        alertDiv.style.alignItems = 'center';
+        alertDiv.style.justifyContent = 'center';
+        alertDiv.style.flexDirection = 'column';
+        alertDiv.innerHTML = "This one is for mobile testing only.";
+
+    let redirectAnchor = document.createElement('a');
+        redirectAnchor.href = '../10.catwoman_advanced_cam_anim/';
+        redirectAnchor.innerHTML = "Click here to go to the Desktop version.";
+        redirectAnchor.style.color = '#ffff00';
+        redirectAnchor.style.textDecoration = 'none';
+
+        document.body.appendChild(alertDiv);
+        alertDiv.appendChild(redirectAnchor);
 }
 
 function createThumbsticks() {
