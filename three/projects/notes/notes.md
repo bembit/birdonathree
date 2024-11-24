@@ -1,4 +1,3 @@
-To enhance the look of your starfield and replace the basic `PointsMaterial` with more visually appealing options like glowing spheres or circular shapes, you have a few approaches:
 
 ---
 
@@ -6,10 +5,10 @@ To enhance the look of your starfield and replace the basic `PointsMaterial` wit
 
 The `PointsMaterial` can use a texture to make the points look like circular or glowing stars. Use a small texture of a white circle or glow effect.
 
-1. **Prepare a Texture**:
+#### Prepare a Texture:
    - Create a small circular texture (e.g., in Photoshop, GIMP, or online tools) or download one (e.g., a transparent PNG of a white circle or glow).
 
-2. **Update `PointsMaterial`**:
+#### Update `PointsMaterial`:
    ```javascript
    const starTexture = new THREE.TextureLoader().load('./textures/star.png'); // Replace with your texture path
    const starMaterial = new THREE.PointsMaterial({
@@ -22,7 +21,7 @@ The `PointsMaterial` can use a texture to make the points look like circular or 
    });
    ```
 
-3. **Benefits**:
+#### Benefits:
    - Lightweight, preserves performance.
    - Stars look circular or glowing, depending on your texture.
 
