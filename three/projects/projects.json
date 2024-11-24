@@ -88,5 +88,14 @@
         "tags": ["Model", "Shadows", "Animation", "Jump", "WASD", "Zoom", "Mouse", "Lights", "3D"],
         "url": "./10.catwoman_advanced_cam_anim/",
         "image": "../assets/img/projects/8.png"
+    },
+    {
+        "id": "10",
+        "title": "Quick mobile test",
+        "dateCreated": "2024-11-24",
+        "subtitle": "Just some AI to test mobile functionality.",
+        "tags": ["Model", "Shadows", "Animation", "Jump", "WASD", "Zoom", "Mouse", "Lights", "3D"],
+        "url": "./11.catwoman_mobile_test/",
+        "image": "../assets/img/projects/8.png"
     }
 ]
