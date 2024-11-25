@@ -97,5 +97,14 @@
         "tags": ["Model", "Shadows", "Animation", "Jump", "WASD", "Zoom", "Mouse", "Lights", "3D"],
         "url": "./11.catwoman_mobile_test/",
         "image": "../assets/img/projects/8.png"
+    },
+    {
+        "id": "12",
+        "title": "Type Base Setup",
+        "dateCreated": "2024-11-25",
+        "subtitle": "Looking at fonts.",
+        "tags": ["Type", "Shadows", "Animation", "WASD", "Zoom", "Mouse", "Lights", "3D", "UI"],
+        "url": "./12.type_test_setup/",
+        "image": "../assets/img/projects/12.png"
     }
 ]
