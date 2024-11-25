@@ -18,15 +18,17 @@
             cursor: pointer;
         }
         #starfield-canvas {
-            z-index: 1;
+            background-color: #969696;
         }
         .hero {
             user-select: none;
         }
-        .hide-ui {
-            display: none !important;
+        .nav-bar {
+            font-size: 12px;
         }
-        .nav-bar a:hover {
+        .nav-bar li:hover {
+            background-color: black;
+            color: white;
             cursor: pointer;
         }
     </style>
@@ -35,31 +37,24 @@
 <body class="load">
 
     <div class="nav-bar">
-        <h4>WASD Mouse</h4>
-       
+        <h4>A bit more freedom with camera, some basics of jumping.</h4>
+        
+        <h4>Animations</h4>
+        <span class="close-btn">×</span>
+        <ul>
+            <!-- render with js -->
+        </ul>
     </div>
-    
-
-    <div onclick="playSound('audioWhisper')" class="show-nav hidden-arrow"><i class="fa-solid fa-bars"></i></div>
+    <div class="show-nav hidden-arrow"><i class="fa-solid fa-bars"></i></div>
 
     
     <main>
         
-        <section class="hero" style="min-height: 100svh;">
-            
-            <!-- class="load"  -->
-            <canvas id="starfield-canvas"></canvas>
+        <canvas id="starfield-canvas"></canvas>
+
     </main>
 
-    <script type="importmap">
-        {
-            "imports": {
-                "three": "https://unpkg.com/three@0.170.0/build/three.module.js"
-            }
-        }
-    </script>
-
-    <script type="module" src="./type.js"></script>
+    <script type="module" src="./model.js"></script>
 
 </body>
 </html>

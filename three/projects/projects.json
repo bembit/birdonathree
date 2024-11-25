@@ -106,5 +106,14 @@
         "tags": ["Type", "Shadows", "Animation", "WASD", "Zoom", "Mouse", "Lights", "3D", "UI"],
         "url": "./12.type_test_setup/",
         "image": "../assets/img/projects/12.png"
+    },
+    {
+        "id": "13",
+        "title": "Catwoman isometric camera and movement",
+        "dateCreated": "2024-11-26",
+        "subtitle": "ARPG.",
+        "tags": ["Type", "Shadows", "Animation", "WASD", "Zoom", "Mouse", "Lights", "3D", "UI"],
+        "url": "./13.catwoman_isometric/",
+        "image": "../assets/img/projects/12.png"
     }
 ]
