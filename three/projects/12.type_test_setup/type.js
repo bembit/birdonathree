@@ -9,7 +9,7 @@ import { TextGeometry } from 'https://unpkg.com/three@0.170.0/examples/jsm/geome
 
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-camera.position.z = 50;
+camera.position.z = 5;
 
 // Target the canvas element
 const canvas = document.getElementById('starfield-canvas');
@@ -75,7 +75,7 @@ document.addEventListener('mousemove', (event) => {
 });
 
 // Movement vectors
-let movementSpeed = 0.25;
+let movementSpeed = 0.1;
 
 function calculateMovement() {
     const forward = new THREE.Vector3();
@@ -110,8 +110,8 @@ fontLoader.load(
         // Create TextGeometry
         const textGeometry = new TextGeometry('Hello, Three.js!', {
             font: font,
-            size: 1, // Size of the text
-            height: .1, // Depth of the text
+            size: 3, // Size of the text
+            height: .5, // Depth of the text
             curveSegments: 12, // Number of curve segments for smoothness
             bevelEnabled: true, // Enable bevel for rounded edges
             bevelThickness: 0.03,
@@ -124,8 +124,8 @@ fontLoader.load(
         const textMesh = new THREE.Mesh(textGeometry, textMaterial);
 
         // Position the text
-        textMesh.position.set(-5, 1, 0); // Adjust based on your scene
-        textMesh.rotation.x = -Math.PI / 4; // Example rotation
+        textMesh.position.set(-5, 1, 0); 
+        textMesh.rotation.x = -Math.PI / 12; // rotation
 
         // Add to the scene
         scene.add(textMesh);

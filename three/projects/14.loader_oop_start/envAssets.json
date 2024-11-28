@@ -1,0 +1,53 @@
+[
+    {
+      "path": "../../models/car.glb",
+      "name": "Tree",
+      "options": {
+        "position": [-7, 0, 0],
+        "castShadow": true,
+        "scale": [2,2,2]
+      }
+    },
+    {
+      "path": "../../models/wolf.glb",
+      "name": "Rock",
+      "options": {
+        "position": [1, 0, 0],
+        "lootable": true
+      }
+    },
+    {
+      "path": "../../models/wolf2.glb",
+      "name": "Rock",
+      "options": {
+        "position": [-2, 0, 0],
+        "lootable": true
+      }
+    },
+    {
+      "path": "../../models/astronaut.glb",
+      "name": "Rock",
+      "options": {
+        "position": [3, 2, 3],
+        "lootable": true,
+        "rotation": [3, 4, 2]
+      }
+    },
+    {
+      "path": "../../models/business_female.glb",
+      "name": "Rock",
+      "options": {
+        "position": [5, 0, 0],
+        "lootable": true
+      }
+    },
+    {
+      "path": "../../models/horse.glb",
+      "name": "Rock",
+      "options": {
+        "position": [7, 0, 0],
+        "lootable": true
+      }
+    }
+  ]
+  
