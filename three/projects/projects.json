@@ -114,6 +114,15 @@
         "subtitle": "ARPG.",
         "tags": ["Type", "Shadows", "Animation", "WASD", "Zoom", "Mouse", "Lights", "3D", "UI"],
         "url": "./13.catwoman_isometric/",
-        "image": "../assets/img/projects/12.png"
+        "image": "../assets/img/projects/13.png"
+    },
+    {
+        "id": "14",
+        "title": "Model Loader OOP Start",
+        "dateCreated": "2024-11-28",
+        "subtitle": "Do I really need classes for everything? Where can I just get away with functional?",
+        "tags": ["Model", "Shadows", "Animation", "Loader"],
+        "url": "./14.loader_oop_start/",
+        "image": "../assets/img/projects/14.png"
     }
 ]

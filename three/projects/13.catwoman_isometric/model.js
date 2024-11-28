@@ -1,6 +1,13 @@
 import * as THREE from 'https://unpkg.com/three@0.125.1/build/three.module.js';
 import { GLTFLoader } from 'https://unpkg.com/three@0.125.1/examples/jsm/loaders/GLTFLoader.js';
 
+// write a new loader class.
+// write a camera / renderer class.
+// a good click movement with animations.
+
+// load multiple models.
+// add health bars on them.
+
 const scene = new THREE.Scene();
 // const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
 const camera = new THREE.OrthographicCamera(
