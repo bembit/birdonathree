@@ -1,0 +1,49 @@
+[
+    {
+      "path": "./models/stylized_tree.glb",
+      "name": "Car",
+      "options": {
+        "position": [0, 0, 0],
+        "castShadow": true
+      }
+    },
+    {
+      "path": "./models/stylized_tree.glb",
+      "name": "Wolf",
+      "options": {
+        "position": [1, 0, 0],
+        "lootable": true,
+        "castShadow": true
+      }
+    },
+    {
+      "path": "./models/stylized_tree.glb",
+      "name": "Tree",
+      "options": {
+        "position": [2, 0, 0],
+        "lootable": true,
+        "castShadow": true
+      }
+    },
+    {
+      "path": "./models/car.glb",
+      "name": "Girl",
+      "options": {
+        "position": [5, 0, 0],
+        "lootable": true,
+        "castShadow": true,
+        "scale": [2, 2, 2]
+      }
+    },
+    {
+      "path": "./models/stylized_tree.glb",
+      "name": "Girl",
+      "options": {
+        "position": [7, 0, 0],
+        "lootable": true,
+        "castShadow": true,
+        "scale": [15, 15, 15]
+      }
+    }
+  ]
+  

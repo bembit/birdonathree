@@ -1,0 +1,57 @@
+[
+    {
+      "path": "./models/car.glb",
+      "name": "Car",
+      "options": {
+        "position": [0, 0, 0],
+        "castShadow": true
+      }
+    },
+    {
+      "path": "./models/wolf.glb",
+      "name": "Wolf",
+      "options": {
+        "position": [1, 0, 0],
+        "lootable": true,
+        "castShadow": true
+      }
+    },
+    {
+      "path": "./models/stylized_tree.glb",
+      "name": "Tree",
+      "options": {
+        "position": [2, 0, 0],
+        "lootable": true,
+        "castShadow": true
+      }
+    },
+    {
+      "path": "./models/astronaut_floating_in_space.glb",
+      "name": "Astronaut",
+      "options": {
+        "position": [3, 2, 3],
+        "lootable": true,
+        "rotation": [3, 4, 2],
+        "castShadow": true
+      }
+    },
+    {
+      "path": "./models/s1.glb",
+      "name": "Girl",
+      "options": {
+        "position": [5, 0, 0],
+        "lootable": true,
+        "castShadow": true
+      }
+    },
+    {
+      "path": "./models/catwoman_rigged.glb",
+      "name": "Girl",
+      "options": {
+        "position": [7, 0, 0],
+        "lootable": true,
+        "castShadow": true
+      }
+    }
+  ]
+  
