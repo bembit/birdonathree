@@ -124,5 +124,23 @@
         "tags": ["Model", "Shadows", "Animation", "Loader"],
         "url": "./14.loader_oop_start/",
         "image": "../assets/img/projects/14.png"
+    },
+    {
+        "id": "15",
+        "title": "Cards scene with animations",
+        "dateCreated": "2025-02-01",
+        "subtitle": "Do I really need classes for everything? Where can I just get away with functional?",
+        "tags": ["Cards", "Web", "Animation", "Loader"],
+        "url": "./15.cards_models_demo/",
+        "image": "../assets/img/projects/15.png"
+    },
+    {
+        "id": "17",
+        "title": "Small game theory",
+        "dateCreated": "2025-02-10",
+        "subtitle": "Do I really need classes for everything? Where can I just get away with functional?",
+        "tags": ["Cards", "Web", "Animation", "Loader"],
+        "url": "./17.small_demo/",
+        "image": "../assets/img/projects/17.png"
     }
 ]
