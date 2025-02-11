@@ -4,7 +4,7 @@ import { HealthBar } from './HealthBar.js';
 
 // enemy type to extend enemy and load model based on type ?
 export class Enemy {
-  constructor(modelLoader, config) {
+  constructor(modelLoader, config, gameManager) {
     this.modelLoader = modelLoader;
     this.config = config;
     this.health = 50;
@@ -15,7 +15,7 @@ export class Enemy {
     this.model = null;
     this.healthBar = null;
     this.attackDistance = 2;
-    
+    this.gameManager = gameManager;
 
     // Set up attack cooldown properties:
     this.attackSpeed = 1; // Attacks per second (adjust as needed)
@@ -87,7 +87,7 @@ export class Enemy {
       this.currentAction = this.actions['punch'];
     }
     if (target.takeDamage) {
-      target.takeDamage(5);
+      target.takeDamage(25);
     }
   }
 
@@ -102,9 +102,11 @@ export class Enemy {
 
   die() {
     console.log('Enemy died!');
-    // Remove the enemy from the scene, or trigger a death animation
     if (this.model && this.model.parent) {
       this.model.parent.remove(this.model);
+    }
+    if (this.gameManager) {
+      this.gameManager.enemyDied(this);
     }
   }
 }

@@ -3,7 +3,7 @@ import * as THREE from 'https://unpkg.com/three@0.125.1/build/three.module.js';
 import { HealthBar } from './HealthBar.js';
 
 export class Player {
-  constructor(modelLoader, config) {
+  constructor(modelLoader, config, gameManager) {
     this.modelLoader = modelLoader;
     this.config = config;
     this.health = 100;
@@ -14,7 +14,7 @@ export class Player {
     this.currentAction = null;
     this.model = null;
     this.healthBar = null;
-
+    this.gameManager = gameManager;
     // Load the player model
     this.load();
   }
@@ -123,6 +123,11 @@ export class Player {
 
   die() {
     console.log('Player died!');
-    // Handle death (e.g., play a death animation or trigger a game over state)
+
+    // game over state
+    if(this.gameManager) {
+      this.gameManager.gameOver();
+    }
+
   }
 }
