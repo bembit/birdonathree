@@ -15,6 +15,9 @@ export class Player {
     this.model = null;
     this.healthBar = null;
     this.gameManager = gameManager;
+    // should have stats later
+    // this.armour = 0; // etc. dodge etc.
+
     // Load the player model
     this.load();
   }
@@ -43,6 +46,7 @@ export class Player {
   }
 
   // this could be a separate class of movement controller?
+  // we have to handle/ignore clicks outside of running game state.
   // Handle click input to set a movement target.
   handleClick(event, camera, renderer) {
     if (!this.model) return;
@@ -113,6 +117,7 @@ export class Player {
 
   // Handle taking damage and updating the health bar.
   takeDamage(amount) {
+    // reduce by armour and so on? dodge, block, etc.
     this.health -= amount;
     console.log(`Player health: ${this.health}`);
     if (this.healthBar) this.healthBar.setHealth(this.health);
@@ -128,6 +133,18 @@ export class Player {
     if(this.gameManager) {
       this.gameManager.gameOver();
     }
+  }
 
+  reset() {
+    this.health = 100;
+    this.speed = 0.05;
+    this.targetPosition = null;
+    // this.mixer = null;
+    this.model.position.set(0, 0, 0);
+    if (this.healthBar) {
+      // this.healthBar.setHealth(this.health);
+      this.healthBar.dispose();
+    }
+    this.healthBar = new HealthBar(this.model);
   }
 }

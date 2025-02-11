@@ -32,4 +32,18 @@ export class HealthBar {
     this.domElement.style.left = `${x - 25}px`;
     this.domElement.style.top = `${y - 5}px`;
   }
+
+  // Removes the DOM element from the document.
+  dispose() {
+    if (this.domElement && this.domElement.parentElement) {
+      this.domElement.parentElement.removeChild(this.domElement);
+    }
+    this.domElement = null;
+  }
+
+  // Optional: A reset method to update the health bar without creating a new one.
+  reset() {
+    this.setHealth(100);
+    // You might also update styles or reposition it immediately here.
+  }
 }

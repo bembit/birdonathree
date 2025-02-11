@@ -15,6 +15,7 @@ export class Enemy {
     this.model = null;
     this.healthBar = null;
     this.attackDistance = 2;
+    this.attackDamage = 25;
     this.gameManager = gameManager;
 
     // Set up attack cooldown properties:
@@ -86,9 +87,15 @@ export class Enemy {
       this.actions['punch'].reset().play();
       this.currentAction = this.actions['punch'];
     }
+
     if (target.takeDamage) {
-      target.takeDamage(25);
+      target.takeDamage(this.calculatedTotalDamage());
     }
+
+  }
+
+  calculatedTotalDamage() {
+    return this.attackDamage;
   }
 
   takeDamage(amount) {
@@ -108,5 +115,19 @@ export class Enemy {
     if (this.gameManager) {
       this.gameManager.enemyDied(this);
     }
+  }
+
+  reset() {
+    this.health = 50;
+    this.speed = 0.01;
+    // this.mixer = null;
+    // this.actions = {};
+    // this.currentAction = null;
+    this.model.position.set(5, 0, 5);
+    if (this.healthBar) {
+      // this.healthBar.setHealth(this.health);
+      this.healthBar.dispose();
+    }
+    this.healthBar = new HealthBar(this.model);
   }
 }

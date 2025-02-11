@@ -28,6 +28,12 @@ const modelLoader = new ModelLoader(scene);
 
 const gameManager = new GameManager();
 
+gameManager.setResetCallback(() => {
+  console.log("Reset callback called: reinit game objects...")
+  player.reset();
+  enemy.reset();
+})
+
 // Create player instance – note that the configuration object
 // tells the loader which model file to use and where to place it.
 const player = new Player(modelLoader, {
@@ -71,10 +77,14 @@ window.addEventListener('click', (event) => {
 // key bindings temp
 window.addEventListener('keydown', (event) => {
   if (event.key.toLowerCase() === 's') {
-    // For instance, pressing "s" starts the game.
+    // Start the game only if not already running.
     gameManager.startGame();
   }
   if (event.key.toLowerCase() === 'p') {
     gameManager.togglePause();
+  }
+  if (event.key.toLowerCase() === 'r') {
+    // Reset the game if it's in a game over state.
+    gameManager.resetGame();
   }
 });
