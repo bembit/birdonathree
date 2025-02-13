@@ -129,7 +129,7 @@
         "id": "15",
         "title": "Cards scene with animations",
         "dateCreated": "2025-02-01",
-        "subtitle": "Do I really need classes for everything? Where can I just get away with functional?",
+        "subtitle": "Cards scene with animations.",
         "tags": ["Cards", "Web", "Animation", "Loader"],
         "url": "./15.cards_models_demo/",
         "image": "../assets/img/projects/15.png"
@@ -138,9 +138,18 @@
         "id": "17",
         "title": "Small game theory",
         "dateCreated": "2025-02-10",
-        "subtitle": "Do I really need classes for everything? Where can I just get away with functional?",
+        "subtitle": "Throwing things so far together.",
         "tags": ["Cards", "Web", "Animation", "Loader"],
         "url": "./17.small_demo/",
         "image": "../assets/img/projects/17.png"
+    },
+    {
+        "id": "18",
+        "title": "RPG Inventory",
+        "dateCreated": "2025-02-11",
+        "subtitle": "asd",
+        "tags": ["Cards", "Web", "Animation", "Loader"],
+        "url": "./18.inventory/",
+        "image": "../assets/img/projects/18.png"
     }
 ]

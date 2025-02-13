@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="main.js" defer></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Metamorphous&display=swap" rel="stylesheet">
+    <style>
+        *,*::before,*::after {
+            box-sizing: border-box;
+            margin: 0 0;
+            padding: 0 0;
+        }
+        main {
+
+        }
+        body {
+            background-color: rgb(24, 22, 22);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 92svh;
+            color: rgb(247, 248, 208);
+            font-family: "Metamorphous", serif;
+            font-weight: 400;
+            font-style: normal;
+        }
+        button {
+            padding: 8px 16px;
+            background-color: #792626;
+            color: rgb(247, 248, 208);
+            font-family: "Metamorphous", serif;
+            font-weight: 400;
+            font-style: normal;
+        }
+        #summary {
+            display: flex;
+            justify-content: flex-start;
+            align-items: flex-start;
+            flex-direction: column;
+            flex-wrap: wrap;
+            min-width: 800px;
+            max-width: 800px;
+            min-height: 300px;
+            max-height: 300px;
+            border: 1px solid #792626;
+            overflow: scroll;
+        }
+        #inventory {
+            position: relative;
+            display: grid;
+            grid-template-columns: repeat(20, 30px);
+            grid-template-rows: repeat(8, 30px);
+        }
+        .inventory-cell {
+            width: 30px;
+            height: 30px;
+            box-sizing: border-box;
+            border: 1px solid #585858;
+            position: relative;
+        }
+        .item-overlay {
+            position: absolute;
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
+            pointer-events: none;
+            z-index: 2;
+        }
+        .item-popup {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: rgba(0, 0, 0, 0.9);
+            color: #fff;
+            font-size: 10px;
+            text-align: center;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            z-index: 3;
+            min-width: 200px;
+            min-height: 250px;
+            padding: 10px 10px;
+            font-size: 16px;
+        }
+        .inventory-cell:hover .item-popup {
+            display: flex;
+        }
+        ul {
+            padding: 0 0;
+            margin:  0 0;
+            list-style: none;
+        }
+        .inventory-container > ul:first-of-type {
+            padding-top: 20px;
+            padding-left: 20px;
+        }
+        #item-type-list {
+            min-height: 200px;
+        }
+        .inventory-container {
+            display: flex;
+            width: 100%;
+            background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.658), rgba(0, 0, 0, 0.842)), url('./img/metal.jpg');
+            background-repeat: no-repeat;
+        }
+    </style>
+</head>
+<body>
+    
+    <main>
+        <div class="top-container">
+            <h1>RPG Item generator - coordinates practice</h1> 
+            <button id="addToInventory">Add item to inventory</button>
+        </div>
+
+        <div class="inventory-container">
+            <div id="inventory"></div>
+            <ul id="item-type-list">
+                <li>Stats:</li>
+            </ul>
+        </div>
+        <ul id="summary"></ul>
+    
+        <div class="bottom-container">
+            <button id="resetInventory">Destroy inventory</button>
+        </div>
+    </main>
+
+</body>
+</html>

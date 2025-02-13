@@ -1,0 +1,18 @@
+{
+    "id": "16",
+    "title": "Camera unfinished reminder",
+    "dateCreated": "2025-02-01",
+    "subtitle": "TBC",
+    "tags": ["Cards", "Web", "Animation", "Loader"],
+    "url": "./15.cards_models_demo/",
+    "image": "../assets/img/projects/16.png"
+},
+{
+    "id": "19",
+    "title": "Game base",
+    "dateCreated": "2025-02-13",
+    "subtitle": "Adding stuff to the game theory demo.",
+    "tags": ["Cards", "Web", "Animation", "Loader"],
+    "url": "./19.game_base/",
+    "image": "../assets/img/projects/19.png"
+}
