@@ -1,18 +1,9 @@
 {
-    "id": "16",
-    "title": "Camera unfinished reminder",
-    "dateCreated": "2025-02-01",
-    "subtitle": "TBC",
-    "tags": ["Cards", "Web", "Animation", "Loader"],
-    "url": "./15.cards_models_demo/",
-    "image": "../assets/img/projects/16.png"
-},
-{
-    "id": "19",
-    "title": "Game base",
-    "dateCreated": "2025-02-13",
-    "subtitle": "Adding stuff to the game theory demo.",
-    "tags": ["Cards", "Web", "Animation", "Loader"],
-    "url": "./19.game_base/",
-    "image": "../assets/img/projects/19.png"
+    "id": "14.1",
+    "title": "OOP Ideas",
+    "dateCreated": "2024-11-27",
+    "subtitle": "Do I really need classes for everything? Where can I just get away with functional?",
+    "tags": ["Model", "Shadows", "Animation", "Loader"],
+    "url": "./14._oop_base_ideas/",
+    "image": "../assets/img/projects/14.png"
 }

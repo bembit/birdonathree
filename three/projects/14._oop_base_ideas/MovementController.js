@@ -32,7 +32,7 @@ export class MovementController {
 
     // Update the movement every frame
     
-    // update(delta) {
-    //     this.player.update(delta);
-    // }
+    update(delta) {
+        this.player.update(delta);
+    }
 }

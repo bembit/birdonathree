@@ -74,7 +74,8 @@ data().then(projects => {
     const createProjectItem = (project) => {
         let createDiv = document.createElement('div');
         createDiv.classList.add('project-item');
-        createDiv.style.backgroundImage = `linear-gradient(to bottom, rgba(0, 0, 0, 0.85), rgba(0,0,0,0.75)), url(${project.image})`;
+        let bgImage = project.image || '../assets/img/projects/5.png';
+        createDiv.style.backgroundImage = `linear-gradient(to bottom, rgba(0, 0, 0, 0.85), rgba(0,0,0,0.75)), url(${bgImage})`;
 
         // on hover maybe later
         // createDiv.addEventListener('mouseover', () => {

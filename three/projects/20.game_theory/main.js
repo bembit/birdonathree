@@ -7,6 +7,7 @@ import { CameraRenderer } from './classes/CameraRenderer.js';
 import { SceneManager } from './classes/SceneManager.js';
 import { Player } from './classes/Player.js';
 import { Enemy } from './classes/Enemy.js';
+import { AttackController } from './classes/AttackController.js';
 
 const canvas = document.getElementById('game-canvas');
 
@@ -14,22 +15,17 @@ const canvas = document.getElementById('game-canvas');
 const sceneManager = new SceneManager();
 const scene = sceneManager.getScene();
 
-// Define your environment assets.
+// Define your environment assets. Or use the default ones link in README.md.
 const environmentAssets = [
   { path: './assets/models/nature_pack/Flower1.glb', scale: 0 },
-  { path: './assets/models/nature_pack/Flower2.glb', scale: 0 },
-  { path: './assets/models/nature_pack/Flower3.glb', scale: 0 },
-  { path: './assets/models/nature_pack/Flower4.glb', scale: 0 },
-  { path: './assets/models/nature_pack/Flower5.glb', scale: 0 },
   { path: './assets/models/nature_pack/Rock2.glb', scale: 1 },
-  // { path: '../assets/models/npcs/car.glb', scale: 2 },
   { path: './assets/models/nature_pack/Tree5_Yellow.glb', scale: 1.5, y: 3 },
   { path: './assets/models/nature_pack/Tree2_Green.glb', scale: 1.5, y: 4 }
 ];
 
 // Randomly add environment objects.
-// Obviously, this is a very simple example. In a real game, you would want to render like this.
-sceneManager.addEnvironmentObjects(environmentAssets, 256);
+// Obviously, this is a very simple example. In a real game, you wouldn't want to render like this.
+sceneManager.addEnvironmentObjects(environmentAssets, 16);
 
 // Set up camera and renderer.
 const camRenderer = new CameraRenderer(canvas);
@@ -43,13 +39,24 @@ window.camera = camera;
 const modelLoader = new ModelLoader(scene);
 const gameManager = new GameManager();
 
+const projectiles = [];
+
 gameManager.setResetCallback(() => {
   console.log("Reset callback called: reinit game objects...")
   player.reset();
   enemy.reset();
+
+  // Quite hacky, but it works, removing loot by userData.
+  // Also quite expensive when we have a lot of stuff on screen.
+  // Making an array of lootDrops and remove them from the scene would be better. TBC.
+  for (let i = scene.children.length - 1; i >= 0; i--) {
+    let obj = scene.children[i];
+    console.log(obj);
+    if (obj.userData.lootDrop) {
+        scene.remove(obj);
+    }
+  }
 })
-
-
 
 // Create player and enemy instance – note atm. the configuration object
 // tells the loader which model file to use and where to place it.
@@ -57,7 +64,7 @@ const player = new Player(modelLoader, {
   path: './assets/models/characters/catwoman.glb',
   position: { x: 0, y: 0, z: 0 },
   scale: 1,
-}, gameManager);
+}, gameManager, projectiles);
 
 const enemy = new Enemy(modelLoader, {
   path: './assets/models/characters/revflash.glb',
@@ -65,8 +72,11 @@ const enemy = new Enemy(modelLoader, {
   scale: 1,
 }, gameManager);
 
+const attackController = new AttackController(player, enemy, camera, canvas);
+
 // Game loop: update animations, movement, AI, and render the scene.
 const clock = new THREE.Clock();
+
 function animate() {
   requestAnimationFrame(animate);
   const delta = clock.getDelta();
@@ -75,6 +85,17 @@ function animate() {
   if (gameManager.isPlaying()) {
     player.update(delta);
     enemy.update(delta, player);
+  }
+
+  // Update all active projectiles.
+  for (let i = projectiles.length - 1; i >= 0; i--) {
+    const proj = projectiles[i];
+    if (proj.alive) {
+      proj.update(delta);
+    } else {
+      // Remove dead projectiles from the array.
+      projectiles.splice(i, 1);
+    }
   }
 
   // Update camera to follow the player.
@@ -91,6 +112,7 @@ window.addEventListener('click', (event) => {
 });
 
 // Key bindings / options temp. 
+// Just leaving it here for now.
 window.addEventListener('keydown', (event) => {
   if (event.key.toLowerCase() === 's') {
     // Start the game only if not already running.
@@ -102,28 +124,5 @@ window.addEventListener('keydown', (event) => {
   if (event.key.toLowerCase() === 'r') {
     // Reset the game if it is in a game over state.
     gameManager.resetGame();
-  }
-});
-
-// Last basic mouse interactions before coming up with a movement controller.
-canvas.addEventListener('mousedown', (event) => {
-  // Check for left mouse button.
-  if (event.button === 0) {
-    const rect = canvas.getBoundingClientRect();
-    const mouse = new THREE.Vector2(
-      ((event.clientX - rect.left) / rect.width) * 2 - 1,
-      -((event.clientY - rect.top) / rect.height) * 2 + 1
-    );
-    
-    const raycaster = new THREE.Raycaster();
-    raycaster.setFromCamera(mouse, camera);
-
-    // If you have multiple enemies, you could pass an array of their models.
-    const enemyIntersects = raycaster.intersectObject(enemy.getObject(), true);
-    if (enemyIntersects.length > 0) {
-      // Enemy is being hovered when the left mouse button is pressed.
-      // Call the player's attack method and pass in the enemy as the target.
-      player.attack(enemy);
-    }
   }
 });

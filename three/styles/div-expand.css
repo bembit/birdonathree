@@ -48,7 +48,7 @@
 }
 
 .inside-box:nth-of-type(3) {
-    background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.85), rgba(0,0,0,0.75)), url(../assets/img/projects/1.png);
+    background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.85), rgba(0,0,0,0.75)), url(../assets/img/projects/20.png);
     opacity: .65;
     background-position: center center;
     background-size: cover;
@@ -64,7 +64,7 @@
 }
 
 .inside-box:nth-of-type(5) {
-    background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.85), rgba(0,0,0,0.75)), url(../assets/img/projects/6.png);
+    background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.85), rgba(0,0,0,0.75)), url(../assets/img/projects/8.png);
     background-color: var(--bg-color);
     opacity: .65;
     background-position: center center;

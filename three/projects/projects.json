@@ -42,7 +42,7 @@
         "subtitle": "Tested Vite for building. Luckily imports from CDNs work just fine so I don't have to do the npm game to have fun.",
         "tags": ["Model", "Vite", "Animation", "Import"],
         "url": "./5.model_test/",
-        "image": "../assets/img/projects/5.png"
+        "image": "../assets/img/projects/6.png"
     },
     {
         "id": "6",
@@ -135,13 +135,20 @@
         "image": "../assets/img/projects/15.png"
     },
     {
+        "id": "16",
+        "title": "Camera unfinished reminder",
+        "dateCreated": "2025-02-02",
+        "subtitle": "TBC",
+        "tags": ["Cards", "Web", "Animation", "Loader"],
+        "url": "./16.camera_playground/"
+    },
+    {
         "id": "17",
         "title": "Small game theory",
         "dateCreated": "2025-02-10",
         "subtitle": "Throwing things so far together.",
         "tags": ["Cards", "Web", "Animation", "Loader"],
-        "url": "./17.small_demo/",
-        "image": "../assets/img/projects/17.png"
+        "url": "./17.small_game_theory/"
     },
     {
         "id": "18",
@@ -151,5 +158,22 @@
         "tags": ["Cards", "Web", "Animation", "Loader"],
         "url": "./18.inventory/",
         "image": "../assets/img/projects/18.png"
+    },
+    {
+        "id": "19",
+        "title": "Game theory base",
+        "dateCreated": "2025-02-13",
+        "subtitle": "Adding stuff to the game theory demo.",
+        "tags": ["Cards", "Web", "Animation", "Loader"],
+        "url": "./19.game_theory_base/"
+    },
+    {
+        "id": "20",
+        "title": "Small Game theory done",
+        "dateCreated": "2025-02-16",
+        "subtitle": "Adding stuff to the game theory demo.",
+        "tags": ["Cards", "Web", "Animation", "Loader"],
+        "url": "./20.game_theory/",
+        "image": "../assets/img/projects/20.png"
     }
 ]
